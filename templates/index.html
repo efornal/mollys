@@ -8,6 +8,100 @@
   {% endfor %}
 {% endif %}
 
-content here,..
+<div class="bs-docs-section">
+
+  <!-- <div class="row"> -->
+  <!--   <div class="col-lg-12"> -->
+  <!--     <div class="page-header"> -->
+  <!--       <h1 id="forms">Forms</h1> -->
+  <!--     </div> -->
+  <!--   </div> -->
+  <!-- </div> -->
+
+  <br>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="well bs-component">
+        <form class="form-horizontal">
+          <fieldset>
+            <legend>Solicitud de habilitación de cuenta</legend>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="textinput">Nombres</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="" id="" value=""/>
+              </div>
+              <label class="col-sm-2 control-label" for="textinput">Apellidos</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="" id="" value=""/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="select" class="col-sm-2 control-label">Tipo Documento</label>
+              <div class="col-sm-4">
+                <select class="form-control" id="select">
+                  <option>DNI</option>
+                  <option>LC</option>
+                </select>
+              </div>
+              <label class="col-sm-2 control-label" for="textinput">Número</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="" id="" value="" />
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="textinput">Cargo</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="" id="" value=""
+                       placeholder="Cargo  o Función"/>
+              </div>
+              <label class="col-sm-2 control-label" for="textinput">Secretaría</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="" id="" value=""
+                       placeholder="Secretaría o dirección"/>
+              </div>
+            </div>
+
+            
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="textinput">Teléfono laboral</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="" id="" value=""/>
+              </div>
+              <label class="col-sm-2 control-label" for="textinput">Particular</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="" id="" value=""/>
+              </div>
+            </div>
+
+
+            
+            <div class="form-group">
+              <label for="inputEmail" class="col-lg-2 control-label">Domicilio</label>
+              <div class="col-lg-10">
+                <input type="text" class="form-control" id="inputEmail">
+              </div>
+            </div>
+
+              <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                  <button type="reset" class="btn btn-default">Cancelar</button> &nbsp;&nbsp;&nbsp;&nbsp;
+                  <button type="submit" class="btn btn-primary">Enviar solicitud</button>
+                </div>
+              </div>
+              
+            </fieldset>
+          </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
 
 {% endblock %}

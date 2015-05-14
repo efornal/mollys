@@ -1,3 +1,10 @@
+body {
+    background: url("images/bgpattern.png"); 
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
 
 .toner-detail {
 }
