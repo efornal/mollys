@@ -22,85 +22,83 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="textinput">Nombres</label>
               <div class="col-sm-4">
-                <input class="form-control" type="text" name="" id="" value=""/>
+                <input class="form-control" type="text" name="name" id="" value=""/>
               </div>
               <label class="col-sm-2 control-label" for="textinput">Apellidos</label>
               <div class="col-sm-4">
-                <input class="form-control" type="text" name="" id="" value=""/>
+                <input class="form-control" type="text" name="surname" id="" value=""/>
               </div>
             </div>
 
             <div class="form-group">
               <label for="select" class="col-sm-2 control-label">Tipo Documento</label>
               <div class="col-sm-4">
-                <select class="form-control" id="select">
+                <select class="form-control" name="document_type" id="select">
                   <option>DNI</option>
                   <option>LC</option>
                 </select>
               </div>
               <label class="col-sm-2 control-label" for="textinput">Número</label>
               <div class="col-sm-4">
-                <input class="form-control" type="text" name="" id="" value="" />
+                <input class="form-control" type="text" name="socument_number"/>
               </div>
             </div>
-
-
            
             <div class="form-group">
               <label class="col-sm-2 control-label" for="textinput">Teléfono laboral</label>
               <div class="col-sm-4">
-                <input class="form-control" type="text" name="" id="" value=""/>
+                <input class="form-control" type="text" name="work_phone"/>
               </div>
               <label class="col-sm-2 control-label" for="textinput">Particular</label>
               <div class="col-sm-4">
-                <input class="form-control" type="text" name="" id="" value=""/>
+                <input class="form-control" type="text" name="home_phone"/>
               </div>
             </div>
 
             <div class="form-group">
               <label for="inputEmail" class="col-sm-2 control-label">Domicilio</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputEmail">
+                <input type="text" class="form-control" name="address">
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-2 control-label" for="textinput">Cargo</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputEmail">
+                <input type="text" class="form-control" name="position">
               </div>
             </div>
 
             <div class="form-group">
               <label for="select" class="col-sm-2 control-label">Secretaría o Dirección</label>
               <div class="col-sm-10">
-                <select class="form-control" id="office_id">
+                <select class="form-control" id="office_id" name="office_id">
                   {% for office in offices %}
-                  <option value="{{office.id}}"
-                          {% if office.id == current_office.id %}selected="selected"{% endif %}>
+                    <option value="{{office.id}}"
+                    {% if office.id == current_office.id %}selected="selected"{% endif %}>
                     {{office.name}}
-                  </option>
+                    </option>
                   {% endfor %}
                   <option value='0'>Especificar otra ..</option>
                 </select>
               </div>
             </div>
 
-            <div class="form-group" id="obs">
+            <div class="form-group" id="new_office_block">
               <label class="col-sm-2 control-label" for="textinput"></label>
               <div class="col-sm-4"></div>
-              <label class="col-sm-2 control-label" for="textinput">Secretaria:</label>
+              <label class="col-sm-2 control-label" for="textinput">Secretaría:</label>
               <div class="col-sm-4">
-                <input class="form-control" type="text" name="" id="" value=""/>
+                <input class="form-control" type="text" name="new_office"/>
               </div>
             </div>
 
-            
             <br>
               
             <div class="form-group">
               <div class="col-lg-10 col-lg-offset-2">
-                <button type="reset" class="btn btn-default">Cancelar</button> &nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="reset" class="btn btn-default">Cancelar</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 <button type="submit" class="btn btn-primary">Enviar solicitud</button>
               </div>
             </div>

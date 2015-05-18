@@ -1,10 +1,10 @@
 $(function() {
-    $( "#obs" ).hide();
+    $( "#new_office_block" ).hide();
     $( "#office_id" ).change(function() {
     if ($( this ).val() == "0") {
-        $( "#obs" ).toggle("clip");
+        $( "#new_office_block" ).toggle("clip");
     } else {
-        $( "#obs" ).hide("clip");
+        $( "#new_office_block" ).hide("clip");
     }
   });
 });
