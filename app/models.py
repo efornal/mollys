@@ -23,3 +23,14 @@ class Person(models.Model):
     def __unicode__(self):
         return "%s" % (self.name)
 
+    
+class Office(models.Model):
+    id = models.AutoField(primary_key=True,null=False)
+    name = models.CharField(max_length=200,null=False)
+    
+    class Meta:
+        db_table = 'offices'
+        verbose_name_plural = 'Offices'
+        
+    def __unicode__(self):
+        return "%s" % (self.name)

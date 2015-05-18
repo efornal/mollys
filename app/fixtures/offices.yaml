@@ -1,0 +1,180 @@
+- model: app.office
+  pk: 1
+  fields:
+    name: Dirección de Informatización y Planificación Tecnológica
+- model: app.office
+  pk: 5
+  fields:
+    name: Compras y Contrataciones
+- model: app.office
+  pk: 7
+  fields:
+    name: Ejecución del Presupuesto
+- model: app.office
+  pk: 8
+  fields:
+    name: Tesorería
+- model: app.office
+  pk: 13
+  fields:
+    name: Relaciones Internacionales
+- model: app.office
+  pk: 14
+  fields:
+    name: Bienestar Estudiantil
+- model: app.office
+  pk: 15
+  fields:
+    name: Construcciones
+- model: app.office
+  pk: 16
+  fields:
+    name: Mesa de Entradas
+- model: app.office
+  pk: 17
+  fields:
+    name: Ciencia y Técnica
+- model: app.office
+  pk: 18
+  fields:
+    name: Secretaría de Extensión Universitaria
+- model: app.office
+  pk: 20
+  fields:
+    name: Contabilidad
+- model: app.office
+  pk: 21
+  fields:
+    name: Secretaría General
+- model: app.office
+  pk: 22
+  fields:
+    name: Patrimonio
+- model: app.office
+  pk: 23
+  fields:
+    name: Secretaría Económico Financiera
+- model: app.office
+  pk: 24
+  fields:
+    name: Rendiciones de Cuentas
+- model: app.office
+  pk: 25
+  fields:
+    name: Personal
+- model: app.office
+  pk: 26
+  fields:
+    name: Despacho DGA
+- model: app.office
+  pk: 27
+  fields:
+    name: Cooperadora
+- model: app.office
+  pk: 29
+  fields:
+    name: Dirección del Presupuesto
+- model: app.office
+  pk: 30
+  fields:
+    name: Planeamiento y Evaluación Institucional
+- model: app.office
+  pk: 31
+  fields:
+    name: Obras y Servicios
+- model: app.office
+  pk: 33
+  fields:
+    name: Cemed
+- model: app.office
+  pk: 35
+  fields:
+    name: Prensa
+- model: app.office
+  pk: 36
+  fields:
+    name: Capacitacion
+- model: app.office
+  pk: 37
+  fields:
+    name: Secretaría Académica
+- model: app.office
+  pk: 38
+  fields:
+    name: Piai
+- model: app.office
+  pk: 39
+  fields:
+    name: Despacho del Consejo Superior
+- model: app.office
+  pk: 40
+  fields:
+    name: Ceremonial
+- model: app.office
+  pk: 41
+  fields:
+    name: Secretaria Privada
+- model: app.office
+  pk: 42
+  fields:
+    name: Auditoria Interna
+- model: app.office
+  pk: 64
+  fields:
+    name: Articulación
+- model: app.office
+  pk: 63
+  fields:
+    name: Despacho General
+- model: app.office
+  pk: 47
+  fields:
+    name: Secretaría de Vinculación Tecnológica y Desarrollo Productivo
+- model: app.office
+  pk: 51
+  fields:
+    name: Comunicación Institucional
+- model: app.office
+  pk: 53
+  fields:
+    name: Coordinación Universitaria
+- model: app.office
+  pk: 55
+  fields:
+    name: Asuntos Jurídicos
+- model: app.office
+  pk: 59
+  fields:
+    name: Diploma y Legalizaciones
+- model: app.office
+  pk: 65
+  fields:
+    name: Intendencia
+- model: app.office
+  pk: 66
+  fields:
+    name: Archivo de mesa de entrada
+- model: app.office
+  pk: 67
+  fields:
+    name: Planificación edilicia
+- model: app.office
+  pk: 68
+  fields:
+    name: Guardia
+- model: app.office
+  pk: 69
+  fields:
+    name: Audiovisual
+- model: app.office
+  pk: 70
+  fields:
+    name: ProAREA
+- model: app.office
+  pk: 71
+  fields:
+    name: Posgrado
+- model: app.office
+  pk: 72
+  fields:
+    name: Predio UNL-ATE

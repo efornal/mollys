@@ -75,9 +75,13 @@
               <label for="select" class="col-sm-2 control-label">Secretaría o Dirección</label>
               <div class="col-sm-10">
                 <select class="form-control" id="office_id">
-                  <option value="1">SECRETARIA VINCULACION TECNOLOGICA Y DESARROLLO PRODUCTIVO</option>
-                  <option value="2">LC</option>
-                  <option value="0">Otra</option>
+                  {% for office in offices %}
+                  <option value="{{office.id}}"
+                          {% if office.id == current_office.id %}selected="selected"{% endif %}>
+                    {{office.name}}
+                  </option>
+                  {% endfor %}
+                  <option value='0'>Especificar otra ..</option>
                 </select>
               </div>
             </div>
@@ -85,7 +89,7 @@
             <div class="form-group" id="obs">
               <label class="col-sm-2 control-label" for="textinput"></label>
               <div class="col-sm-4"></div>
-              <label class="col-sm-2 control-label" for="textinput">Observación</label>
+              <label class="col-sm-2 control-label" for="textinput">Secretaria:</label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="" id="" value=""/>
               </div>
