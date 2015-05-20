@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.shortcuts import render
 from django.http import HttpResponse
 from app.models import Person, Office
+from django.template import Context
+from django.contrib import messages
 
 def index(request):
     return redirect('new')
