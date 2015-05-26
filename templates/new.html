@@ -2,11 +2,7 @@
 
 {% block content %}
 
-{% if form.errors %}
-  {% for errors in form.errors %}
-  <p>{{ errors }}</p>
-  {% endfor %}
-{% endif %}
+{% include '_errors_form.html' %}
 
 <div class="bs-docs-section">
 
@@ -15,18 +11,21 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="well bs-component">
-        <form class="form-horizontal">
+        <form class="form-horizontal" action="{% url 'create' %}" method="post">
+          {% csrf_token %}
           <fieldset>
             <legend>Solicitud de habilitación de cuenta</legend>
 
             <div class="form-group">
               <label class="col-sm-2 control-label" for="textinput">Nombres</label>
               <div class="col-sm-4">
-                <input class="form-control" type="text" name="name" id="" value=""/>
+                <input class="form-control" type="text" name="name"
+                       value="{{ form.name.value }}"/>
               </div>
               <label class="col-sm-2 control-label" for="textinput">Apellidos</label>
               <div class="col-sm-4">
-                <input class="form-control" type="text" name="surname" id="" value=""/>
+                <input class="form-control" type="text" name="surname"
+                       value="{{ form.surname.value }}"/>
               </div>
             </div>
 
@@ -34,38 +33,43 @@
               <label for="select" class="col-sm-2 control-label">Tipo Documento</label>
               <div class="col-sm-4">
                 <select class="form-control" name="document_type" id="select">
-                  <option>DNI</option>
-                  <option>LC</option>
+                  <option value="1">DNI</option>
+                  <option value="2">LC</option>
                 </select>
               </div>
               <label class="col-sm-2 control-label" for="textinput">Número</label>
               <div class="col-sm-4">
-                <input class="form-control" type="text" name="document_number"/>
+                <input class="form-control" type="text" name="document_number"
+                       value="{{ form.document_number.value }}"/>
               </div>
             </div>
            
             <div class="form-group">
               <label class="col-sm-2 control-label" for="textinput">Teléfono laboral</label>
               <div class="col-sm-4">
-                <input class="form-control" type="text" name="work_phone"/>
+                <input class="form-control" type="text" name="work_phone"
+                       value="{{ form.work_phone.value }}"/>
               </div>
               <label class="col-sm-2 control-label" for="textinput">Particular</label>
               <div class="col-sm-4">
-                <input class="form-control" type="text" name="home_phone"/>
+                <input class="form-control" type="text" name="home_phone"
+                       value="{{ form.home_phone.value }}"/>
               </div>
             </div>
 
             <div class="form-group">
               <label for="inputEmail" class="col-sm-2 control-label">Domicilio</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" name="address">
+                <input type="text" class="form-control" name="address"
+                       value="{{ form.address.value }}">
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-sm-2 control-label" for="textinput">Cargo</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" name="position">
+                <input type="text" class="form-control" name="position"
+                       value="{{ form.position.value }}">
               </div>
             </div>
 
@@ -75,7 +79,7 @@
                 <select class="form-control" id="office_id" name="office">
                   {% for office in offices %}
                     <option value="{{office.id}}"
-                    {% if office.id == current_office.id %}selected="selected"{% endif %}>
+                    {% if office.id == form.office.value %}selected="selected"{% endif %}>
                     {{office.name}}
                     </option>
                   {% endfor %}
