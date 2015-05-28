@@ -18,9 +18,13 @@ def new(request):
     return render(request, 'new.html', context)
 
 def create(request):
+    offices = Office.objects.order_by('name')
+    
     if request.method == 'POST':
-        offices = Office.objects.order_by('name')
+        office_id = request.POST.get('office') | None
+        office  = Office.objects.get(id=office_id)
         form = PersonForm(request.POST)
+        form.office = office
         if form.is_valid():
             f = form.save(commit=False)
             f.save()
