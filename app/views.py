@@ -27,20 +27,21 @@ def create(request):
         office  = Office.objects.get(id=office_id)
         form = PersonForm(request.POST)
         form.office = office
+        
         if form.is_valid():
             try:
                 f = form.save(commit=False)
                 f.save()
-                message = 'La solicitud fué realizada con éxito.'
+                message = 'La solicitud se realizó con éxito.'
             except IntegrityError:
                 message = 'La solicitud no pudo realizarse.'
                 logging.error('Error de integridad en la base de datos.')
+
+            request.session['message'] = message
+            return redirect('outcome')
         else:
-            message = 'La solicitud no pudo realizarse.'
-        request.session['message'] = message
-        return redirect('outcome')
-    else:
-        form = PersonForm()
+            return render(request, 'new.html', {'form': form, 'offices': offices})
+
     return render(request, 'new.html', {'offices': offices})
 
 def outcome(request):

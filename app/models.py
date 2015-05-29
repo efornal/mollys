@@ -20,7 +20,7 @@ class Person(models.Model):
     surname = models.CharField(max_length=200,null=False)
     document_number = models.CharField(max_length=200,null=False)
     document_type = models.IntegerField(null=False)
-    position = models.CharField(max_length=200,null=True)
+    position = models.CharField(max_length=200,null=True, blank=True)
     work_phone = models.CharField(max_length=200,null=True)
     home_phone = models.CharField(max_length=200,null=True)
     address = models.CharField(max_length=200,null=True)
