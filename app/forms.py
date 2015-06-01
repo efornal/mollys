@@ -29,9 +29,10 @@ class PersonForm(forms.ModelForm):
     address = forms.CharField(max_length=200, required=False)
     created_at = forms.DateTimeField(required=False)
     updated_at = forms.DateTimeField(required=False)
+    other_office = forms.CharField(max_length=200, required=False)
 
     class Meta:
         model = Person
         fields = ('name', 'surname', 'document_number', 'document_type', 'address',
-                  'position', 'office', 'work_phone', 'home_phone')
+                  'position', 'office', 'work_phone', 'home_phone', 'other_office')
 

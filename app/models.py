@@ -29,7 +29,8 @@ class Person(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     office = models.ForeignKey(Office, null=True, blank=True)
-    
+    other_office = models.CharField(max_length=200,null=True)
+
     class Meta:
         db_table = 'people'
         verbose_name_plural = 'People'

@@ -23,8 +23,12 @@ def create(request):
     offices = Office.objects.order_by('name')
     
     if request.method == 'POST':
-        office_id = request.POST.get('office') or None
-        office  = Office.objects.get(id=office_id)
+        # office_id = request.POST.get('office') or None
+        # if (int(office_id) > 0) and (office_id is not None):
+        #     office  = Office.objects.get(id=office_id)
+        # else:
+        #     office = 0
+        office = 0
         form = PersonForm(request.POST)
         form.office = office
         
