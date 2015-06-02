@@ -128,3 +128,18 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
 
+
+
+# loggin querys in develompent
+if DEBUG:
+    import logging
+    l = logging.getLogger('django.db.backends')
+    l.setLevel(logging.DEBUG)
+    l.addHandler(logging.StreamHandler())
+    logging.basicConfig(
+        level = logging.DEBUG,
+        format = " %(levelname)s %(name)s: %(message)s",
+    )
+
+
+
