@@ -17,7 +17,7 @@ class PersonForm(forms.ModelForm):
                           'invalid': 'Ingrese un valor válido'},
         label = 'Nro. documento')
 
-    document_type = forms.IntegerField(required=True,
+    document_type = forms.IntegerField(required=True,min_value=1, max_value=5,
         error_messages = {'required': 'Es un atributo requerido.',
                           'invalid': 'Ingrese un valor válido'},
         label = 'Tipo documento')
