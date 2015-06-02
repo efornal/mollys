@@ -11,6 +11,7 @@ from django.http import HttpResponseRedirect
 from .forms import PersonForm
 import logging
 
+
 def index(request):
     return redirect('new')
 
@@ -21,17 +22,10 @@ def new(request):
 
 def create(request):
     offices = Office.objects.order_by('name')
-    
     if request.method == 'POST':
-        # office_id = request.POST.get('office') or None
-        # if (int(office_id) > 0) and (office_id is not None):
-        #     office  = Office.objects.get(id=office_id)
-        # else:
-        #     office = 0
-        office = 0
-        form = PersonForm(request.POST)
-        form.office = office
+        logging.info("POST (New People): %s" % request.POST)
         
+        form = PersonForm(request.POST)
         if form.is_valid():
             try:
                 f = form.save(commit=False)

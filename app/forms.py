@@ -25,7 +25,7 @@ class PersonForm(forms.ModelForm):
     position = forms.CharField(max_length=200, required=False)
     office   = forms.ModelChoiceField(queryset=Office.objects.all(),
                                       empty_label="(Especificar Otra)",
-                                      to_field_name= "name",
+                                      to_field_name= "id",
                                       required=False)
     work_phone = forms.CharField(max_length=200, required=False)
     home_phone = forms.CharField(max_length=200, required=False)
