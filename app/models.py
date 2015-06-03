@@ -2,7 +2,18 @@
 from django.db import models
 from datetime import datetime
 from django.core.validators import RegexValidator
+
+class DocumentType(models.Model):
+    id = models.AutoField(primary_key=True,null=False)
+    name = models.CharField(max_length=100,null=False)
     
+    class Meta:
+        db_table = 'document_types'
+        verbose_name_plural = 'DocumentTypes'
+        
+    def __unicode__(self):
+        return "%s" % (self.name)
+
 class Office(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     name = models.CharField(max_length=200,null=False)
@@ -21,7 +32,7 @@ class Person(models.Model):
     name = models.CharField(max_length=200,null=False)
     surname = models.CharField(max_length=200,null=False)
     document_number = models.CharField(max_length=200,null=False,validators=[document_regex])
-    document_type = models.IntegerField(null=False)
+    document_type = models.ForeignKey(DocumentType, null=False, blank=False)
     position = models.CharField(max_length=200,null=True, blank=True)
     work_phone = models.CharField(max_length=200,null=True)
     home_phone = models.CharField(max_length=200,null=True)

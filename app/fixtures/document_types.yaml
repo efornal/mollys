@@ -1,0 +1,15 @@
+- model: app.documenttype
+  fields:
+    name: DNI
+- model: app.documenttype
+  fields:
+    name: LC
+- model: app.documenttype
+  fields:
+    name: LE
+- model: app.documenttype
+  fields:
+    name: CI
+- model: app.documenttype
+  fields:
+    name: Pasaporte

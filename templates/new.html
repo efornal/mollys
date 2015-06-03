@@ -32,14 +32,16 @@
             <div class="form-group">
               <label for="select" class="col-sm-2 control-label">Tipo Documento</label>
               <div class="col-sm-4">
-                <select class="form-control" name="document_type" id="select">
-                  <option value="1">DNI</option>
-                  <option value="2">LC</option>
-                  <option value="3">LE</option>
-                  <option value="4">CI</option>
-                  <option value="5">Pasaporte</option>
+                <select class="form-control" id="document_type_id" name="document_type">
+                  {% for doc in document_types %}
+                    <option value="{{doc.id}}"
+                    {% if doc.id == form.document_type.value|add:0 %}selected="selected"{% endif %}>
+                    {{doc.name}}
+                    </option>
+                  {% endfor %}
                 </select>
               </div>
+
               <label class="col-sm-2 control-label" for="textinput">Número</label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="document_number"
@@ -82,7 +84,7 @@
                 <select class="form-control" id="office_id" name="office">
                   {% for office in offices %}
                     <option value="{{office.id}}"
-                    {% if office.id == form.office.value %}selected="selected"{% endif %}>
+                    {% if office.id == form.office.value|add:0 %}selected="selected"{% endif %}>
                     {{office.name}}
                     </option>
                   {% endfor %}

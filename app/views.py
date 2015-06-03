@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from app.models import Person, Office
+from app.models import Person, Office, DocumentType
 from django.template import Context
 from django.contrib import messages
 from django.db import IntegrityError
@@ -16,12 +16,15 @@ def index(request):
     return redirect('new')
 
 def new(request):
+    document_types = DocumentType.objects.order_by('id')
     offices = Office.objects.order_by('name')
-    context = {'offices': offices}
+    context = {'offices': offices, 'document_types': document_types}
     return render(request, 'new.html', context)
 
 def create(request):
+    document_types = DocumentType.objects.order_by('id')
     offices = Office.objects.order_by('name')
+    context = {'offices': offices, 'document_types': document_types}
     if request.method == 'POST':
         logging.info("POST (New People): %s" % request.POST)
         
@@ -38,9 +41,10 @@ def create(request):
             request.session['message'] = message
             return redirect('outcome')
         else:
-            return render(request, 'new.html', {'form': form, 'offices': offices})
+            return render(request, 'new.html', {'form': form, 'offices': offices,
+                                                'document_types': document_types})
 
-    return render(request, 'new.html', {'offices': offices})
+    return render(request, 'new.html', context)
 
 def outcome(request):
     context = {'message': request.session.get('message')}

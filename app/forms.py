@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django import forms
 from django.forms import ModelForm
-from .models import Person, Office
+from .models import Person, Office, DocumentType
 
 class PersonForm(forms.ModelForm):
     name = forms.CharField(max_length=200, required=True,
@@ -17,10 +17,13 @@ class PersonForm(forms.ModelForm):
                           'invalid': 'Ingrese un valor válido'},
         label = 'Nro. documento')
 
-    document_type = forms.IntegerField(required=True,min_value=1, max_value=5,
-        error_messages = {'required': 'Es un atributo requerido.',
-                          'invalid': 'Ingrese un valor válido'},
-        label = 'Tipo documento')
+
+    document_type = forms.ModelChoiceField(queryset=DocumentType.objects.all(),
+                                           to_field_name = "id",
+                                           required = True,
+                                           error_messages = {'required': 'Es un atributo requerido.',
+                                                             'invalid': 'Ingrese un valor válido'},
+                                           label = 'Tipo documento')
 
     position = forms.CharField(max_length=200, required=False)
     office   = forms.ModelChoiceField(queryset=Office.objects.all(),
