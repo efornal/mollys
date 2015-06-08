@@ -41,7 +41,9 @@ class Person(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     office = models.ForeignKey(Office, null=True, blank=True)
     other_office = models.CharField(max_length=200,null=True)
-
+    ldap_user_name = models.CharField(max_length=200,null=True)
+    received_application = models.BooleanField(default=False)
+    
     class Meta:
         db_table = 'people'
         verbose_name_plural = 'People'
