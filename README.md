@@ -12,6 +12,7 @@ sudo apt-get install python-yaml
 sudo pip install django-suit
 sudo pip install django==1.7.4
 sudo pip install django-extensions
+pip install reportlab
 pip install django-bootstrap-themes
 ```
 ### Postgres configuration

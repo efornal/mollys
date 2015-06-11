@@ -51,3 +51,6 @@ class Person(models.Model):
     def __unicode__(self):
         return "%s" % (self.name)
 
+    def name_and_surname(self):
+        return "%s, %s" % (self.name, self.surname)
+
