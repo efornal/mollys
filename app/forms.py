@@ -36,8 +36,8 @@ class PersonForm(forms.ModelForm):
     created_at = forms.DateTimeField(required=False)
     updated_at = forms.DateTimeField(required=False)
     other_office = forms.CharField(max_length=200, required=False)
-    ldap_user_name = models.CharField(max_length=200,required=False)
-    received_application = models.BooleanField(required=False)
+    ldap_user_name = forms.CharField(max_length=200,required=False)
+    received_application = forms.BooleanField(required=False)
 
     class Meta:
         model = Person
