@@ -2,6 +2,11 @@
 from django.db import models
 from datetime import datetime
 from django.core.validators import RegexValidator
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+import logging
+import ldap
+from django.core.exceptions import ValidationError
 
 class DocumentType(models.Model):
     id = models.AutoField(primary_key=True,null=False)
@@ -54,3 +59,20 @@ class Person(models.Model):
     def name_and_surname(self):
         return "%s, %s" % (self.name, self.surname)
 
+    @classmethod
+    def exists_in_ldap(cls,uid):
+        ldap_condition = "(uid=%s)" % uid
+        logging.info("LDAP condition: %s" % ldap_condition)
+        try:
+            l = ldap.initialize('ldap://ldap.intranet')
+            r = l.search_s('ou=People,dc=rectorado,dc=unl,dc=edu,dc=ar',
+                           ldap.SCOPE_SUBTREE, ldap_condition)
+            
+            for dn,entry in r:
+                logging.info("LDAP USER: %s=%s?" % (entry['uid'][0],uid))
+                if entry['uid'][0] == uid:
+                    logging.info("ENCONTRADO: %s" % entry['uid'][0])
+                    return True
+        except ldap.LDAPError, e:
+            logging.error(e)
+        return False
