@@ -58,51 +58,69 @@ def outcome_error(request,form):
 
 
 def print_request (request, person_id):
-    from reportlab.lib.units import inch
     from reportlab.lib.pagesizes import letter
+    from reportlab.lib.units import inch, cm
     person = Person.objects.get(id=person_id)
-    x = 1.8*inch
+    x = 1*inch
     y = 2.7*inch
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="solicitud.pdf"'
     p = canvas.Canvas(response, pagesize=letter)
-    dy = 25
-    top = y + 20*dy
+    dy = 0.5*inch
+    top = y + 6.5*inch
+    right = x + 7*inch
     fecha = datetime.now().strftime("%d/%m/%y %H:%M")
-    p.drawString(160,top,'FORMULARIO DE SOLICITUD DE ALTA DE USUARIO')
-    p.drawString(500,top, fecha)
-    p.line(490,top-3,580,top-3)
-
-    p.drawString(30,top-2*dy,'Solicitante: ')
-    p.line(120,top-2*dy-3,380,top-2*dy-3)
-    p.drawString(120,top-2*dy,person.name_and_surname())
-
-    p.drawString(30,top-3*dy,'Documento: ')
-    p.line(120,top-3*dy-3,380,top-3*dy-3)
-    p.drawString(120,top-3*dy,"%s %s"%(person.document_type.name,person.document_number))
-
-    p.drawString(30,top-4*dy,'Función: ')
-    p.line(120,top-4*dy-3,380,top-4*dy-3)
-    p.drawString(120,top-4*dy,person.position)
-
-    p.drawString(30,top-5*dy,'Telefonos: ')
-    p.line(120,top-5*dy-3,380,top-5*dy-3)
-    p.drawString(120,top-5*dy,"%s  /  %s"%(person.work_phone or "",person.home_phone or ""))
-
-    p.drawString(30,top-6*dy,'Dirección: ')
-    p.line(120,top-6*dy-3,380,top-6*dy-3)
-    p.drawString(120,top-6*dy, person.address )
-
-    p.drawString(30,top-7*dy,'Oficina: ')
-    p.line(120,top-7*dy-3,380,top-7*dy-3)
-    p.drawString(120,top-7*dy, person.office.name )
-
-    p.drawString(100,top-10*dy,'Firma: ')
-    p.line(160,top-10*dy-3,380,top-10*dy-3)
-    p.drawString(100,top-11*dy,'Aclaración: ')
-    p.line(160,top-11*dy-3,380,top-11*dy-3)
-
+    xtext = x + 1.2*inch
     
-    p.showPage()
+    # header
+    p.drawImage('static/images/unl.png', x, top, inch, inch)
+    p.line(x,top-3,right,top-3)
+    p.drawString(xtext,top+0.7*inch,'Dirección de Informatización y Planificación Tecnológica')
+    p.drawString(xtext,top+0.4*inch,'Rectorado')
+    p.drawString(xtext,top+0.1*inch,'Universidad Nacional del Litoral')
+    p.drawString(right-1.1*inch,top, fecha)
+    
+    # title
+    p.drawString(xtext,top-inch,'SOLICITUD DE HABILITACIÓN DE CUENTA')
+
+    line = 4
+    p.drawString(x,top-line*dy,'Solicitante: ')
+    p.line(xtext,top-line*dy-3,380,top-line*dy-3)
+    p.drawString(xtext,top-line*dy,person.name_and_surname())
+    line+=1
+    p.drawString(x,top-line*dy,'Documento: ')
+    p.line(xtext,top-line*dy-3,380,top-line*dy-3)
+    p.drawString(xtext,top-line*dy,"%s %s"%(person.document_type.name,person.document_number))
+    line+=1
+    p.drawString(x,top-line*dy,'Función: ')
+    p.line(xtext,top-line*dy-3,380,top-line*dy-3)
+    p.drawString(xtext,top-line*dy,person.position)
+    line+=1
+    p.drawString(x,top-line*dy,'Telefonos: ')
+    p.line(xtext,top-line*dy-3,380,top-line*dy-3)
+    p.drawString(xtext,top-line*dy,"%s  /  %s"%(person.work_phone or "",person.home_phone or ""))
+    line+=1
+    p.drawString(x,top-line*dy,'Dirección: ')
+    p.line(xtext,top-line*dy-3,380,top-line*dy-3)
+    p.drawString(xtext,top-line*dy, person.address )
+    line+=1
+    p.drawString(x,top-line*dy,'Oficina: ')
+    p.line(xtext,top-line*dy-3,380,top-line*dy-3)
+    p.drawString(xtext,top-line*dy, person.office.name )
+
+    line+=1
+    p.drawString(x,top-line*dy,"La DIPT (Dirección de Informatización y Planificación Tecnológica) habilita cuentas en sus servidores")
+    line+=1
+    p.drawString(x,top-line*dy, "y/o permitirá la habilitación de cuentas ...")
+
+    p.showPage() # new page
+    
+    line+=2
+    p.drawString(xtext,top-line*dy,'Firma: ')
+    p.line(xtext+60,top-line*dy-3,380,top-line*dy-3)
+    line+=1
+    p.drawString(xtext,top-line*dy,'Aclaración: ')
+    p.line(xtext+60,top-line*dy-3,380,top-line*dy-3)
+
     p.save()
     return response    
