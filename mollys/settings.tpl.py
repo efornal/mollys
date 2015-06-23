@@ -137,6 +137,14 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
 )
 
 
+# APP Configuration
+
+# conduct code documents
+CODE_FILES = { 'intro': '%s%sdocs/intro_code.txt' % (BASE_DIR, STATIC_URL),
+               'conduct': '%s%sdocs/conduct_code.txt' % (BASE_DIR, STATIC_URL),
+               'header': '%s%sdocs/header_code.txt' % (BASE_DIR, STATIC_URL) }
+
+
 
 # loggin querys in develompent
 if DEBUG:

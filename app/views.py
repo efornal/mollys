@@ -12,6 +12,7 @@ from .forms import PersonForm
 from datetime import datetime
 import logging
 from reportlab.pdfgen import canvas
+from django.conf import settings
 
 def index(request):
     return redirect('new')
@@ -57,28 +58,58 @@ def outcome_error(request,form):
     return render(request, 'outcome_error.html', context)
 
 
-def print_request (request, person_id):
-    from reportlab.lib.pagesizes import letter
-    from reportlab.lib.units import inch, cm
-    person = Person.objects.get(id=person_id)
-    x = 1*inch
-    y = 2.7*inch
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="solicitud.pdf"'
-    p = canvas.Canvas(response, pagesize=letter)
-    dy = 0.5*inch
-    top = y + 6.5*inch
-    right = x + 7*inch
+def parag_style():
+    from  reportlab.lib.styles import ParagraphStyle
+    from reportlab.lib.enums import TA_LEFT
+    style = ParagraphStyle('test')
+    style.textColor = 'black'
+    style.borderColor = 'black'
+    style.borderWidth = 0
+    style.alignment = TA_LEFT
+    style.fontSize = 9
+    return style
+    
+def write_header(canvas, x, y, ancho, alto):
+    from reportlab.platypus import Paragraph
+    from reportlab.lib.units import cm
+    # header
     fecha = datetime.now().strftime("%d/%m/%y %H:%M")
+    canvas.drawImage('static/images/logo_conduct_header.png', x, y, 1.5*cm, 1.5*cm)
+    canvas.line(x,y-0.1*cm,ancho,y-0.1*cm)
+    parag = Paragraph(load_file(settings.CODE_FILES['header']),parag_style())
+    parag.wrapOn(canvas,ancho-x,500)
+    parag.drawOn(canvas, x + 1.6*cm, y)
+    canvas.drawString(ancho-3*cm, y, fecha)
+
+def load_file(filename):
+    f = open(filename, 'r')
+    content = f.read()
+    f.close()
+    return content
+
+def print_request (request, person_id):
+    from reportlab.platypus import Paragraph
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.units import cm,inch
+    from reportlab.platypus import Paragraph
+    from reportlab.lib.styles import ParagraphStyle
+
+    person = Person.objects.get(id=person_id)
+    
+    # configuration
+    x = 1.5*cm
+    y = 1.5*cm
+    dy = 0.5*inch
+    top = 29.7*cm - y - 1.2*y
+    right = 21*cm - x 
     xtext = x + 1.2*inch
     
-    # header
-    p.drawImage('static/images/unl.png', x, top, inch, inch)
-    p.line(x,top-3,right,top-3)
-    p.drawString(xtext,top+0.7*inch,'Dirección de Informatización y Planificación Tecnológica')
-    p.drawString(xtext,top+0.4*inch,'Rectorado')
-    p.drawString(xtext,top+0.1*inch,'Universidad Nacional del Litoral')
-    p.drawString(right-1.1*inch,top, fecha)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="solicitud.pdf"'
+    p = canvas.Canvas(response, pagesize=A4)
+
+
+    write_header(p, x,top,right,200)
     
     # title
     p.drawString(xtext,top-inch,'SOLICITUD DE HABILITACIÓN DE CUENTA')
@@ -108,19 +139,26 @@ def print_request (request, person_id):
     p.line(xtext,top-line*dy-3,380,top-line*dy-3)
     p.drawString(xtext,top-line*dy, person.office.name )
 
-    line+=1
-    p.drawString(x,top-line*dy,"La DIPT (Dirección de Informatización y Planificación Tecnológica) habilita cuentas en sus servidores")
-    line+=1
-    p.drawString(x,top-line*dy, "y/o permitirá la habilitación de cuentas ...")
+    
+    parag = Paragraph(load_file(settings.CODE_FILES['intro']), parag_style())
+    parag.wrapOn(p,right-x,500)
+    parag.drawOn(p, x,y+0.5*inch)
 
     p.showPage() # new page
-    
-    line+=2
-    p.drawString(xtext,top-line*dy,'Firma: ')
-    p.line(xtext+60,top-line*dy-3,380,top-line*dy-3)
-    line+=1
-    p.drawString(xtext,top-line*dy,'Aclaración: ')
-    p.line(xtext+60,top-line*dy-3,380,top-line*dy-3)
+
+    write_header(p, x,top,right,200)
+        
+    parag = Paragraph(load_file(settings.CODE_FILES['conduct']), parag_style())
+    parag.wrapOn(p,right-x,500)
+    parag.drawOn(p, x,top-550)
+
+    p.drawString(x,y+3*cm,'Santa Fe, ...... de ............. de 20....')
+
+    p.drawString(xtext-5,y,'Firma ')
+    p.line(x,y+0.5*cm,260,y+0.5*cm)
+
+    p.drawString(x+8.2*cm,y,'Firma y aclaración del responsable del área/sector ')
+    p.line(270,y+0.5*cm,right,y+0.5*cm)
 
     p.save()
     return response    
