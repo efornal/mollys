@@ -5,6 +5,7 @@
     {% load bootstrap_themes %}
     {% bootstrap_styles theme='spacelab' type='css' %}
     {% bootstrap_script use_min=True %}
+    {% load i18n %}
 
     <meta charset="utf-8">
     <title>Mollys</title>
@@ -42,7 +43,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-header">
           <img class="logo-header" src="/static/images/mollys.png"/>
-            <a href="{% url 'index' %}" class="navbar-brand" >Mollys</a>
+            <a href="{% url 'index' %}" class="navbar-brand" >{{ _("title") }}</a>
             <button class="navbar-toggle" type="button" data-toggle="collapse"
                     data-target="#navbar-main">
             <span class="icon-bar"></span>

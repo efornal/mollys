@@ -13,6 +13,7 @@ from datetime import datetime
 import logging
 from reportlab.pdfgen import canvas
 from django.conf import settings
+from django.utils.translation import ugettext as _
 
 def index(request):
     return redirect('new')

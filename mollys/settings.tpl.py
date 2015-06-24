@@ -109,7 +109,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-ar'
 
 TIME_ZONE = 'UTC'
 
@@ -144,7 +144,8 @@ CODE_FILES = { 'intro': '%s%sdocs/intro_code.txt' % (BASE_DIR, STATIC_URL),
                'conduct': '%s%sdocs/conduct_code.txt' % (BASE_DIR, STATIC_URL),
                'header': '%s%sdocs/header_code.txt' % (BASE_DIR, STATIC_URL) }
 
-
+LOCALE_PATHS = (
+     BASE_DIR + '/locale', )
 
 # loggin querys in develompent
 if DEBUG:
