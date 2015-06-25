@@ -61,7 +61,9 @@ def outcome_success(request,form):
 
 def outcome_error(request,form):
     logging.error("Form: %s" % form )
-    context = {'form': form}
+    msg = _("outcome_error") % {'name': form.name,
+                                'surname': form.surname}
+    context = {'form': form, 'msg': msg}
     return render(request, 'outcome_error.html', context)
 
 

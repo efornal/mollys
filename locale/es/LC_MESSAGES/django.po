@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-25 13:28-0300\n"
+"POT-Creation-Date: 2015-06-25 13:36-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -69,7 +69,15 @@ msgstr "Cancelar"
 msgid "send_request"
 msgstr "Enviar Solicitud"
 
-#: templates/outcome_success.html:22
+#: templates/outcome_error.html:17
+msgid "outcome_error"
+msgstr ""
+"Estimado/a <strong>%(name)s, %(surname)s</strong> <br>"
+"La solicitud no pudo completarse. Para poder realizar el trámite "
+"te pedimos que te acerques a nuestra oficina o intentes realizar la solicitud "
+"nuevamente más tarde.<br>"
+
+#: templates/outcome_error.html:19 templates/outcome_success.html:21
 msgid "new_request"
 msgstr "Realizar una nueva solicitud"
 

@@ -18,8 +18,8 @@
             </div>
             <div class="panel-body"> {{ msg|safe }} </div>
             <div class="panel-body">
-              <a href="{% url 'new' %}" class="alert-link">
-              {{ _("new_request") }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="{% url 'new' %}" class="alert-link">{{ _("new_request") }}</a>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <a href="{% url 'print_request' form.id %}" TARGET="_blank"
                  class="alert-link" >{{ _("print_request") }}</a>
             </div>
