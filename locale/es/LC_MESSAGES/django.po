@@ -1,9 +1,17 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-25 11:45-0300\n"
+"POT-Creation-Date: 2015-06-25 13:28-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: app/views.py:54
+msgid "outcome_success"
+msgstr ""
+"Estimado/a <strong>%(name)s, %(surname)s</strong> <br> La solicitud se a "
+"realizado con éxito. Para completar el trámite te pedimos que te acerques a "
+"nuestra oficina con el siguiente <a href='%(url)s' "
+"TARGET='_blank'>formulario</a> impreso y la firma del responsable de tu área."
 
 #: templates/base.html:46
 msgid "title"
@@ -61,14 +69,10 @@ msgstr "Cancelar"
 msgid "send_request"
 msgstr "Enviar Solicitud"
 
-#: templates/outcome_success.html:17
-msgid "outcome_success"
-msgstr "Estimado/a <strong>%(name)s, %(surname)s</strong> <br> La solicitud se a realizado con éxito. Para completar el trámite te pedimos que te acerques a nuestra oficina con el siguiente <a href='%(url)s' TARGET='_blank'>formulario</a> impreso y la firma del responsable de tu área."
-
-#: templates/outcome_success.html:25
+#: templates/outcome_success.html:22
 msgid "new_request"
 msgstr "Realizar una nueva solicitud"
 
-#: templates/outcome_success.html:26
+#: templates/outcome_success.html:24
 msgid "print_request"
 msgstr "Imprimir Solicitud"
