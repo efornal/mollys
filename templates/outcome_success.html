@@ -1,8 +1,10 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block content %}
 
 {% include '_errors_form.html' %}
+
+
 
 <div class="bs-docs-section">
   <br \><br \><br \>
@@ -14,15 +16,12 @@
             <div class="panel-heading">
               <h3 class="panel-title">Envío de solicitud</h3>
             </div>
-            <div class="panel-body">
-              Estimado/a <strong>{{ form.name }}, {{ form.surname }}</strong> <br>
-              La solicitud se a realizado con éxito. Para completar el trámite te pedimos que te acerques a nuestra oficina con el siguiente <a href="{% url 'print_request' form.id %}" TARGET="_blank">formulario</a> impreso y la firma del responsable de tu área.<br>
-
-            </div>
+            <div class="panel-body"> {{ msg|safe }} </div>
             <div class="panel-body">
               <a href="{% url 'new' %}" class="alert-link">
-              Realizar una nueva solicitud</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="{% url 'print_request' form.id %}" TARGET="_blank" class="alert-link" >Imprimir Solicitud</a>
+              {{ _("new_request") }}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="{% url 'print_request' form.id %}" TARGET="_blank"
+                 class="alert-link" >{{ _("print_request") }}</a>
             </div>
           </div>
         </div>

@@ -15,6 +15,7 @@ from reportlab.pdfgen import canvas
 from django.conf import settings
 from django.utils.translation import ugettext as _
 
+
 def index(request):
     return redirect('new')
 
@@ -48,8 +49,13 @@ def create(request):
 
 
 def outcome_success(request,form):
+    from django.core.urlresolvers import reverse
     logging.error("Form: %s" % form )
-    context = {'form': form}
+    msg = _("outcome_success") % {'name': form.name,
+                                  'surname': form.surname,
+                                  'url': reverse('print_request', args=(form.id,)) }
+
+    context = {'form': form, 'msg': msg}
     return render(request, 'outcome_success.html', context)
 
 
