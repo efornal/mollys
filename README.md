@@ -29,4 +29,5 @@ psql -h localhost -U mollys_owner -p 5432 -d mollys_db
 ```bash
 python manage.py syncdb
 python manage.py migrate
+django-admin compilemessages
 ```
