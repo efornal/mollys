@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-25 13:36-0300\n"
+"POT-Creation-Date: 2015-06-26 11:52-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -13,13 +13,77 @@ msgstr ""
 "nuestra oficina con el siguiente <a href='%(url)s' "
 "TARGET='_blank'>formulario</a> impreso y la firma del responsable de tu área."
 
+#: app/views.py:64
+msgid "outcome_error"
+msgstr ""
+"Estimado/a <strong>%(name)s, %(surname)s</strong> <br>La solicitud no pudo "
+"completarse. Para poder realizar el trámite te pedimos que te acerques a "
+"nuestra oficina o intentes realizar la solicitud nuevamente más tarde.<br>"
+
+#: app/views.py:88
+msgid "header_code"
+msgstr "Office<br/>Business<br/>Other,.."
+
+#: app/views.py:124 templates/new.html:17
+msgid "enabling_account"
+msgstr "Solicitud de habilitación de cuenta"
+
+#: app/views.py:127
+msgid "applicant"
+msgstr "Solicitante"
+
+#: app/views.py:131 templates/new.html:33
+msgid "doc_type"
+msgstr "Tipo Documento"
+
+#: app/views.py:132 templates/new.html:45
+msgid "doc_number"
+msgstr "Número"
+
+#: app/views.py:137 templates/new.html:74
+msgid "position"
+msgstr "Cargo"
+
+#: app/views.py:141 templates/new.html:53
+msgid "work_phone"
+msgstr "Teléfono laboral"
+
+#: app/views.py:145 templates/new.html:58
+msgid "home_phone"
+msgstr "Particular"
+
+#: app/views.py:149 templates/new.html:66
+msgid "address"
+msgstr "Domicilio"
+
+#: app/views.py:153
+msgid "short_office"
+msgstr "Secretaría"
+
+#: app/views.py:158
+msgid "intro_code"
+msgstr ""
+"<strong>Conduct code</strong><br></br><br></br>Texto ,...<br></br><br></br>"
+
+#: app/views.py:166
+msgid "conduct_code"
+msgstr "texto ,. .."
+
+#: app/views.py:170
+msgid "date"
+msgstr "Santa Fe, ...... de ............. de 20...."
+
+#: app/views.py:172
+msgid "firm"
+msgstr "Firma"
+
+#: app/views.py:175
+msgid "firm_responsible"
+msgstr "Firma y aclaración del responsable del área/sector"
+
 #: templates/base.html:46
 msgid "title"
 msgstr "Mollys"
-
-#: templates/new.html:17
-msgid "enabling_account"
-msgstr "Solicitud de habilitación de cuenta"
 
 #: templates/new.html:20
 msgid "names"
@@ -28,30 +92,6 @@ msgstr "Nombres"
 #: templates/new.html:25
 msgid "surnames"
 msgstr "Apellidos"
-
-#: templates/new.html:33
-msgid "doc_type"
-msgstr "Tipo Documento"
-
-#: templates/new.html:45
-msgid "doc_number"
-msgstr "Número"
-
-#: templates/new.html:53
-msgid "work_phone"
-msgstr "Teléfono laboral"
-
-#: templates/new.html:58
-msgid "home_phone"
-msgstr "Particular"
-
-#: templates/new.html:66
-msgid "address"
-msgstr "Domicilio"
-
-#: templates/new.html:74
-msgid "position"
-msgstr "Cargo"
 
 #: templates/new.html:82
 msgid "office"
@@ -68,14 +108,6 @@ msgstr "Cancelar"
 #: templates/new.html:112
 msgid "send_request"
 msgstr "Enviar Solicitud"
-
-#: templates/outcome_error.html:17
-msgid "outcome_error"
-msgstr ""
-"Estimado/a <strong>%(name)s, %(surname)s</strong> <br>"
-"La solicitud no pudo completarse. Para poder realizar el trámite "
-"te pedimos que te acerques a nuestra oficina o intentes realizar la solicitud "
-"nuevamente más tarde.<br>"
 
 #: templates/outcome_error.html:19 templates/outcome_success.html:21
 msgid "new_request"
