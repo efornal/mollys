@@ -122,33 +122,33 @@ def print_request (request, person_id):
 
     line = 4
     p.drawString(x,top-line*dy, _("applicant") )
-    p.line(xtext,top-line*dy-3,380,top-line*dy-3)
+    p.line(xtext,top-line*dy-3,right-4*cm,top-line*dy-3)
     p.drawString(xtext,top-line*dy,person.name_and_surname())
     line+=1
     p.drawString(x,top-line*dy, _("doc_type") )
     p.drawString(xtext+3*cm,top-line*dy, _("doc_number") )
-    p.line(xtext,top-line*dy-3,380,top-line*dy-3)
+    p.line(xtext,top-line*dy-3,right-4*cm,top-line*dy-3)
     p.drawString(xtext,top-line*dy, person.document_type.name )
     p.drawString(xtext + 5*cm,top-line*dy, person.document_number )
     line+=1
     p.drawString(x,top-line*dy, _("position") )
-    p.line(xtext,top-line*dy-3,380,top-line*dy-3)
+    p.line(xtext,top-line*dy-3,right-4*cm,top-line*dy-3)
     p.drawString(xtext,top-line*dy,person.position)
     line+=1
     p.drawString(x,top-line*dy, _("work_phone"))
-    p.line(xtext,top-line*dy-3,380,top-line*dy-3)
+    p.line(xtext,top-line*dy-3,right-4*cm,top-line*dy-3)
     p.drawString(xtext,top-line*dy, person.work_phone or "")
     line+=1
     p.drawString(x,top-line*dy, _("home_phone"))
-    p.line(xtext,top-line*dy-3,380,top-line*dy-3)
+    p.line(xtext,top-line*dy-3,right-4*cm,top-line*dy-3)
     p.drawString(xtext,top-line*dy, person.home_phone or "")
     line+=1
     p.drawString(x,top-line*dy, _("address"))
-    p.line(xtext,top-line*dy-3,380,top-line*dy-3)
+    p.line(xtext,top-line*dy-3,right-4*cm,top-line*dy-3)
     p.drawString(xtext,top-line*dy, person.address )
     line+=1
     p.drawString(x,top-line*dy, _("short_office"))
-    p.line(xtext,top-line*dy-3,380,top-line*dy-3)
+    p.line(xtext,top-line*dy-3,right-4*cm,top-line*dy-3)
     p.drawString(xtext,top-line*dy, person.office.name )
 
     parag = Paragraph(_("intro_code"), parag_style())
