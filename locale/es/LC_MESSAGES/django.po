@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-26 11:52-0300\n"
+"POT-Creation-Date: 2015-06-30 10:29-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/views.py:54
+#: app/views.py:56
 msgid "outcome_success"
 msgstr ""
 "Estimado/a <strong>%(name)s, %(surname)s</strong> <br> La solicitud se a "
@@ -13,71 +13,71 @@ msgstr ""
 "nuestra oficina con el siguiente <a href='%(url)s' "
 "TARGET='_blank'>formulario</a> impreso y la firma del responsable de tu área."
 
-#: app/views.py:64
+#: app/views.py:66
 msgid "outcome_error"
 msgstr ""
 "Estimado/a <strong>%(name)s, %(surname)s</strong> <br>La solicitud no pudo "
 "completarse. Para poder realizar el trámite te pedimos que te acerques a "
 "nuestra oficina o intentes realizar la solicitud nuevamente más tarde.<br>"
 
-#: app/views.py:88
+#: app/views.py:91
 msgid "header_code"
 msgstr "Office<br/>Business<br/>Other,.."
 
-#: app/views.py:124 templates/new.html:17
+#: app/views.py:121 templates/new.html:17
 msgid "enabling_account"
 msgstr "Solicitud de habilitación de cuenta"
 
-#: app/views.py:127
+#: app/views.py:124
 msgid "applicant"
 msgstr "Solicitante"
 
-#: app/views.py:131 templates/new.html:33
+#: app/views.py:128 templates/new.html:33
 msgid "doc_type"
 msgstr "Tipo Documento"
 
-#: app/views.py:132 templates/new.html:45
+#: app/views.py:129 templates/new.html:45
 msgid "doc_number"
 msgstr "Número"
 
-#: app/views.py:137 templates/new.html:74
+#: app/views.py:134 templates/new.html:74
 msgid "position"
 msgstr "Cargo"
 
-#: app/views.py:141 templates/new.html:53
+#: app/views.py:138 templates/new.html:53
 msgid "work_phone"
 msgstr "Teléfono laboral"
 
-#: app/views.py:145 templates/new.html:58
+#: app/views.py:142 templates/new.html:58
 msgid "home_phone"
 msgstr "Particular"
 
-#: app/views.py:149 templates/new.html:66
+#: app/views.py:146 templates/new.html:66
 msgid "address"
 msgstr "Domicilio"
 
-#: app/views.py:153
+#: app/views.py:150
 msgid "short_office"
 msgstr "Secretaría"
 
-#: app/views.py:158
+#: app/views.py:154
 msgid "intro_code"
 msgstr ""
 "<strong>Conduct code</strong><br></br><br></br>Texto ,...<br></br><br></br>"
 
-#: app/views.py:166
+#: app/views.py:162
 msgid "conduct_code"
 msgstr "texto ,. .."
 
-#: app/views.py:170
+#: app/views.py:166
 msgid "date"
 msgstr "Santa Fe, ...... de ............. de 20...."
 
-#: app/views.py:172
+#: app/views.py:168
 msgid "firm"
 msgstr "Firma"
 
-#: app/views.py:175
+#: app/views.py:171
 msgid "firm_responsible"
 msgstr "Firma y aclaración del responsable del área/sector"
 
@@ -108,6 +108,10 @@ msgstr "Cancelar"
 #: templates/new.html:112
 msgid "send_request"
 msgstr "Enviar Solicitud"
+
+#: templates/outcome_error.html:15 templates/outcome_success.html:17
+msgid "sending_request"
+msgstr "Envío de solicitud"
 
 #: templates/outcome_error.html:19 templates/outcome_success.html:21
 msgid "new_request"
