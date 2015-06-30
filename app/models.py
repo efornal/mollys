@@ -47,14 +47,14 @@ class Person(models.Model):
                                        validators=[document_regex])
     document_type = models.ForeignKey(DocumentType, null=False, blank=False)
     position = models.CharField(max_length=200,null=True, blank=True)
-    work_phone = models.CharField(max_length=200,null=True)
-    home_phone = models.CharField(max_length=200,null=True)
-    address = models.CharField(max_length=200,null=True)
+    work_phone = models.CharField(max_length=200,null=True, blank=True)
+    home_phone = models.CharField(max_length=200,null=True, blank=True)
+    address = models.CharField(max_length=200,null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     office = models.ForeignKey(Office, null=True, blank=True)
-    other_office = models.CharField(max_length=200,null=True)
-    ldap_user_name = models.CharField(max_length=200,null=True,
+    other_office = models.CharField(max_length=200,null=True, blank=True)
+    ldap_user_name = models.CharField(max_length=200,null=True, blank=True,
                                       validators=[validate_existence_in_ldap])
     received_application = models.BooleanField(default=False)
     
