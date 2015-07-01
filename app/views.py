@@ -21,6 +21,7 @@ def index(request):
 
 
 def new(request):
+    request.session['has_registered'] = False
     document_types = DocumentType.objects.order_by('id')
     offices = Office.objects.order_by('name')
     context = {'offices': offices, 'document_types': document_types}
@@ -33,12 +34,16 @@ def create(request):
     context = {'offices': offices, 'document_types': document_types}
     if request.method == 'POST':
         logging.info("POST (New People): %s" % request.POST)
+
+        if request.session['has_registered']:
+            return redirect('new')
         
         form = PersonForm(request.POST)
         if form.is_valid():
             try:
                 f = form.save(commit=False)
                 f.save()
+                request.session['has_registered'] = True
                 return outcome_success(request, f)
             except IntegrityError:
                 logging.error('Error de integridad en la base de datos.')
