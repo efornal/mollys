@@ -33,9 +33,9 @@ class Office(models.Model):
 
 class Person(models.Model):
 
-    def validate_existence_in_ldap(value):
-        if Person.exists_in_ldap(value):
-            raise ValidationError('El usuario %s ya existe.' % value)
+#    def validate_existence_in_ldap(value):
+#        if Person.exists_in_ldap(value):
+#            raise ValidationError('El usuario %s ya existe.' % value)
   
     document_regex = RegexValidator(regex=r'^\d{6,10}$',
                                     message="Ingrese un valor válido")
@@ -54,8 +54,8 @@ class Person(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     office = models.ForeignKey(Office, null=True, blank=True)
     other_office = models.CharField(max_length=200,null=True, blank=True)
-    ldap_user_name = models.CharField(max_length=200,null=True, blank=True,
-                                      validators=[validate_existence_in_ldap])
+    ldap_user_name = models.CharField(max_length=200,null=True, blank=True)#,
+ #                                     validators=[validate_existence_in_ldap])
     received_application = models.BooleanField(default=False)
     
     class Meta:
