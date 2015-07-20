@@ -1,5 +1,7 @@
 from django.contrib import admin
 from app.models import Person, Office
+import logging
+
 
 class PersonAdmin(admin.ModelAdmin):
     list_display = ('name', 'surname', 'document_number')

@@ -14,11 +14,15 @@ import logging
 from reportlab.pdfgen import canvas
 from django.conf import settings
 from django.utils.translation import ugettext as _
-
+import json
 
 def index(request):
     return redirect('new')
 
+def check_ldap(request):
+    result = Person.exists_in_ldap(request.POST['ldap_user_name'])
+    topic_list = json.dumps({'exists': result})
+    return HttpResponse(topic_list)
 
 def new(request):
     request.session['has_registered'] = False
