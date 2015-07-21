@@ -143,15 +143,15 @@ LOCALE_PATHS = (
      BASE_DIR + '/locale', )
 
 # loggin querys in develompent
-if DEBUG:
-    import logging
-    l = logging.getLogger('django.db.backends')
-    l.setLevel(logging.DEBUG)
-    l.addHandler(logging.StreamHandler())
-    logging.basicConfig(
-        level = logging.DEBUG,
-        format = " %(levelname)s %(name)s: %(message)s",
-    )
+# if DEBUG:
+#     import logging
+#     l = logging.getLogger('django.db.backends')
+#     l.setLevel(logging.DEBUG)
+#     l.addHandler(logging.StreamHandler())
+#     logging.basicConfig(
+#         level = logging.DEBUG,
+#         format = " %(levelname)s %(name)s: %(message)s",
+#     )
 
 
 
