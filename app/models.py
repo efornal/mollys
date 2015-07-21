@@ -8,6 +8,7 @@ import logging
 import ldap
 from django.core.exceptions import ValidationError
 from django.conf import settings
+from django.utils.translation import ugettext as _
 
 class DocumentType(models.Model):
     id = models.AutoField(primary_key=True,null=False)
@@ -15,19 +16,21 @@ class DocumentType(models.Model):
     
     class Meta:
         db_table = 'document_types'
-        verbose_name_plural = 'DocumentTypes'
+        verbose_name = _('DocumentType')
+        verbose_name_plural = _('DocumentTypes')
         
     def __unicode__(self):
         return "%s" % (self.name)
 
 class Office(models.Model):
     id = models.AutoField(primary_key=True,null=False)
-    name = models.CharField(max_length=200,null=False)
+    name = models.CharField(max_length=200, null=False, verbose_name=_('name'))
     
     class Meta:
         db_table = 'offices'
-        verbose_name_plural = 'Offices'
-        
+        verbose_name = _('office')
+        verbose_name_plural = _('offices')
+
     def __unicode__(self):
         return "%s" % (self.name)
 
@@ -40,27 +43,42 @@ class Person(models.Model):
     document_regex = RegexValidator(regex=r'^\d{6,10}$',
                                     message="Ingrese un valor válido")
     
-    id = models.AutoField(primary_key=True,null=False)
-    name = models.CharField(max_length=200,null=False)
-    surname = models.CharField(max_length=200,null=False)
+    id = models.AutoField(primary_key=True, null=False)
+    name = models.CharField(max_length=200, null=False,
+                            verbose_name=_('names'))
+    surname = models.CharField(max_length=200,null=False,
+                               verbose_name=_('surnames'))
     document_number = models.CharField(max_length=200,null=False,
-                                       validators=[document_regex])
-    document_type = models.ForeignKey(DocumentType, null=False, blank=False)
-    position = models.CharField(max_length=200,null=True, blank=True)
-    work_phone = models.CharField(max_length=200,null=True, blank=True)
-    home_phone = models.CharField(max_length=200,null=True, blank=True)
-    address = models.CharField(max_length=200,null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    office = models.ForeignKey(Office, null=True, blank=True)
-    other_office = models.CharField(max_length=200,null=True, blank=True)
-    ldap_user_name = models.CharField(max_length=200,null=True, blank=True)#,
+                                       validators=[document_regex],
+                                       verbose_name=_('document_number'))
+    document_type = models.ForeignKey(DocumentType, null=False, blank=False,
+                                      verbose_name=_('document_type'))
+    position = models.CharField(max_length=200,null=True, blank=True,
+                                verbose_name=_('position'))
+    work_phone = models.CharField(max_length=200,null=True, blank=True,
+                                  verbose_name=_('work_phone'))
+    home_phone = models.CharField(max_length=200,null=True, blank=True,
+                                  verbose_name=_('home_phone'))
+    address = models.CharField(max_length=200,null=True, blank=True,
+                               verbose_name=_('address'))
+    created_at = models.DateTimeField(auto_now_add=True,
+                                      verbose_name=_('created_at'))
+    updated_at = models.DateTimeField(auto_now=True,
+                                      verbose_name=_('updated_at'))
+    office = models.ForeignKey(Office, null=True, blank=True,
+                               verbose_name=_('office'))
+    other_office = models.CharField(max_length=200,null=True, blank=True,
+                                    verbose_name=_('other_office'))
+    ldap_user_name = models.CharField(max_length=200,null=True, blank=True,
+                                      verbose_name=_('ldap_user_name'))
  #                                     validators=[validate_existence_in_ldap])
-    received_application = models.BooleanField(default=False)
+    received_application = models.BooleanField(default=False,
+                                               verbose_name=_('received_application'))
     
     class Meta:
         db_table = 'people'
-        verbose_name_plural = 'People'
+        verbose_name = _('person')
+        verbose_name_plural = _('people')
 
     def __unicode__(self):
         return "%s" % (self.name)

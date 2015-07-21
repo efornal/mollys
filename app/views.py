@@ -118,7 +118,7 @@ def print_request (request, person_id):
     dy = 0.5*inch
     top = 29.7*cm - y - 1.2*y
     right = 21*cm - x 
-    xtext = x + 3.5*cm
+    xtext = x + 3.7*cm
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="solicitud.pdf"'
 
@@ -158,7 +158,8 @@ def print_request (request, person_id):
     line+=1
     p.drawString(x,top-line*dy, _("short_office"))
     p.line(xtext,top-line*dy-3,right-4*cm,top-line*dy-3)
-    p.drawString(xtext,top-line*dy, person.office.name )
+    if person.office:
+        p.drawString(xtext,top-line*dy, person.office.name)
 
     parag = Paragraph(_("intro_code"), parag_style())
     parag.wrapOn(p,right-x,500)

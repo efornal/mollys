@@ -1,11 +1,91 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-30 10:29-0300\n"
+"POT-Creation-Date: 2015-07-21 09:26-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/views.py:56
+#: app/models.py:19
+msgid "DocumentType"
+msgstr "Tipo Documento"
+
+#: app/models.py:20
+msgid "DocumentTypes"
+msgstr "Tipos de Documentos"
+
+#: app/models.py:27
+msgid "name"
+msgstr "Nombre"
+
+#: app/models.py:31 app/models.py:69 templates/new.html:82
+msgid "office"
+msgstr "Secretaría"
+
+#: app/models.py:32
+msgid "offices"
+msgstr "Secretarías"
+
+#: app/models.py:48 templates/new.html:20
+msgid "names"
+msgstr "Nombres"
+
+#: app/models.py:50 templates/new.html:25
+msgid "surnames"
+msgstr "Apellidos"
+
+#: app/models.py:53
+msgid "document_number"
+msgstr "Número Documento"
+
+#: app/models.py:55
+msgid "document_type"
+msgstr "Tipo Documento"
+
+#: app/models.py:57 app/views.py:143 templates/new.html:74
+msgid "position"
+msgstr "Cargo"
+
+#: app/models.py:59 app/views.py:147 templates/new.html:53
+msgid "work_phone"
+msgstr "Teléfono laboral"
+
+#: app/models.py:61 app/views.py:151
+msgid "home_phone"
+msgstr "Teléfono particular"
+
+#: app/models.py:63 app/views.py:155 templates/new.html:66
+msgid "address"
+msgstr "Domicilio"
+
+#: app/models.py:65
+msgid "created_at"
+msgstr "creado"
+
+#: app/models.py:67
+msgid "updated_at"
+msgstr "actualizado"
+
+#: app/models.py:71 templates/new.html:99
+msgid "other_office"
+msgstr "Otra Secretaría"
+
+#: app/models.py:73
+msgid "ldap_user_name"
+msgstr "Nombre de usuario ldap"
+
+#: app/models.py:76
+msgid "received_application"
+msgstr "Solicitud recibida"
+
+#: app/models.py:80
+msgid "person"
+msgstr "Persona"
+
+#: app/models.py:81
+msgid "people"
+msgstr "Personas"
+
+#: app/views.py:65
 msgid "outcome_success"
 msgstr ""
 "Estimado/a <strong>%(name)s, %(surname)s</strong> <br> La solicitud se a "
@@ -13,93 +93,100 @@ msgstr ""
 "nuestra oficina con el siguiente <a href='%(url)s' "
 "TARGET='_blank'>formulario</a> impreso y la firma del responsable de tu área."
 
-#: app/views.py:66
+#: app/views.py:75
 msgid "outcome_error"
 msgstr ""
 "Estimado/a <strong>%(name)s, %(surname)s</strong> <br>La solicitud no pudo "
 "completarse. Para poder realizar el trámite te pedimos que te acerques a "
 "nuestra oficina o intentes realizar la solicitud nuevamente más tarde.<br>"
 
-#: app/views.py:91
+#: app/views.py:100
 msgid "header_code"
 msgstr "Office<br/>Business<br/>Other,.."
 
-#: app/views.py:121 templates/new.html:17
+#: app/views.py:130 templates/new.html:17
 msgid "enabling_account"
 msgstr "Solicitud de habilitación de cuenta"
 
-#: app/views.py:124
+#: app/views.py:133
 msgid "applicant"
 msgstr "Solicitante"
 
-#: app/views.py:128 templates/new.html:33
+#: app/views.py:137 templates/new.html:33
 msgid "doc_type"
 msgstr "Tipo Documento"
 
-#: app/views.py:129 templates/new.html:45
+#: app/views.py:138 templates/new.html:45
 msgid "doc_number"
 msgstr "Número"
 
-#: app/views.py:134 templates/new.html:74
-msgid "position"
-msgstr "Cargo"
-
-#: app/views.py:138 templates/new.html:53
-msgid "work_phone"
-msgstr "Teléfono laboral"
-
-#: app/views.py:142 templates/new.html:58
-msgid "home_phone"
-msgstr "Particular"
-
-#: app/views.py:146 templates/new.html:66
-msgid "address"
-msgstr "Domicilio"
-
-#: app/views.py:150
+#: app/views.py:159
 msgid "short_office"
 msgstr "Secretaría"
 
-#: app/views.py:154
+#: app/views.py:163
 msgid "intro_code"
 msgstr ""
 "<strong>Conduct code</strong><br></br><br></br>Texto ,...<br></br><br></br>"
 
-#: app/views.py:162
+#: app/views.py:171
 msgid "conduct_code"
 msgstr "texto ,. .."
 
-#: app/views.py:166
+#: app/views.py:175
 msgid "date"
 msgstr "Santa Fe, ...... de ............. de 20...."
 
-#: app/views.py:168
+#: app/views.py:177
 msgid "firm"
 msgstr "Firma"
 
-#: app/views.py:171
+#: app/views.py:180
 msgid "firm_responsible"
 msgstr "Firma y aclaración del responsable del área/sector"
 
-#: templates/base.html:46
+#: templates/admin/change_form.html:21
+msgid "You have unsaved changes"
+msgstr "Usted tiene cambios no guardados"
+
+#: templates/admin/change_form.html:50 templates/admin/change_form.html:76
+msgid "Add"
+msgstr "Agregar"
+
+#: templates/admin/change_form.html:61
+msgid "Home"
+msgstr "Inicio"
+
+#: templates/admin/change_form.html:98
+msgid "tools"
+msgstr "herramientas"
+
+#: templates/admin/change_form.html:102
+msgid "History"
+msgstr "Historial"
+
+#: templates/admin/change_form.html:106
+msgid "View on site"
+msgstr "Ver en el sitio"
+
+#: templates/admin/change_form.html:112
+#, python-format
+msgid "Add %(name)s"
+msgstr "Agregar %(name)s"
+
+#: templates/admin/change_form.html:140
+msgid "Please correct the error below."
+msgid_plural " Please correct the errors below."
+msgstr[0] "Por favor, corrija el error indicado"
+msgstr[1] "Por favor, corrija los errores indicados"
+
+#: templates/base.html:43
 msgid "title"
 msgstr "Mollys"
 
-#: templates/new.html:20
-msgid "names"
-msgstr "Nombres"
-
-#: templates/new.html:25
-msgid "surnames"
-msgstr "Apellidos"
-
-#: templates/new.html:82
-msgid "office"
-msgstr "Secretaría o Dirección"
-
-#: templates/new.html:99
-msgid "other_office"
-msgstr "Secretaría"
+#: templates/new.html:58
+msgid "short_home_phone"
+msgstr "Particular"
 
 #: templates/new.html:110
 msgid "cancel"
