@@ -156,6 +156,6 @@ LOCALE_PATHS = (
 
 
 SUIT_CONFIG = {
-    'ADMIN_NAME': Mollys
+    'ADMIN_NAME': 'Mollys'
 }
 
