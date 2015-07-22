@@ -4,8 +4,10 @@ import logging
 
 
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ('name', 'surname', 'document_number')
-    search_fields = ['name', 'surname', 'document_number']
+    list_display = ('surname', 'name', 'document_number', 'ldap_user_name',
+                    'received_application')
+    search_fields = ['surname', 'name', 'document_number', 'ldap_user_name',
+                     'received_application']
 
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Office)
