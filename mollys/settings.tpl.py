@@ -19,12 +19,10 @@ LANGUAGE_CODE = 'es-AR'
 USE_I18N = True
 
 # servidor sobre el que se verifica la existencia de usuarios
-# ej: 'ldap://ldap.intranet'
-LDAP_SERVER = 'ldap://ldap.intranet'
+#LDAP_SERVER = 'ldap://host_ldap'
 
 # Dn para entrada en ldap
-# ej: ou=Entity,dc=domain,dc=unl,dc=edu,dc=ar
-LDAP_DN = 'ou=People,dc=rectorado,dc=unl,dc=edu,dc=ar'
+#LDAP_DN = 'ou=Entity,dc=domain,dc=edu,dc=ar'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
