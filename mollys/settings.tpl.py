@@ -27,6 +27,9 @@ USE_I18N = True
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
+# set static path for production
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'tfp%=#=oszs#x4wea8mkm60p=nmg3l9)jq5g1%s_ev#_4$w#&-'
 
