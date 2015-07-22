@@ -6,13 +6,14 @@
     {% bootstrap_styles theme='spacelab' type='css' %}
     {% bootstrap_script use_min=True %}
     {% load i18n %}
-
+    {% load staticfiles %}
+    
     <meta charset="utf-8">
     <title>Mollys</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" href="/static/style.css">
-    <script type="text/javascript" src="/static/application.js"></script>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script type="text/javascript" src="{% static 'application.js' %}"></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="../bower_components/html5shiv/dist/html5shiv.js"></script>
@@ -39,7 +40,7 @@
     
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-header">
-          <img class="logo-header" src="/static/images/mollys.png"/>
+          <img class="logo-header" src="{% static 'images/mollys.png' %}"/>
             <a href="{% url 'index' %}" class="navbar-brand" >{{ _("title") }}</a>
             <button class="navbar-toggle" type="button" data-toggle="collapse"
                     data-target="#navbar-main">
