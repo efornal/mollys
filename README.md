@@ -9,11 +9,13 @@ sudo apt-get install postgresql-9.3
 sudo apt-get install python-psycopg2
 sudo apt-get install python-pip
 sudo apt-get install python-yaml
+sudo apt-get install python-ldap
+sudo apt-get install python-dev
 sudo pip install django-suit
 sudo pip install django==1.7.4
 sudo pip install django-extensions
-pip install reportlab
-pip install django-bootstrap-themes
+sudo pip install reportlab
+sudo pip install django-bootstrap-themes
 ```
 ### Postgres configuration
 ```bash
