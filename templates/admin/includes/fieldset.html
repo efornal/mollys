@@ -64,14 +64,12 @@
                if ( response.exists ) {
                  $("#ldap_user_name_message").text("El usuario actualmente existe en ldap");
                  $p.show(4000, function() {
-                 $p.css("background-color","#BEF781")
+                 $p.css("background-color","#F78181");
                  });
-
-
                } else {
                //$p.show(4000, function() {
                  $("#ldap_user_name_message").text("El usuario no existe en ldap");
-                 $p.css("background-color","#F78181");
+                 $p.css("background-color","#BEF781")
                  //});
                }
 
