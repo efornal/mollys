@@ -97,7 +97,10 @@ def write_header(canvas, x, y, ancho, alto):
     from reportlab.lib.units import cm
     # header
     fecha = datetime.now().strftime("%d/%m/%y %H:%M")
-    img_path = "%s%simages/logo_conduct_header.png" % (settings.BASE_DIR,settings.STATIC_URL)
+    if settings.STATIC_ROOT:
+        img_path = "%s/images/logo_conduct_header.png" % settings.STATIC_ROOT
+    else:
+        img_path = "%s%simages/logo_conduct_header.png" % (settings.BASE_DIR,settings.STATIC_URL)
     canvas.drawImage(img_path, x, y, 1.5*cm, 1.5*cm)
     canvas.line(x,y-0.1*cm,ancho,y-0.1*cm)
     parag = Paragraph( _("header_code"),parag_style())
