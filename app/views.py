@@ -163,7 +163,9 @@ def print_request (request, person_id):
     p.line(xtext,top-line*dy-3,right-4*cm,top-line*dy-3)
     if person.office:
         p.drawString(xtext,top-line*dy, person.office.name)
-
+    else:
+        p.drawString(xtext,top-line*dy, person.other_office)
+        
     parag = Paragraph(_("intro_code"), parag_style())
     parag.wrapOn(p,right-x,500)
     parag.drawOn(p, x,y+0.5*inch)
