@@ -5,17 +5,18 @@ Administration request for internal user accounts to the organization
 ### Package Installation
 ```bash
 sudo apt-get install python2.7
-sudo apt-get install postgresql-9.3
+sudo apt-get install postgresql-9.4
 sudo apt-get install python-psycopg2
-sudo apt-get install python-pip
-sudo apt-get install python-yaml
-sudo apt-get install python-ldap
-sudo apt-get install python-dev
-sudo pip install django-suit
-sudo pip install django==1.7.4
-sudo pip install django-extensions
-sudo pip install reportlab
-sudo pip install django-bootstrap-themes
+sudo apt-get install python-pip=1.5.6-5
+sudo apt-get install python-yaml=3.11-2
+sudo apt-get install python-ldap=2.4.10-1
+sudo apt-get install python-dev=2.7.9-1
+sudo apt-get install gettext=0.19.3-2
+sudo pip install django-suit==0.2.13
+sudo pip install django==1.8
+sudo pip install django-extensions==1.5.5
+sudo pip install reportlab==3.2.0
+sudo pip install django-bootstrap-themes==3.1.2
 ```
 ### Postgres configuration
 ```bash
@@ -28,8 +29,50 @@ hostssl  mollys_db     mollys_owner        ::1/128                 password
 psql -h localhost -U mollys_owner -p 5432 -d mollys_db
 ```
 ### App configuration
+descargar archivos:
+git clone https://github.com/efornal/mollys.git
+
+cd mollys
+cp mollys/settings.tpl.py mollys/settings.py
+
+habilitar:
+mkdir static_production
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_production')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
+
 ```bash
 python manage.py syncdb
 python manage.py migrate
 django-admin compilemessages
+
+python manage.py collectstatic
+```
+
+
+
+### Con apache
+```bash
+apt-get install apache2 libapache2-mod-wsgi
+aptitude install libapache2-mod-python
+
+Creo el archivo /etc/apache2/conf-available/django.conf
+
+WSGIScriptAlias /admin /srv/pyapp/mollys/mollys/wsgi.py
+WSGIPythonPath /srv/pyapp/mollys/
+
+Alias /static /srv/pyapp/mollys/static
+<Directory /srv/pyapp/mollys/mollys>
+       <Files wsgi.py>
+                Allow from all
+        </Files>
+</Directory>
+
+
+a2enconf django
+a2ensite default-ssl
+service apache2 reload
+
 ```
