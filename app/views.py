@@ -16,6 +16,7 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 import json
 
+
 def index(request):
     return redirect('new')
 
@@ -91,11 +92,13 @@ def parag_style():
 
 
 def write_header(canvas, x, y, ancho, alto):
+    from django.conf import settings
     from reportlab.platypus import Paragraph
     from reportlab.lib.units import cm
     # header
     fecha = datetime.now().strftime("%d/%m/%y %H:%M")
-    canvas.drawImage('static/images/logo_conduct_header.png', x, y, 1.5*cm, 1.5*cm)
+    img_path = "%s%simages/logo_conduct_header.png" % (settings.BASE_DIR,settings.STATIC_URL)
+    canvas.drawImage(img_path, x, y, 1.5*cm, 1.5*cm)
     canvas.line(x,y-0.1*cm,ancho,y-0.1*cm)
     parag = Paragraph( _("header_code"),parag_style())
     parag.wrapOn(canvas,ancho-x,500)
