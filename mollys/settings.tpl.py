@@ -15,7 +15,12 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+from django.utils.translation import ugettext_lazy as _
 LANGUAGE_CODE = 'es-AR'
+LANGUAGES = (
+  ('es', _('Spanish')),
+  ('en', _('English')),
+)
 USE_I18N = True
 
 # servidor sobre el que se verifica la existencia de usuarios

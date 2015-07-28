@@ -10,4 +10,10 @@ $(function() {
     }
     });
 
+    $(function(){
+        $("#select_lang").change(function(){
+            this.form.submit();
+        });
+    });
+
 });

@@ -15,7 +15,13 @@ from reportlab.pdfgen import canvas
 from django.conf import settings
 from django.utils.translation import ugettext as _
 import json
+from django.utils import translation
 
+def set_language(request):
+    user_language = request.GET['language'] or 'es'
+    translation.activate(user_language)
+    request.session[translation.LANGUAGE_SESSION_KEY] = user_language
+    return redirect('index')
 
 def index(request):
     return redirect('new')

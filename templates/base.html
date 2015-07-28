@@ -7,6 +7,7 @@
     {% bootstrap_script use_min=True %}
     {% load i18n %}
     {% load staticfiles %}
+    {% get_current_language as LANGUAGE_CODE %}
     
     <meta charset="utf-8">
     <title>{{ _('title') }}</title>
@@ -41,17 +42,30 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-header">
           <img class="logo-header" src="{% static 'images/mollys.png' %}"/>
-            <a href="{% url 'index' %}" class="navbar-brand" >{{ _("title") }}</a>
-            <button class="navbar-toggle" type="button" data-toggle="collapse"
-                    data-target="#navbar-main">
+          <a href="{% url 'index' %}" class="navbar-brand" >{{ _("title") }}</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse"
+                  data-target="#navbar-main">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
       </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+        <ul class="nav navbar-nav navbar-right">
+          <li style="margin:4px 50px;">
+            <form action="{% url 'set_language' %}" method="get">
+              <select class="form-control" id="select_lang" name="language">
+                <option value='es' {% if LANGUAGE_CODE = 'es' %} selected="selected" {% endif %}>
+                 {{ _('Spanish') }}</option>
+                <option value='en' {% if LANGUAGE_CODE = 'en' %} selected="selected" {% endif %}>
+                {{ _('English') }}</option>
+              </select>
+            </form>
+            </li>
+          </ul>
+      </div>
     </div>
-
-
+    
     <div class="container">
 
       <div class="page-header" id="banner"></div>
