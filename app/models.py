@@ -41,7 +41,7 @@ class Person(models.Model):
 #            raise ValidationError('El usuario %s ya existe.' % value)
   
     document_regex = RegexValidator(regex=r'^\d{6,10}$',
-                                    message="Ingrese un valor válido")
+                                    message=_('invalid_value'))
     
     id = models.AutoField(primary_key=True, null=False)
     name = models.CharField(max_length=200, null=False,

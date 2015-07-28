@@ -6,22 +6,16 @@ from django.utils.translation import ugettext as _
 from django.utils import translation
 
 class PersonForm(forms.ModelForm):
-    name = forms.CharField(max_length=200, required=True,
-        error_messages = {'required': _('required_attribute')})
+    name = forms.CharField(max_length=200, required=True)
 
-    surname = forms.CharField(max_length=200, required=True,
-        error_messages = {'required': _('required_attribute')})
+    surname = forms.CharField(max_length=200, required=True)
 
-    document_number = forms.CharField(max_length=10, required=True,
-        error_messages = {'required': _('required_attribute'),
-                          'invalid': _('invalid_value')})
+    document_number = forms.CharField(max_length=10, required=True)
 
     document_type = forms.ModelChoiceField(queryset=DocumentType.objects.all(),
                                            to_field_name = "id",
-                                           required = True,
-                                           error_messages = {'required': _('required_attribute'),
-                                                             'invalid': _('invalid_value')})
-
+                                           required = True)
+    
     position = forms.CharField(max_length=200, required=False)
     office   = forms.ModelChoiceField(queryset=Office.objects.all(),
                                       empty_label="(Especificar Otra)",

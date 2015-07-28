@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-28 12:06-0300\n"
+"POT-Creation-Date: 2015-07-28 12:43-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/forms.py:10 app/forms.py:13 app/forms.py:16 app/forms.py:22
+#: app/forms.py:13 app/forms.py:16 app/forms.py:22
 msgid "required_attribute"
 msgstr "It is a required attribute"
 
-#: app/forms.py:17 app/forms.py:23
+#: app/forms.py:17 app/forms.py:23 app/models.py:44
 msgid "invalid_value"
 msgstr "Enter a valid value"
 
@@ -167,11 +167,12 @@ msgstr "Firm and responsible area / Sector"
 
 #: mollys/settings.py:22 mollys/settings.tpl.py:21 templates/base.html:59
 msgid "Spanish"
-msgstr ""
+msgstr "Spanish"
 
-#: mollys/settings.py:23 mollys/settings.tpl.py:22 templates/base.html:61
+#: mollys/settings.py:23 mollys/settings.py:24 mollys/settings.tpl.py:22
+#: templates/base.html:61
 msgid "English"
-msgstr ""
+msgstr "English"
 
 #: templates/admin/change_form.html:21
 msgid "You have unsaved changes"
