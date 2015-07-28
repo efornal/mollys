@@ -1,185 +1,199 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-07-28 09:09-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: app/models.py:19
 msgid "DocumentType"
-msgstr "Tipo Documento"
+msgstr "Document Type"
 
 #: app/models.py:20
 msgid "DocumentTypes"
-msgstr "Tipos de Documentos"
+msgstr "Document Types"
 
 #: app/models.py:27
 msgid "name"
-msgstr "Nombre"
+msgstr "Name"
 
 #: app/models.py:31 app/models.py:69 templates/new.html:82
 msgid "office"
-msgstr "Secretaría"
+msgstr "Office"
 
 #: app/models.py:32
 msgid "offices"
-msgstr "Secretarías"
+msgstr "Offices"
 
 #: app/models.py:48 templates/new.html:20
 msgid "names"
-msgstr "Nombres"
+msgstr "Names"
 
 #: app/models.py:50 templates/new.html:25
 msgid "surnames"
-msgstr "Apellidos"
+msgstr "Surnames"
 
 #: app/models.py:53
 msgid "document_number"
-msgstr "Número Documento"
+msgstr "Document Number"
 
 #: app/models.py:55
 msgid "document_type"
-msgstr "Tipo Documento"
+msgstr "Document Type"
 
 #: app/models.py:57 app/views.py:149 templates/new.html:74
 msgid "position"
-msgstr "Cargo"
+msgstr "Position"
 
 #: app/models.py:59 app/views.py:153 templates/new.html:53
 msgid "work_phone"
-msgstr "Teléfono laboral"
+msgstr "Work Phone"
 
 #: app/models.py:61 app/views.py:157
 msgid "home_phone"
-msgstr "Teléfono particular"
+msgstr "Home Phone"
 
 #: app/models.py:63 app/views.py:161 templates/new.html:66
 msgid "address"
-msgstr "Domicilio"
+msgstr "Address"
 
 #: app/models.py:65
 msgid "created_at"
-msgstr "creado"
+msgstr "Created at"
 
 #: app/models.py:67
 msgid "updated_at"
-msgstr "actualizado"
+msgstr "Updated at"
 
 #: app/models.py:71 templates/new.html:99
 msgid "other_office"
-msgstr "Otra Secretaría"
+msgstr "Other office"
 
 #: app/models.py:73
 msgid "ldap_user_name"
-msgstr "Nombre de usuario ldap"
+msgstr "ldap user name"
 
 #: app/models.py:76
 msgid "received_application"
-msgstr "Solicitud recibida"
+msgstr "Received application"
 
 #: app/models.py:80
 msgid "person"
-msgstr "Persona"
+msgstr "Person"
 
 #: app/models.py:81
 msgid "people"
-msgstr "Personas"
+msgstr "People"
 
 #: app/views.py:66
 msgid "outcome_success"
 msgstr ""
-"Estimado/a <strong>%(name)s, %(surname)s</strong> <br> La solicitud se a "
-"realizado con éxito. Para completar el trámite te pedimos que te acerques a "
-"nuestra oficina con el siguiente <a href='%(url)s' "
-"TARGET='_blank'>formulario</a> impreso y la firma del responsable de tu área."
+"Dear <strong>%(name)s, %(surname)s</strong> <br> The request was successful. "
+"To complete the process we ask you approach our office with the  <a "
+"href='%(url)s' TARGET='_blank'>form</a> printed and signed by the head of "
+"your area"
 
 #: app/views.py:76
 msgid "outcome_error"
 msgstr ""
-"Estimado/a <strong>%(name)s, %(surname)s</strong> <br>La solicitud no pudo "
-"completarse. Para poder realizar el trámite te pedimos que te acerques a "
-"nuestra oficina o intentes realizar la solicitud nuevamente más tarde.<br>"
+"Dear <strong>%(name)s, %(surname)s</strong> <br> The request could not be "
+"completed. In order to complete the process we ask you approach our officeor "
+"try to make the request again later"
 
 #: app/views.py:106
 msgid "header_code"
-msgstr "Office<br/>Business<br/>Other,.."
+msgstr "Header code"
 
 #: app/views.py:136 templates/new.html:17
 msgid "enabling_account"
-msgstr "Solicitud de habilitación de cuenta"
+msgstr "Enabling account"
 
 #: app/views.py:139
 msgid "applicant"
-msgstr "Solicitante"
+msgstr "Applicant"
 
 #: app/views.py:143 templates/new.html:33
 msgid "doc_type"
-msgstr "Tipo Documento"
+msgstr "Document Type"
 
 #: app/views.py:144 templates/new.html:45
 msgid "doc_number"
-msgstr "Número Documento"
+msgstr "Document number"
 
 #: app/views.py:165
 msgid "short_office"
-msgstr "Secretaría"
+msgstr "Office"
 
 #: app/views.py:172
 msgid "intro_code"
 msgstr ""
-"<strong>Código de conducta</strong><br></br><br></br>Texto ,...<br></"
-"br><br></br>"
+"<strong>Conduct code</strong><br></br><br></br>Text ,...<br></br><br></br>"
 
 #: app/views.py:180
 msgid "conduct_code"
-msgstr "texto ,. .."
+msgstr "text ,. .."
 
 #: app/views.py:184
 msgid "date"
-msgstr "Ciudad, ...... de ............. de 20...."
+msgstr "City, ...... of ............. of 20...."
 
 #: app/views.py:186
 msgid "firm"
-msgstr "Firma"
+msgstr "Firm"
 
 #: app/views.py:189
 msgid "firm_responsible"
-msgstr "Firma y aclaración del responsable del área/sector"
+msgstr "Firm and responsible area / Sector"
 
 #: templates/admin/change_form.html:21
 msgid "You have unsaved changes"
-msgstr "Usted tiene cambios no guardados"
+msgstr "You have unsaved changes"
 
 #: templates/admin/change_form.html:50 templates/admin/change_form.html:76
 msgid "Add"
-msgstr "Agregar"
+msgstr "Add"
 
 #: templates/admin/change_form.html:61
 msgid "Home"
-msgstr "Inicio"
+msgstr "Home"
 
 #: templates/admin/change_form.html:98
 msgid "tools"
-msgstr "herramientas"
+msgstr "Tools"
 
 #: templates/admin/change_form.html:102
 msgid "History"
-msgstr "Historial"
+msgstr "History"
 
 #: templates/admin/change_form.html:106
 msgid "View on site"
-msgstr "Ver en el sitio"
+msgstr "View on site"
 
 #: templates/admin/change_form.html:112
 #, python-format
 msgid "Add %(name)s"
-msgstr "Agregar %(name)s"
+msgstr "Add %(name)s"
 
 #: templates/admin/change_form.html:140
+#, fuzzy
+#| msgid "Please correct the error below."
+#| msgid_plural "Please correct the errors below."
 msgid "Please correct the error below."
 msgid_plural " Please correct the errors below."
-msgstr[0] "Por favor, corrija el error indicado"
-msgstr[1] "Por favor, corrija los errores indicados"
+msgstr[0] "Please correct the error below."
+msgstr[1] "Please correct the errors below."
 
 #: templates/base.html:12 templates/base.html.py:44
 msgid "title"
@@ -187,24 +201,24 @@ msgstr "Mollys"
 
 #: templates/new.html:58
 msgid "short_home_phone"
-msgstr "Particular"
+msgstr "Home phone"
 
 #: templates/new.html:110
 msgid "cancel"
-msgstr "Cancelar"
+msgstr "Cancel"
 
 #: templates/new.html:112
 msgid "send_request"
-msgstr "Enviar Solicitud"
+msgstr "Send request"
 
 #: templates/outcome_error.html:15 templates/outcome_success.html:17
 msgid "sending_request"
-msgstr "Envío de solicitud"
+msgstr "Sending request"
 
 #: templates/outcome_error.html:19 templates/outcome_success.html:21
 msgid "new_request"
-msgstr "Realizar una nueva solicitud"
+msgstr "New request"
 
 #: templates/outcome_success.html:24
 msgid "print_request"
-msgstr "Imprimir Solicitud"
+msgstr "Print request"

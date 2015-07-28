@@ -144,7 +144,7 @@ def print_request (request, person_id):
     p.drawString(xtext+3*cm,top-line*dy, _("doc_number") )
     p.line(xtext,top-line*dy-3,right-4*cm,top-line*dy-3)
     p.drawString(xtext,top-line*dy, person.document_type.name )
-    p.drawString(xtext + 5*cm,top-line*dy, person.document_number )
+    p.drawString(xtext + 7*cm,top-line*dy, person.document_number )
     line+=1
     p.drawString(x,top-line*dy, _("position") )
     p.line(xtext,top-line*dy-3,right-4*cm,top-line*dy-3)
