@@ -6,29 +6,40 @@ from django.utils.translation import ugettext as _
 from django.utils import translation
 
 class PersonForm(forms.ModelForm):
-    name = forms.CharField(max_length=200, required=True)
-
-    surname = forms.CharField(max_length=200, required=True)
-
-    document_number = forms.CharField(max_length=10, required=True)
-
+    name = forms.CharField(max_length=200, required=True,
+                           label=_('names'))
+    surname = forms.CharField(max_length=200, required=True,
+                              label=_('surnames'))
+    document_number = forms.CharField(max_length=10, required=True,
+                                      label=_('document_number'))
     document_type = forms.ModelChoiceField(queryset=DocumentType.objects.all(),
                                            to_field_name = "id",
-                                           required = True)
+                                           required = True,
+                                           label=_('document_type'))
     
-    position = forms.CharField(max_length=200, required=False)
+    position = forms.CharField(max_length=200, required=False,
+                               label=_('position'))
     office   = forms.ModelChoiceField(queryset=Office.objects.all(),
                                       empty_label="(Especificar Otra)",
                                       to_field_name= "id",
-                                      required=False)
-    work_phone = forms.CharField(max_length=200, required=False)
-    home_phone = forms.CharField(max_length=200, required=False)
-    address = forms.CharField(max_length=200, required=False)
-    created_at = forms.DateTimeField(required=False)
-    updated_at = forms.DateTimeField(required=False)
-    other_office = forms.CharField(max_length=200, required=False)
-    ldap_user_name = forms.CharField(max_length=200,required=False)
-    received_application = forms.BooleanField(required=False)
+                                      required=False,
+                                      label=_('office'))
+    work_phone = forms.CharField(max_length=200, required=False,
+                                 label=_('work_phone'))
+    home_phone = forms.CharField(max_length=200, required=False,
+                                 label=_('home_phone'))
+    address = forms.CharField(max_length=200, required=False,
+                              label=_('address'))
+    created_at = forms.DateTimeField(required=False,
+                                     label=_('created_at'))
+    updated_at = forms.DateTimeField(required=False,
+                                     label=_('updated_at'))
+    other_office = forms.CharField(max_length=200, required=False,
+                                   label=_('other_office'))
+    ldap_user_name = forms.CharField(max_length=200,required=False,
+                                     label=_('ldap_user_name'))
+    received_application = forms.BooleanField(required=False,
+                                              label=_('received_application'))
 
     class Meta:
         model = Person
