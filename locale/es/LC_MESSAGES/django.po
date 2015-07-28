@@ -1,9 +1,17 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-28 09:09-0300\n"
+"POT-Creation-Date: 2015-07-28 12:06-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: app/forms.py:10 app/forms.py:13 app/forms.py:16 app/forms.py:22
+msgid "required_attribute"
+msgstr "Es un atributo requerido"
+
+#: app/forms.py:17 app/forms.py:23
+msgid "invalid_value"
+msgstr "Ingrese un valor válido"
 
 #: app/models.py:19
 msgid "DocumentType"
@@ -41,19 +49,19 @@ msgstr "Número Documento"
 msgid "document_type"
 msgstr "Tipo Documento"
 
-#: app/models.py:57 app/views.py:149 templates/new.html:74
+#: app/models.py:57 app/views.py:155 templates/new.html:74
 msgid "position"
 msgstr "Cargo"
 
-#: app/models.py:59 app/views.py:153 templates/new.html:53
+#: app/models.py:59 app/views.py:159 templates/new.html:53
 msgid "work_phone"
 msgstr "Teléfono laboral"
 
-#: app/models.py:61 app/views.py:157
+#: app/models.py:61 app/views.py:163
 msgid "home_phone"
 msgstr "Teléfono particular"
 
-#: app/models.py:63 app/views.py:161 templates/new.html:66
+#: app/models.py:63 app/views.py:167 templates/new.html:66
 msgid "address"
 msgstr "Domicilio"
 
@@ -85,7 +93,7 @@ msgstr "Persona"
 msgid "people"
 msgstr "Personas"
 
-#: app/views.py:66
+#: app/views.py:72
 msgid "outcome_success"
 msgstr ""
 "Estimado/a <strong>%(name)s, %(surname)s</strong> <br> La solicitud se a "
@@ -93,58 +101,66 @@ msgstr ""
 "nuestra oficina con el siguiente <a href='%(url)s' "
 "TARGET='_blank'>formulario</a> impreso y la firma del responsable de tu área."
 
-#: app/views.py:76
+#: app/views.py:82
 msgid "outcome_error"
 msgstr ""
 "Estimado/a <strong>%(name)s, %(surname)s</strong> <br>La solicitud no pudo "
 "completarse. Para poder realizar el trámite te pedimos que te acerques a "
 "nuestra oficina o intentes realizar la solicitud nuevamente más tarde.<br>"
 
-#: app/views.py:106
+#: app/views.py:112
 msgid "header_code"
 msgstr "Office<br/>Business<br/>Other,.."
 
-#: app/views.py:136 templates/new.html:17
+#: app/views.py:142 templates/new.html:17
 msgid "enabling_account"
 msgstr "Solicitud de habilitación de cuenta"
 
-#: app/views.py:139
+#: app/views.py:145
 msgid "applicant"
 msgstr "Solicitante"
 
-#: app/views.py:143 templates/new.html:33
+#: app/views.py:149 templates/new.html:33
 msgid "doc_type"
 msgstr "Tipo Documento"
 
-#: app/views.py:144 templates/new.html:45
+#: app/views.py:150 templates/new.html:45
 msgid "doc_number"
 msgstr "Número Documento"
 
-#: app/views.py:165
+#: app/views.py:171
 msgid "short_office"
 msgstr "Secretaría"
 
-#: app/views.py:172
+#: app/views.py:178
 msgid "intro_code"
 msgstr ""
 "<strong>Código de conducta</strong><br></br><br></br>Texto ,...<br></"
 "br><br></br>"
 
-#: app/views.py:180
+#: app/views.py:186
 msgid "conduct_code"
 msgstr "texto ,. .."
 
-#: app/views.py:184
+#: app/views.py:190
 msgid "date"
 msgstr "Ciudad, ...... de ............. de 20...."
 
-#: app/views.py:186
+#: app/views.py:192
 msgid "firm"
 msgstr "Firma"
 
-#: app/views.py:189
+#: app/views.py:195
 msgid "firm_responsible"
 msgstr "Firma y aclaración del responsable del área/sector"
+
+#: mollys/settings.py:22 mollys/settings.tpl.py:21 templates/base.html:59
+msgid "Spanish"
+msgstr ""
+
+#: mollys/settings.py:23 mollys/settings.tpl.py:22 templates/base.html:61
+msgid "English"
+msgstr ""
 
 #: templates/admin/change_form.html:21
 msgid "You have unsaved changes"
@@ -181,7 +197,7 @@ msgid_plural " Please correct the errors below."
 msgstr[0] "Por favor, corrija el error indicado"
 msgstr[1] "Por favor, corrija los errores indicados"
 
-#: templates/base.html:12 templates/base.html.py:44
+#: templates/base.html:13 templates/base.html.py:45
 msgid "title"
 msgstr "Mollys"
 

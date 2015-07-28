@@ -2,28 +2,25 @@
 from django import forms
 from django.forms import ModelForm
 from .models import Person, Office, DocumentType
+from django.utils.translation import ugettext as _
+from django.utils import translation
 
 class PersonForm(forms.ModelForm):
     name = forms.CharField(max_length=200, required=True,
-        error_messages = {'required': 'Es un atributo requerido.'},
-        label = 'Nombre')
+        error_messages = {'required': _('required_attribute')})
 
     surname = forms.CharField(max_length=200, required=True,
-        error_messages = {'required': 'Es un atributo requerido.'},
-        label = 'Apellido')
+        error_messages = {'required': _('required_attribute')})
 
     document_number = forms.CharField(max_length=10, required=True,
-        error_messages = {'required': 'Es un atributo requerido.',
-                          'invalid': 'Ingrese un valor válido'},
-        label = 'Nro. documento')
-
+        error_messages = {'required': _('required_attribute'),
+                          'invalid': _('invalid_value')})
 
     document_type = forms.ModelChoiceField(queryset=DocumentType.objects.all(),
                                            to_field_name = "id",
                                            required = True,
-                                           error_messages = {'required': 'Es un atributo requerido.',
-                                                             'invalid': 'Ingrese un valor válido'},
-                                           label = 'Tipo documento')
+                                           error_messages = {'required': _('required_attribute'),
+                                                             'invalid': _('invalid_value')})
 
     position = forms.CharField(max_length=200, required=False)
     office   = forms.ModelChoiceField(queryset=Office.objects.all(),

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-28 09:09-0300\n"
+"POT-Creation-Date: 2015-07-28 12:06-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: app/forms.py:10 app/forms.py:13 app/forms.py:16 app/forms.py:22
+msgid "required_attribute"
+msgstr "It is a required attribute"
+
+#: app/forms.py:17 app/forms.py:23
+msgid "invalid_value"
+msgstr "Enter a valid value"
 
 #: app/models.py:19
 msgid "DocumentType"
@@ -53,19 +61,19 @@ msgstr "Document Number"
 msgid "document_type"
 msgstr "Document Type"
 
-#: app/models.py:57 app/views.py:149 templates/new.html:74
+#: app/models.py:57 app/views.py:155 templates/new.html:74
 msgid "position"
 msgstr "Position"
 
-#: app/models.py:59 app/views.py:153 templates/new.html:53
+#: app/models.py:59 app/views.py:159 templates/new.html:53
 msgid "work_phone"
 msgstr "Work Phone"
 
-#: app/models.py:61 app/views.py:157
+#: app/models.py:61 app/views.py:163
 msgid "home_phone"
 msgstr "Home Phone"
 
-#: app/models.py:63 app/views.py:161 templates/new.html:66
+#: app/models.py:63 app/views.py:167 templates/new.html:66
 msgid "address"
 msgstr "Address"
 
@@ -97,7 +105,7 @@ msgstr "Person"
 msgid "people"
 msgstr "People"
 
-#: app/views.py:66
+#: app/views.py:72
 msgid "outcome_success"
 msgstr ""
 "Dear <strong>%(name)s, %(surname)s</strong> <br> The request was successful. "
@@ -105,57 +113,65 @@ msgstr ""
 "href='%(url)s' TARGET='_blank'>form</a> printed and signed by the head of "
 "your area"
 
-#: app/views.py:76
+#: app/views.py:82
 msgid "outcome_error"
 msgstr ""
 "Dear <strong>%(name)s, %(surname)s</strong> <br> The request could not be "
 "completed. In order to complete the process we ask you approach our officeor "
 "try to make the request again later"
 
-#: app/views.py:106
+#: app/views.py:112
 msgid "header_code"
 msgstr "Header code"
 
-#: app/views.py:136 templates/new.html:17
+#: app/views.py:142 templates/new.html:17
 msgid "enabling_account"
 msgstr "Enabling account"
 
-#: app/views.py:139
+#: app/views.py:145
 msgid "applicant"
 msgstr "Applicant"
 
-#: app/views.py:143 templates/new.html:33
+#: app/views.py:149 templates/new.html:33
 msgid "doc_type"
 msgstr "Document Type"
 
-#: app/views.py:144 templates/new.html:45
+#: app/views.py:150 templates/new.html:45
 msgid "doc_number"
 msgstr "Document number"
 
-#: app/views.py:165
+#: app/views.py:171
 msgid "short_office"
 msgstr "Office"
 
-#: app/views.py:172
+#: app/views.py:178
 msgid "intro_code"
 msgstr ""
 "<strong>Conduct code</strong><br></br><br></br>Text ,...<br></br><br></br>"
 
-#: app/views.py:180
+#: app/views.py:186
 msgid "conduct_code"
 msgstr "text ,. .."
 
-#: app/views.py:184
+#: app/views.py:190
 msgid "date"
 msgstr "City, ...... of ............. of 20...."
 
-#: app/views.py:186
+#: app/views.py:192
 msgid "firm"
 msgstr "Firm"
 
-#: app/views.py:189
+#: app/views.py:195
 msgid "firm_responsible"
 msgstr "Firm and responsible area / Sector"
+
+#: mollys/settings.py:22 mollys/settings.tpl.py:21 templates/base.html:59
+msgid "Spanish"
+msgstr ""
+
+#: mollys/settings.py:23 mollys/settings.tpl.py:22 templates/base.html:61
+msgid "English"
+msgstr ""
 
 #: templates/admin/change_form.html:21
 msgid "You have unsaved changes"
@@ -195,7 +211,7 @@ msgid_plural " Please correct the errors below."
 msgstr[0] "Please correct the error below."
 msgstr[1] "Please correct the errors below."
 
-#: templates/base.html:12 templates/base.html.py:44
+#: templates/base.html:13 templates/base.html.py:45
 msgid "title"
 msgstr "Mollys"
 
