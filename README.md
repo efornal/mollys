@@ -1,6 +1,5 @@
 # mollys
-Administration request for internal user accounts to the organization
-
+Administration request for internal user accounts to the organization. The user accounts are relationated with ldap account
 
 ### Package Installation
 ```bash
@@ -25,19 +24,25 @@ createuser mollys_owner -P;
 
 /etc/postgresql/9.3/main/pg_hba.conf
 hostssl  mollys_db     mollys_owner        ::1/128                 password
+
 /etc/init.d/postgresql restart
 psql -h localhost -U mollys_owner -p 5432 -d mollys_db
 ```
 ### App configuration
 descargar archivos:
+
 git clone https://github.com/efornal/mollys.git
 
 cd mollys
+
 cp mollys/settings.tpl.py mollys/settings.py
 
-habilitar:
 mkdir static_production
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_production')
+
+habilitar:
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
@@ -56,9 +61,9 @@ python manage.py collectstatic
 ### Con apache
 ```bash
 apt-get install apache2 libapache2-mod-wsgi
-aptitude install libapache2-mod-python
+apt-get install libapache2-mod-python
 
-Creo el archivo /etc/apache2/conf-available/django.conf
+Crear archivo /etc/apache2/conf-available/django.conf
 
 WSGIScriptAlias /admin /srv/pyapp/mollys/mollys/wsgi.py
 WSGIPythonPath /srv/pyapp/mollys/
