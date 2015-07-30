@@ -16,7 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 from django.utils.translation import ugettext_lazy as _
-LANGUAGE_CODE = 'es-AR'
+LANGUAGE_CODE = 'es'
 LANGUAGES = (
   ('es', _('Spanish')),
   ('en', _('English')),
@@ -117,8 +117,6 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
-
-LANGUAGE_CODE = 'es-ar'
 
 TIME_ZONE = 'UTC'
 
