@@ -144,7 +144,7 @@ def print_request (request, person_id):
     line = 4
     p.drawString(x,top-line*dy, _("applicant") )
     p.line(xtext,top-line*dy-3,right-4*cm,top-line*dy-3)
-    p.drawString(xtext,top-line*dy,person.name_and_surname())
+    p.drawString(xtext,top-line*dy,person.surname_and_name())
     line+=1
     p.drawString(x,top-line*dy, _("doc_type") )
     p.drawString(xtext+3*cm,top-line*dy, _("doc_number") )

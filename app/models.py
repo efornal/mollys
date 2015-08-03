@@ -86,6 +86,9 @@ class Person(models.Model):
     def name_and_surname(self):
         return "%s, %s" % (self.name, self.surname)
 
+    def surname_and_name(self):
+        return "%s, %s" % (self.surname, self.name)
+
     @classmethod
     def exists_in_ldap(cls,uid):
         ldap_condition = "(uid=%s)" % uid
