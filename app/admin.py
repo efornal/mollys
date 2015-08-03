@@ -9,6 +9,12 @@ class PersonAdmin(admin.ModelAdmin):
     search_fields = ['surname', 'name', 'document_number', 'ldap_user_name',
                      'received_application']
 
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        #self.inlines = (ItemChangeInline, )
+        Person.suggested_name(object_id)
+        context = {'suggested_ldap_name': Person.suggested_name(object_id) }
+        return super(PersonAdmin, self).change_view(request, object_id,'',context)
+    
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Office)
 

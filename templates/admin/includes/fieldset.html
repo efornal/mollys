@@ -82,7 +82,7 @@
           });
                     });
         </script>
-
+        {% if not field.field.value %}<p >Nombre sugerido: {{ suggested_ldap_name }} </p>{% endif %}
         {% endif %}
 
 

@@ -105,3 +105,8 @@ class Person(models.Model):
         except ldap.LDAPError, e:
             logging.error(e)
         return False
+
+    @classmethod
+    def suggested_name(cls,object_id):
+        person = Person.objects.get(id=object_id)
+        return "%s%s" % ( person.name[0].lower(), person.surname.lower() )
