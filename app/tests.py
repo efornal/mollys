@@ -29,7 +29,7 @@ class PersonTests(TestCase):
     def test_compose_extended_suggested_name_with_compose_surname(self):
         name = 'Alan Mathison'
         surname = 'Turing Wilmslow'
-        self.assertEqual( Person.compose_extended_suggested_name(surname, name), 'amturingwilmslow')
+        self.assertEqual( Person.compose_extended_suggested_name(surname, name), 'amturing')
 
     def test_compose_extended_suggested_name_with_simple_name_and_surname(self):
         name = 'Alan'

@@ -115,7 +115,7 @@ class Person(models.Model):
         words = ""
         for word in name.lower().split(" "):
             words += word[0]
-        return "%s%s" % ( words, surname.lower().replace(" ","") )
+        return "%s%s" % ( words, surname.lower().partition(" ")[0] )
 
     @classmethod
     def suggested_name( cls, object_id ):
