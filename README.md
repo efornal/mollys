@@ -54,6 +54,8 @@ python manage.py migrate
 django-admin compilemessages
 
 python manage.py collectstatic
+
+python manage.py test  --keepdb
 ```
 
 

@@ -107,6 +107,22 @@ class Person(models.Model):
         return False
 
     @classmethod
-    def suggested_name(cls,object_id):
+    def compose_suggested_name( cls, surname, name ):
+        return "%s%s" % ( name[0].lower(), surname.lower().partition(" ")[0] )
+
+    @classmethod
+    def compose_extended_suggested_name( cls, surname, name ):
+        words = ""
+        for word in name.lower().split(" "):
+            words += word[0]
+        return "%s%s" % ( words, surname.lower().replace(" ","") )
+
+    @classmethod
+    def suggested_name( cls, object_id ):
         person = Person.objects.get(id=object_id)
-        return "%s%s" % ( person.name[0].lower(), person.surname.lower() )
+        first_try = Person.compose_suggested_name(person.surname, person.name)
+
+        if  Person.exists_in_ldap(first_try):
+            return Person.compose_extended_suggested_name(person.surname, person.name)
+        else:
+            return first_try
