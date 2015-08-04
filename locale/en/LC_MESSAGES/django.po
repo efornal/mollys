@@ -55,23 +55,23 @@ msgstr "Surnames"
 
 #: app/models.py:53
 msgid "document_number"
-msgstr "Document Number"
+msgstr "ID Number"
 
 #: app/models.py:55
 msgid "document_type"
-msgstr "Document Type"
+msgstr "ID Type"
 
 #: app/models.py:57 app/views.py:155 templates/new.html:74
 msgid "position"
-msgstr "Position"
+msgstr "Job title"
 
 #: app/models.py:59 app/views.py:159 templates/new.html:53
 msgid "work_phone"
-msgstr "Work Phone"
+msgstr "(Work) Phone Number"
 
 #: app/models.py:61 app/views.py:163
 msgid "home_phone"
-msgstr "Home Phone"
+msgstr "(Home) Phone Number"
 
 #: app/models.py:63 app/views.py:167 templates/new.html:66
 msgid "address"
@@ -87,11 +87,11 @@ msgstr "Updated at"
 
 #: app/models.py:71 templates/new.html:99
 msgid "other_office"
-msgstr "Other office"
+msgstr "Another office"
 
 #: app/models.py:73
 msgid "ldap_user_name"
-msgstr "ldap user name"
+msgstr "ldap username"
 
 #: app/models.py:76
 msgid "received_application"
@@ -108,16 +108,16 @@ msgstr "People"
 #: app/views.py:72
 msgid "outcome_success"
 msgstr ""
-"Dear <strong>%(name)s, %(surname)s</strong> <br> The request was successful. "
-"To complete the process we ask you approach our office with the  <a "
-"href='%(url)s' TARGET='_blank'>form</a> printed and signed by the head of "
+"Dear <strong>%(name)s, %(surname)s</strong> <br> the request has been successfuly made. "
+"To complete the process we ask you to approach our office with the  <a "
+"href='%(url)s' TARGET='_blank'>aplication form</a> printed and signed by the head of "
 "your area"
 
 #: app/views.py:82
 msgid "outcome_error"
 msgstr ""
 "Dear <strong>%(name)s, %(surname)s</strong> <br> The request could not be "
-"completed. In order to complete the process we ask you approach our officeor "
+"completed. In order to complete the process we would like to ask you to approach our office or you could"
 "try to make the request again later"
 
 #: app/views.py:112
@@ -126,7 +126,7 @@ msgstr "Header code"
 
 #: app/views.py:142 templates/new.html:17
 msgid "enabling_account"
-msgstr "Enabling account"
+msgstr "Apply for the enabling of a new account"
 
 #: app/views.py:145
 msgid "applicant"
@@ -134,11 +134,11 @@ msgstr "Applicant"
 
 #: app/views.py:149 templates/new.html:33
 msgid "doc_type"
-msgstr "Document Type"
+msgstr "ID Type"
 
 #: app/views.py:150 templates/new.html:45
 msgid "doc_number"
-msgstr "Document number"
+msgstr "ID number"
 
 #: app/views.py:171
 msgid "short_office"
@@ -147,7 +147,7 @@ msgstr "Office"
 #: app/views.py:178
 msgid "intro_code"
 msgstr ""
-"<strong>Conduct code</strong><br></br><br></br>Text ,...<br></br><br></br>"
+"<strong>Honor code</strong><br></br><br></br>Text ,...<br></br><br></br>"
 
 #: app/views.py:186
 msgid "conduct_code"
@@ -159,11 +159,11 @@ msgstr "City, ...... of ............. of 20...."
 
 #: app/views.py:192
 msgid "firm"
-msgstr "Firm"
+msgstr "Signature"
 
 #: app/views.py:195
 msgid "firm_responsible"
-msgstr "Firm and responsible area / Sector"
+msgstr "Signature and clarification from area / Sector manager"
 
 #: mollys/settings.py:22 mollys/settings.tpl.py:21 templates/base.html:59
 msgid "Spanish"
@@ -176,7 +176,7 @@ msgstr "English"
 
 #: templates/admin/change_form.html:21
 msgid "You have unsaved changes"
-msgstr "You have unsaved changes"
+msgstr "Some changes has not been saved"
 
 #: templates/admin/change_form.html:50 templates/admin/change_form.html:76
 msgid "Add"
@@ -218,7 +218,7 @@ msgstr "Mollys"
 
 #: templates/new.html:58
 msgid "short_home_phone"
-msgstr "Home phone"
+msgstr "Home Phone"
 
 #: templates/new.html:110
 msgid "cancel"
