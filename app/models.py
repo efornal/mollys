@@ -10,6 +10,10 @@ from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.utils.translation import ugettext as _
 
+def validate_group_existence_in_ldap(value):
+    if not (value > 0):
+        raise ValidationError('El grupo identificado con %s no existe.' % value)
+
 class DocumentType(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     name = models.CharField(max_length=100,null=False)
@@ -34,12 +38,40 @@ class Office(models.Model):
     def __unicode__(self):
         return "%s" % (self.name)
 
+class Group(models.Model):
+    group_id = models.IntegerField()
+    name = models.CharField(max_length=200)
+    
+    class Meta:
+        verbose_name = _('Group')
+        verbose_name_plural = _('Groups')
+        managed = False
+        
+        
+    def __unicode__(self):
+        return ""
+    
+    @classmethod
+    def all(cls):
+        ldap_condition = "(cn=*)"
+        rows = []
+        try:
+            l = ldap.initialize( settings.LDAP_SERVER )
+            r = l.search_s( "%s,%s" %(settings.LDAP_GROUP, settings.LDAP_DN),
+                            ldap.SCOPE_SUBTREE, ldap_condition, settings.LDAP_GROUP_FIELDS )
+            for dn,entry in r:
+                row = {}
+                if settings.LDAP_GROUP_FIELDS[0] in entry and settings.LDAP_GROUP_FIELDS[1] in entry:
+                    row[settings.LDAP_GROUP_FIELDS[0]] = entry[settings.LDAP_GROUP_FIELDS[0]][0].encode('utf8')
+                    row[settings.LDAP_GROUP_FIELDS[1]] = entry[settings.LDAP_GROUP_FIELDS[1]][0].encode('utf8')
+                    rows.append(row)
+        except ldap.LDAPError, e:
+            logging.error(e)
+        return rows
+    
+    
 class Person(models.Model):
 
-#    def validate_existence_in_ldap(value):
-#        if Person.exists_in_ldap(value):
-#            raise ValidationError('El usuario %s ya existe.' % value)
-  
     document_regex = RegexValidator(regex=r'^\d{6,10}$',
                                     message=_('invalid_value'))
     
@@ -74,6 +106,11 @@ class Person(models.Model):
  #                                     validators=[validate_existence_in_ldap])
     received_application = models.BooleanField(default=False,
                                                verbose_name=_('received_application'))
+    group_id = models.IntegerField(null=True, blank=True, verbose_name=_('group_id'))
+
+    # models.IntegerField(null=True, blank=True,
+    #                                verbose_name=_('group_id'),
+    #                                validators=[validate_group_existence_in_ldap])
     
     class Meta:
         db_table = 'people'
@@ -89,19 +126,19 @@ class Person(models.Model):
     def surname_and_name(self):
         return "%s, %s" % (self.surname, self.name)
 
+
     @classmethod
     def exists_in_ldap(cls,uid):
         ldap_condition = "(uid=%s)" % uid
-        logging.info("LDAP condition: %s" % ldap_condition)
         try:
             l = ldap.initialize( settings.LDAP_SERVER )
-            r = l.search_s(settings.LDAP_DN, ldap.SCOPE_SUBTREE, ldap_condition)
+            r = l.search_s("%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN),
+                           ldap.SCOPE_SUBTREE, ldap_condition, settings.LDAP_PEOPLE_FIELDS)
             
             for dn,entry in r:
-                logging.info("LDAP user search: %s=%s?" % (entry['uid'][0],uid))
                 if entry['uid'][0] == uid:
-                    logging.info("LDAP User: %s, found!: " % entry['uid'][0])
                     return True
+
         except ldap.LDAPError, e:
             logging.error(e)
         return False

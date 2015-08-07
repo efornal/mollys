@@ -27,7 +27,12 @@ USE_I18N = True
 #LDAP_SERVER = 'ldap://host_ldap'
 
 # Dn para entrada en ldap
-#LDAP_DN = 'ou=Entity,dc=domain,dc=edu,dc=ar'
+#LDAP_DN = ',dc=domain,dc=edu,dc=ar'
+#LDAP_DN = 'dc=rectorado,dc=unl,dc=edu,dc=ar'
+#LDAP_GROUP  = 'ou=Entity'
+#LDAP_PEOPLE = 'ou=Entity'
+#LDAP_GROUP_FIELDS  = ['gidNumber','cn']
+#LDAP_PEOPLE_FIELDS = ['uid','cn']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/

@@ -40,9 +40,11 @@ class PersonForm(forms.ModelForm):
                                      label=_('ldap_user_name'))
     received_application = forms.BooleanField(required=False,
                                               label=_('received_application'))
+    group_id = forms.IntegerField(required=False,
+                                              label=_('group_id'))
 
     class Meta:
         model = Person
         fields = ('name', 'surname', 'document_number', 'document_type', 'address',
-                  'position', 'office', 'work_phone', 'home_phone', 'other_office')
+                  'position', 'office', 'work_phone', 'home_phone', 'other_office', 'group_id')
 
