@@ -53,7 +53,8 @@ class Group(models.Model):
     
     @classmethod
     def all(cls):
-        ldap_condition = "(cn=*)"
+        ldap_condition = "(&(cn=*)(%s>=%s))"  % (settings.LDAP_GROUP_FIELDS[0],
+                                                 settings.LDAP_GROUP_MIN_VALUE)
         rows = []
         try:
             l = ldap.initialize( settings.LDAP_SERVER )

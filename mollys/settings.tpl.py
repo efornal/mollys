@@ -32,6 +32,7 @@ USE_I18N = True
 #LDAP_GROUP  = 'ou=Entity'
 #LDAP_PEOPLE = 'ou=Entity'
 #LDAP_GROUP_FIELDS  = ['gidNumber','cn']
+#LDAP_GROUP_MIN_VALUE = 500 # min group_id (group_id>= 500) for ldap search filter
 #LDAP_PEOPLE_FIELDS = ['uid','cn']
 
 # Quick-start development settings - unsuitable for production
