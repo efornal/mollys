@@ -62,8 +62,8 @@ class Group(models.Model):
             for dn,entry in r:
                 row = {}
                 if settings.LDAP_GROUP_FIELDS[0] in entry and settings.LDAP_GROUP_FIELDS[1] in entry:
-                    row[settings.LDAP_GROUP_FIELDS[0]] = entry[settings.LDAP_GROUP_FIELDS[0]][0].encode('utf8')
-                    row[settings.LDAP_GROUP_FIELDS[1]] = entry[settings.LDAP_GROUP_FIELDS[1]][0].encode('utf8')
+                    row[settings.LDAP_GROUP_FIELDS[0]] = int(entry[settings.LDAP_GROUP_FIELDS[0]][0])
+                    row[settings.LDAP_GROUP_FIELDS[1]] = entry[settings.LDAP_GROUP_FIELDS[1]][0]
                     rows.append(row)
         except ldap.LDAPError, e:
             logging.error(e)

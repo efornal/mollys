@@ -118,7 +118,8 @@
        
         {% endspaceless %}
 
-        {% if field.field.name == 'ldap_user_name' %}
+        {% if field.field.name == 'group_id' %}
+        <div>
         <div class="control-label">
           <label for="id_office">Grupo:</label>
         </div>
@@ -126,10 +127,12 @@
           <div class="related-widget-wrapper">
             <select id="group_id" name="group_id">
               {% for group in groups %}
-              <option value="{{ group.gidNumber }}" >{{ group.cn }}</option>
+              <option value="{{ group.gidNumber }}" {% ifequal field.field.value group.gidNumber %} selected="selected" {%endifequal%}>
+              {{ group.cn }}</option>
               {% endfor%}
             </select>
           </div>
+        </div>
         </div>
         {% endif %}
         
