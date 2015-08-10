@@ -67,11 +67,11 @@ msgstr "Job title"
 
 #: app/models.py:59 app/views.py:159 templates/new.html:53
 msgid "work_phone"
-msgstr "(Work) Phone Number"
+msgstr "Work phone"
 
 #: app/models.py:61 app/views.py:163
 msgid "home_phone"
-msgstr "(Home) Phone Number"
+msgstr "Home phone"
 
 #: app/models.py:63 app/views.py:167 templates/new.html:66
 msgid "address"
