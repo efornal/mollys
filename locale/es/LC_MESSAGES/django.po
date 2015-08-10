@@ -96,7 +96,7 @@ msgstr "Personas"
 #: app/views.py:72
 msgid "outcome_success"
 msgstr ""
-"Estimado/a <strong>%(name)s, %(surname)s</strong> <br> La solicitud se a "
+"Estimado/a <strong>%(surname)s, %(name)s</strong> <br> La solicitud se a "
 "realizado con éxito. Para completar el trámite te pedimos que te acerques a "
 "nuestra oficina con el siguiente <a href='%(url)s' "
 "TARGET='_blank'>formulario</a> impreso y la firma del responsable de tu área."
@@ -104,7 +104,7 @@ msgstr ""
 #: app/views.py:82
 msgid "outcome_error"
 msgstr ""
-"Estimado/a <strong>%(name)s, %(surname)s</strong> <br>La solicitud no pudo "
+"Estimado/a <strong>%(surname)s, %(name)s</strong> <br>La solicitud no pudo "
 "completarse. Para poder realizar el trámite te pedimos que te acerques a "
 "nuestra oficina o intentes realizar la solicitud nuevamente más tarde.<br>"
 

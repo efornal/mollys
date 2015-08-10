@@ -108,7 +108,7 @@ msgstr "People"
 #: app/views.py:72
 msgid "outcome_success"
 msgstr ""
-"Dear <strong>%(name)s, %(surname)s</strong> <br> the request has been successfuly made. "
+"Dear <strong>%(surname)s, %(name)s</strong> <br> the request has been successfuly made. "
 "To complete the process we ask you to approach our office with the  <a "
 "href='%(url)s' TARGET='_blank'>aplication form</a> printed and signed by the head of "
 "your area"
@@ -116,7 +116,7 @@ msgstr ""
 #: app/views.py:82
 msgid "outcome_error"
 msgstr ""
-"Dear <strong>%(name)s, %(surname)s</strong> <br> The request could not be "
+"Dear <strong>%(surname)s, %(name)s</strong> <br> The request could not be "
 "completed. In order to complete the process we would like to ask you to approach our office or you could"
 "try to make the request again later"
 
