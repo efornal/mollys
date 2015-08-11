@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    {% load bootstrap_themes %}
-    {% bootstrap_styles theme='spacelab' type='css' %}
-    {% bootstrap_script use_min=True %}
-    {% load i18n %}
     {% load staticfiles %}
+    <script src="{% static 'jquery-1.10.2.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/themes/spacelab/css/bootstrap.css' %}">
+    {% load i18n %}
     {% get_current_language as LANGUAGE_CODE %}
     
     <meta charset="utf-8">
