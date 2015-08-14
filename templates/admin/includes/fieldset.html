@@ -54,6 +54,11 @@
         <script type="text/javascript">
           $(function(){
           $("#id_group_id").attr('name', 'id_group_id');
+
+          {% if field.field.value %}
+          $("#id_ldap_user_name").prop('readonly', true);
+          {% endif %}
+          
           $("#check_ldap_user").click(function(){
            $.ajax({
                type: "POST",
