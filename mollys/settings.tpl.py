@@ -23,17 +23,35 @@ LANGUAGES = (
 )
 USE_I18N = True
 
-# servidor sobre el que se verifica la existencia de usuarios
-#LDAP_SERVER = 'ldap://host_ldap'
 
-# Dn para entrada en ldap
-#LDAP_DN = ',dc=domain,dc=edu,dc=ar'
-#LDAP_DN = 'dc=rectorado,dc=unl,dc=edu,dc=ar'
-#LDAP_GROUP  = 'ou=Entity'
-#LDAP_PEOPLE = 'ou=Entity'
-#LDAP_GROUP_FIELDS  = ['gidNumber','cn']
+# LDAP CONFIGURATION ====================\
+
+# LDAP server
+#LDAP_SERVER = 'ldap://host_ldap:port'
+
+# Dn for entry
+#LDAP_DN = 'dc=domain,dc=edu,dc=ar'
+
+# LDAP authentication
+#LDAP_USER_NAME='user_name'
+#LDAP_USER_PASS='password'
+
+# Organizational Unit for Person and Person Group
+#LDAP_GROUP  = 'Group' # ou=Entry
+#LDAP_PEOPLE = 'People' # ou=Entry
+#LDAP_GROUP_FIELDS  = ['gidNumber','cn']  # id first!
+#LDAP_PEOPLE_FIELDS = ['uid','cn'] # idfirst!
 #LDAP_GROUP_MIN_VALUE = 500 # min group_id (group_id>= 500) for ldap search filter
-#LDAP_PEOPLE_FIELDS = ['uid','cn']
+
+# Params for create new people in ldap
+#LDAP_PEOPLE_OBJECTCLASSES = ['agente','hordeperson','inetOrgPerson',
+#                             'organizationalperson','person','posixaccount',
+#                             'shadowaccount', 'top']
+#LDAP_PEOPLE_PAISDOC = "ARG"
+#LDAP_PEOPLE_HOMEDIRECTORY_PREFIX = "/home/"
+
+# =======================================/
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/

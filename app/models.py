@@ -2,7 +2,7 @@
 from django.db import models
 from datetime import datetime
 from django.core.validators import RegexValidator
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 import logging
 import ldap
@@ -58,7 +58,7 @@ class Group(models.Model):
         rows = []
         try:
             l = ldap.initialize( settings.LDAP_SERVER )
-            r = l.search_s( "%s,%s" %(settings.LDAP_GROUP, settings.LDAP_DN),
+            r = l.search_s( "ou=%s,%s" %(settings.LDAP_GROUP, settings.LDAP_DN),
                             ldap.SCOPE_SUBTREE, ldap_condition, settings.LDAP_GROUP_FIELDS )
             for dn,entry in r:
                 row = {}
@@ -75,7 +75,7 @@ class Person(models.Model):
 
     document_regex = RegexValidator(regex=r'^\d{6,10}$',
                                     message=_('invalid_value'))
-    
+
     id = models.AutoField(primary_key=True, null=False)
     name = models.CharField(max_length=200, null=False,
                             verbose_name=_('names'))
@@ -103,8 +103,8 @@ class Person(models.Model):
     other_office = models.CharField(max_length=200,null=True, blank=True,
                                     verbose_name=_('other_office'))
     ldap_user_name = models.CharField(max_length=200,null=True, blank=True,
-                                      verbose_name=_('ldap_user_name'))
- #                                     validators=[validate_existence_in_ldap])
+                                      verbose_name=_('ldap_user_name'))#,
+                                      #validators=[validate_existence_in_ldap])
     received_application = models.BooleanField(default=False,
                                                verbose_name=_('received_application'))
     group_id = models.IntegerField(null=True, blank=True, verbose_name=_('group_id'))
@@ -127,13 +127,16 @@ class Person(models.Model):
     def surname_and_name(self):
         return "%s, %s" % (self.surname, self.name)
 
+    
+        
+        
 
     @classmethod
     def exists_in_ldap(cls,uid):
         ldap_condition = "(uid=%s)" % uid
         try:
             l = ldap.initialize( settings.LDAP_SERVER )
-            r = l.search_s("%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN),
+            r = l.search_s("ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN),
                            ldap.SCOPE_SUBTREE, ldap_condition, settings.LDAP_PEOPLE_FIELDS)
             
             for dn,entry in r:
@@ -164,3 +167,36 @@ class Person(models.Model):
             return Person.compose_extended_suggested_name(person.surname, person.name)
         else:
             return first_try
+
+
+@receiver(post_save, sender=Person)
+def update_ldap_user(sender, instance, *args, **kwargs):
+    ldap_user_name = str(instance.ldap_user_name) or None
+    new_uid_number = '2002'
+    
+    if ldap_user_name and Person.exists_in_ldap(ldap_user_name):
+        logging.info("El usuario %s ya existe en ldap. No se actualiza!" % ldap_user_name)
+    elif ldap_user_name:
+
+        l = ldap.initialize( settings.LDAP_SERVER )
+        l.simple_bind_s( "cn=%s,%s" % ( settings.LDAP_USER_NAME, settings.LDAP_DN ),
+                         settings.LDAP_USER_PASS )
+
+        dn = "uid=%s,ou=%s,%s" % ( ldap_user_name, settings.LDAP_PEOPLE, settings.LDAP_DN )
+        
+        new_record = [
+            ('objectclass', settings.LDAP_PEOPLE_OBJECTCLASSES),
+            ('cn', ["%s %s" % ( str(instance.name), str(instance.surname) )]),
+            ('sn', [str(instance.surname)] ),
+            ('givenName', [str(instance.name)] ),
+            ('paisdoc', [settings.LDAP_PEOPLE_PAISDOC] ),
+            ('tipodoc', [str(instance.document_type)] ),
+            ('numdoc', [str(instance.document_number)] ),
+            ('uidNumber', [new_uid_number] ),
+            ('homedirectory', ['%s%s' % ( settings.LDAP_PEOPLE_HOMEDIRECTORY_PREFIX, ldap_user_name)]),
+            ('gidNumber', [str(instance.group_id)] ),
+            ('ou', [settings.LDAP_PEOPLE]),
+        ]
+        logging.info("Nuevo usuario %s creado en ldap" % new_record )
+        l.add_s(dn, new_record)
+        
