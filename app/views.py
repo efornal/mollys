@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from app.models import Person, Office, DocumentType, Group
+from app.models import Person, Office, DocumentType
 from django.template import Context
 from django.contrib import messages
 from django.db import IntegrityError

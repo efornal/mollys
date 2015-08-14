@@ -154,6 +154,23 @@ class Person(models.Model):
     def surname_and_name(self):
         return "%s, %s" % (self.surname, self.name)
 
+    @classmethod
+    def next_ldap_uid(cls):
+        ldap_condition = "(uidNumber=*)"
+        next_value = 0
+        try:
+            r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN),
+                                        ldap.SCOPE_SUBTREE, ldap_condition, ['uidNumber'])
+            
+            for dn,entry in r:
+                if entry['uidNumber'][0] and int(entry['uidNumber'][0]) > next_value:
+                    next_value = int(entry['uidNumber'][0])
+            if next_value > 0:
+                next_value += 1
+        except ldap.LDAPError, e:
+            logging.error(e)
+            
+        return next_value
 
     @classmethod
     def exists_in_ldap(cls,uid):
@@ -195,7 +212,7 @@ class Person(models.Model):
 @receiver(post_save, sender=Person)
 def update_ldap_user(sender, instance, *args, **kwargs):
     ldap_user_name = str(instance.ldap_user_name) or None
-    new_uid_number = '2002'
+    new_uid_number = Person.next_ldap_uid()
     
     if ldap_user_name and Person.exists_in_ldap(ldap_user_name):
         logging.info("El usuario %s ya existe en ldap. No se actualiza!" % ldap_user_name)
@@ -215,7 +232,7 @@ def update_ldap_user(sender, instance, *args, **kwargs):
                 ('paisdoc', [settings.LDAP_PEOPLE_PAISDOC] ),
                 ('tipodoc', [str(instance.document_type)] ),
                 ('numdoc', [str(instance.document_number)] ),
-                ('uidNumber', [new_uid_number] ),
+                ('uidNumber', [str(new_uid_number)] ),
                 ('homedirectory', ['%s%s' % ( settings.LDAP_PEOPLE_HOMEDIRECTORY_PREFIX, ldap_user_name)]),
                 ('gidNumber', [str(instance.group_id)] ),
                 ('ou', [settings.LDAP_PEOPLE]),
