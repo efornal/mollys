@@ -14,7 +14,6 @@ class PersonAdmin(admin.ModelAdmin):
 
         Person.suggested_name(object_id)
         groups = Group.all()
-        logging.error("REQUES: %s" % request.POST)
         context = {'suggested_ldap_name': Person.suggested_name(object_id), 'groups': groups }
         return super(PersonAdmin, self).change_view(request, object_id,'',context)
 
