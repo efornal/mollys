@@ -14,6 +14,31 @@ def validate_group_existence_in_ldap(value):
     if not (value > 0):
         raise ValidationError('El grupo identificado con %s no existe.' % value)
 
+
+class LdapConn():
+
+    @classmethod
+    def new(cls):
+        try:
+            return ldap.initialize( settings.LDAP_SERVER )
+        except ldap.LDAPError, e:
+            logging.error("Can't connect to LDAP server: %s" % settings.LDAP_SERVER )
+            logging.error(e)
+            raise
+
+    @classmethod
+    def bind_s(cls):
+        try:
+            connection = ldap.initialize( settings.LDAP_SERVER )
+            connection.simple_bind_s( "cn=%s,%s" % ( settings.LDAP_USER_NAME, settings.LDAP_DN ),
+                                          settings.LDAP_USER_PASS )
+            return connection
+        except ldap.LDAPError, e:
+            logging.error(e)
+            raise
+
+    
+    
 class DocumentType(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     name = models.CharField(max_length=100,null=False)
@@ -26,6 +51,7 @@ class DocumentType(models.Model):
     def __unicode__(self):
         return "%s" % (self.name)
 
+    
 class Office(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     name = models.CharField(max_length=200, null=False, verbose_name=_('name'))
@@ -38,6 +64,7 @@ class Office(models.Model):
     def __unicode__(self):
         return "%s" % (self.name)
 
+    
 class Group(models.Model):
     group_id = models.IntegerField()
     name = models.CharField(max_length=200)
@@ -57,9 +84,8 @@ class Group(models.Model):
                                                  settings.LDAP_GROUP_MIN_VALUE)
         rows = []
         try:
-            l = ldap.initialize( settings.LDAP_SERVER )
-            r = l.search_s( "ou=%s,%s" %(settings.LDAP_GROUP, settings.LDAP_DN),
-                            ldap.SCOPE_SUBTREE, ldap_condition, settings.LDAP_GROUP_FIELDS )
+            r = LdapConn.new().search_s( "ou=%s,%s" %(settings.LDAP_GROUP, settings.LDAP_DN),
+                                         ldap.SCOPE_SUBTREE, ldap_condition, settings.LDAP_GROUP_FIELDS )
             for dn,entry in r:
                 row = {}
                 if settings.LDAP_GROUP_FIELDS[0] in entry and settings.LDAP_GROUP_FIELDS[1] in entry:
@@ -68,8 +94,9 @@ class Group(models.Model):
                     rows.append(row)
         except ldap.LDAPError, e:
             logging.error(e)
+
         return rows
-    
+
     
 class Person(models.Model):
 
@@ -127,17 +154,13 @@ class Person(models.Model):
     def surname_and_name(self):
         return "%s, %s" % (self.surname, self.name)
 
-    
-        
-        
 
     @classmethod
     def exists_in_ldap(cls,uid):
         ldap_condition = "(uid=%s)" % uid
         try:
-            l = ldap.initialize( settings.LDAP_SERVER )
-            r = l.search_s("ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN),
-                           ldap.SCOPE_SUBTREE, ldap_condition, settings.LDAP_PEOPLE_FIELDS)
+            r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN),
+                                        ldap.SCOPE_SUBTREE, ldap_condition, settings.LDAP_PEOPLE_FIELDS)
             
             for dn,entry in r:
                 if entry['uid'][0] == uid:
@@ -177,26 +200,30 @@ def update_ldap_user(sender, instance, *args, **kwargs):
     if ldap_user_name and Person.exists_in_ldap(ldap_user_name):
         logging.info("El usuario %s ya existe en ldap. No se actualiza!" % ldap_user_name)
     elif ldap_user_name:
+        try:
+            conn_bind = LdapConn.bind_s()
 
-        l = ldap.initialize( settings.LDAP_SERVER )
-        l.simple_bind_s( "cn=%s,%s" % ( settings.LDAP_USER_NAME, settings.LDAP_DN ),
-                         settings.LDAP_USER_PASS )
+            dn = "uid=%s,ou=%s,%s" % ( ldap_user_name,
+                                       settings.LDAP_PEOPLE,
+                                       settings.LDAP_DN )
+        
+            new_record = [
+                ('objectclass', settings.LDAP_PEOPLE_OBJECTCLASSES),
+                ('cn', ["%s %s" % ( str(instance.name), str(instance.surname) )]),
+                ('sn', [str(instance.surname)] ),
+                ('givenName', [str(instance.name)] ),
+                ('paisdoc', [settings.LDAP_PEOPLE_PAISDOC] ),
+                ('tipodoc', [str(instance.document_type)] ),
+                ('numdoc', [str(instance.document_number)] ),
+                ('uidNumber', [new_uid_number] ),
+                ('homedirectory', ['%s%s' % ( settings.LDAP_PEOPLE_HOMEDIRECTORY_PREFIX, ldap_user_name)]),
+                ('gidNumber', [str(instance.group_id)] ),
+                ('ou', [settings.LDAP_PEOPLE]),
+            ]
+        
+            logging.info("Nuevo usuario %s creado en ldap" % new_record )
+            conn_bind.add_s(dn, new_record)
+        
+        except ldap.LDAPError, e:
+            logging.error(e)
 
-        dn = "uid=%s,ou=%s,%s" % ( ldap_user_name, settings.LDAP_PEOPLE, settings.LDAP_DN )
-        
-        new_record = [
-            ('objectclass', settings.LDAP_PEOPLE_OBJECTCLASSES),
-            ('cn', ["%s %s" % ( str(instance.name), str(instance.surname) )]),
-            ('sn', [str(instance.surname)] ),
-            ('givenName', [str(instance.name)] ),
-            ('paisdoc', [settings.LDAP_PEOPLE_PAISDOC] ),
-            ('tipodoc', [str(instance.document_type)] ),
-            ('numdoc', [str(instance.document_number)] ),
-            ('uidNumber', [new_uid_number] ),
-            ('homedirectory', ['%s%s' % ( settings.LDAP_PEOPLE_HOMEDIRECTORY_PREFIX, ldap_user_name)]),
-            ('gidNumber', [str(instance.group_id)] ),
-            ('ou', [settings.LDAP_PEOPLE]),
-        ]
-        logging.info("Nuevo usuario %s creado en ldap" % new_record )
-        l.add_s(dn, new_record)
-        
