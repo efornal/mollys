@@ -9,6 +9,7 @@ import ldap
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.utils.translation import ugettext as _
+import unicodedata
 
 def validate_group_existence_in_ldap(value):
     if not (value > 0):
@@ -189,14 +190,20 @@ class Person(models.Model):
 
     @classmethod
     def compose_suggested_name( cls, surname, name ):
-        return "%s%s" % ( name[0].lower(), surname.lower().partition(" ")[0] )
+        return Person.strip_accents( "%s%s" % ( name[0].lower(), surname.lower().partition(" ")[0] ) )
 
     @classmethod
     def compose_extended_suggested_name( cls, surname, name ):
         words = ""
         for word in name.lower().split(" "):
             words += word[0]
-        return "%s%s" % ( words, surname.lower().partition(" ")[0] )
+        return Person.strip_accents( "%s%s" % ( words, surname.lower().partition(" ")[0] ) )
+
+    @classmethod
+    def strip_accents(cls,s):
+        import unicodedata
+        return ''.join(c for c in unicodedata.normalize('NFD', s)
+                       if unicodedata.category(c) != 'Mn')
 
     @classmethod
     def suggested_name( cls, object_id ):
@@ -209,6 +216,7 @@ class Person(models.Model):
             return first_try
 
 
+        
 @receiver(post_save, sender=Person)
 def update_ldap_user(sender, instance, *args, **kwargs):
     ldap_user_name = str(instance.ldap_user_name) or None
