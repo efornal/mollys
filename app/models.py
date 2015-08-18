@@ -186,6 +186,7 @@ class Person(models.Model):
 
         except ldap.LDAPError, e:
             logging.error(e)
+            raise
         return False
 
     @classmethod

@@ -11,10 +11,12 @@ class PersonAdmin(admin.ModelAdmin):
                      'received_application']
     
     def change_view(self, request, object_id, form_url='', extra_context=None):
-
-        Person.suggested_name(object_id)
+        person = Person.objects.get(id=object_id)
+        exists_in_ldap = Person.exists_in_ldap( person.ldap_user_name )
         groups = Group.all()
-        context = {'suggested_ldap_name': Person.suggested_name(object_id), 'groups': groups }
+        context = {'suggested_ldap_name': Person.suggested_name(object_id),
+                   'groups': groups,
+                   'exists_in_ldap': exists_in_ldap }
         return super(PersonAdmin, self).change_view(request, object_id,'',context)
 
     
