@@ -131,6 +131,7 @@
         <div class="controls">
           <div class="related-widget-wrapper">
             <select id="group_id" name="group_id">
+              <option value="0">Seleccione uno</option>
               {% for group in groups %}
               <option value="{{ group.gidNumber }}" {% ifequal field.field.value group.gidNumber %} selected="selected" {%endifequal%}>
               {{ group.cn }}</option>

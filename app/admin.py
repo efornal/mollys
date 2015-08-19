@@ -17,6 +17,9 @@ class PersonAdminForm(forms.ModelForm):
         if self.cleaned_data["ldap_user_name"] and not self.cleaned_data["received_application"]:
             raise forms.ValidationError( "No es posible asignar un usuario ldap " \
                                          "sin confirmar la 'solicitud recibida'" )
+
+        if self.instance.pk and not self.cleaned_data["group_id"]:
+            raise forms.ValidationError( "El atributo 'Grupo' es requerido")                 
     
 class PersonAdmin(admin.ModelAdmin):
     form = PersonAdminForm
