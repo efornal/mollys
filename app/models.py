@@ -225,13 +225,18 @@ class Person(models.Model):
         
 @receiver(post_save, sender=Person)
 def update_ldap_user(sender, instance, *args, **kwargs):
-    ldap_user_name = str(instance.ldap_user_name) or None
-    new_uid_number = Person.next_ldap_uid()
-    
-    if ldap_user_name and Person.exists_in_ldap(ldap_user_name):
+
+    ldap_user_name = str(instance.ldap_user_name) if instance.ldap_user_name else None
+
+    if ldap_user_name is None:
+        logging.info("No se proporsinó usuario de ldap. No se actualiza!")
+    elif ldap_user_name and Person.exists_in_ldap(ldap_user_name):
         logging.info("El usuario %s ya existe en ldap. No se actualiza!" % ldap_user_name)
     elif ldap_user_name:
         try:
+
+            new_uid_number = Person.next_ldap_uid()
+
             conn_bind = LdapConn.bind_s()
 
             dn = "uid=%s,ou=%s,%s" % ( ldap_user_name,
