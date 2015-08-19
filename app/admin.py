@@ -3,8 +3,23 @@ from django.contrib import admin
 from app.models import Person, Office, Group
 import logging
 from django.forms.widgets import HiddenInput
+from django.contrib import admin
+from django import forms
 
+ 
+class PersonAdminForm(forms.ModelForm):
+    
+    class Meta:
+        model = Person
+        fields = '__all__'
+        
+    def clean(self):
+        if self.cleaned_data["ldap_user_name"] and not self.cleaned_data["received_application"]:
+            raise forms.ValidationError( "No es posible asignar un usuario ldap " \
+                                         "sin confirmar la 'solicitud recibida'" )
+    
 class PersonAdmin(admin.ModelAdmin):
+    form = PersonAdminForm
     list_display = ('surname', 'name', 'document_number', 'ldap_user_name',
                     'received_application')
     search_fields = ['surname', 'name', 'document_number', 'ldap_user_name',
