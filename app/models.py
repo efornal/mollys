@@ -191,19 +191,28 @@ class Person(models.Model):
 
     @classmethod
     def compose_suggested_name( cls, surname, name ):
-        return Person.strip_accents( "%s%s" % ( name[0].lower(), surname.lower().partition(" ")[0] ) )
+        return Person.strip_accents( "%s%s" % ( name.strip()[0].lower(),
+                                                surname.lower().strip().partition(" ")[0] ) )
 
     @classmethod
     def compose_extended_suggested_name( cls, surname, name ):
-        words = ""
-        for word in name.lower().split(" "):
-            words += word[0]
-        return Person.strip_accents( "%s%s" % ( words, surname.lower().partition(" ")[0] ) )
+        names = ""
+        for word in name.lower().strip().split(" "):
+            if len(word) > 1: names += word[0] 
+        return Person.strip_accents( "%s%s" % ( names,
+                                                surname.lower().strip().partition(" ")[0] ) )
 
     @classmethod
     def strip_accents(cls,s):
-        return ''.join(c for c in unicodedata.normalize('NFD', s)
-                       if unicodedata.category(c) != 'Mn')
+        if not isinstance(s, unicode):
+            text = unicodedata.normalize('NFKD', unicode(s, 'utf8'))
+            return u"".join([c for c in text if not unicodedata.combining(c)])
+
+            # return ''.join(c for c in unicodedata.normalize('NFD', unicode(s))
+            #                if unicodedata.category(c) != 'Mn')
+        else:
+            return ''.join(c for c in unicodedata.normalize('NFD', s)
+                           if unicodedata.category(c) != 'Mn')
 
     @classmethod
     def suggested_name( cls, object_id ):
