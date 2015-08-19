@@ -207,9 +207,6 @@ class Person(models.Model):
         if not isinstance(s, unicode):
             text = unicodedata.normalize('NFKD', unicode(s, 'utf8'))
             return u"".join([c for c in text if not unicodedata.combining(c)])
-
-            # return ''.join(c for c in unicodedata.normalize('NFD', unicode(s))
-            #                if unicodedata.category(c) != 'Mn')
         else:
             return ''.join(c for c in unicodedata.normalize('NFD', s)
                            if unicodedata.category(c) != 'Mn')
