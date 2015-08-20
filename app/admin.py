@@ -5,8 +5,37 @@ import logging
 from django.forms.widgets import HiddenInput
 from django.contrib import admin
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
- 
+class ReceivedApplicationFilter(admin.SimpleListFilter):
+    title = _('received_application')
+
+    parameter_name = 'received_application'
+
+    def lookups(self, request, model_admin):
+        return (
+            (None, _('No')),
+            ('yes', _('Yes')),
+            ('all', _('All')),
+        )
+
+    def choices(self, cl):
+        for lookup, title in self.lookup_choices:
+            yield {
+                'selected': self.value() == lookup,
+                'query_string': cl.get_query_string({
+                    self.parameter_name: lookup,
+                }, []),
+                'display': title,
+            }
+
+    def queryset(self, request, queryset):
+        if self.value() == 'yes':
+            return queryset.filter(received_application=True)    
+        elif self.value() == None:
+            return queryset.filter(received_application=False)
+
+
 class PersonAdminForm(forms.ModelForm):
     
     class Meta:
@@ -20,13 +49,15 @@ class PersonAdminForm(forms.ModelForm):
 
         if self.instance.pk and not self.cleaned_data["group_id"]:
             raise forms.ValidationError( "El atributo 'Grupo' es requerido")                 
-    
+
+        
 class PersonAdmin(admin.ModelAdmin):
     form = PersonAdminForm
     list_display = ('surname', 'name', 'document_number', 'ldap_user_name',
                     'received_application')
     search_fields = ['surname', 'name', 'document_number', 'ldap_user_name',
                      'received_application']
+    list_filter = (ReceivedApplicationFilter,)
     
     def change_view(self, request, object_id, form_url='', extra_context=None):
         person = Person.objects.get(id=object_id)
