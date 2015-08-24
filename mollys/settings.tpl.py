@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 """
 Django settings for mollys project.
 
@@ -12,7 +13,6 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 from django.utils.translation import ugettext_lazy as _
@@ -64,6 +64,8 @@ SECRET_KEY = 'tfp%=#=oszs#x4wea8mkm60p=nmg3l9)jq5g1%s_ev#_4$w#&-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+#TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -181,6 +183,7 @@ LOCALE_PATHS = (
 #         format = " %(levelname)s %(name)s: %(message)s",
 #     )
 
+DEFAULT_CHARSET = 'utf-8'
 
 SUIT_CONFIG = {
     'ADMIN_NAME': 'Mollys'
