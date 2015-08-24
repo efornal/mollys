@@ -38,6 +38,9 @@ class LdapConn():
             logging.error(e)
             raise
 
+    @classmethod
+    def parseattr (cls, s):
+        return s.encode("utf8","ignore")
     
     
 class DocumentType(models.Model):
@@ -50,7 +53,7 @@ class DocumentType(models.Model):
         verbose_name_plural = _('DocumentTypes')
         
     def __unicode__(self):
-        return "%s" % (self.name)
+        return self.name
 
     
 class Office(models.Model):
@@ -63,7 +66,7 @@ class Office(models.Model):
         verbose_name_plural = _('offices')
 
     def __unicode__(self):
-        return "%s" % (self.name)
+        return self.name
 
     
 class Group(models.Model):
@@ -77,7 +80,7 @@ class Group(models.Model):
         
         
     def __unicode__(self):
-        return ""
+        return self.name
     
     @classmethod
     def all(cls):
@@ -147,7 +150,7 @@ class Person(models.Model):
         verbose_name_plural = _('people')
 
     def __unicode__(self):
-        return "%s" % (self.name)
+        return self.name
 
     def name_and_surname(self):
         return "%s, %s" % (self.name, self.surname)
@@ -221,8 +224,6 @@ class Person(models.Model):
         else:
             return first_try
 
-
-        
 @receiver(post_save, sender=Person)
 def update_ldap_user(sender, instance, *args, **kwargs):
 
@@ -235,6 +236,7 @@ def update_ldap_user(sender, instance, *args, **kwargs):
     elif ldap_user_name:
         try:
 
+
             new_uid_number = Person.next_ldap_uid()
 
             conn_bind = LdapConn.bind_s()
@@ -242,17 +244,20 @@ def update_ldap_user(sender, instance, *args, **kwargs):
             dn = "uid=%s,ou=%s,%s" % ( ldap_user_name,
                                        settings.LDAP_PEOPLE,
                                        settings.LDAP_DN )
-        
+            cnuser = LdapConn.parseattr( "%s %s" % (instance.name, instance.surname) )
+            snuser = LdapConn.parseattr( "%s" % instance.surname )
+            
             new_record = [
                 ('objectclass', settings.LDAP_PEOPLE_OBJECTCLASSES),
-                ('cn', ["%s %s" % ( str(instance.name), str(instance.surname) )]),
-                ('sn', [str(instance.surname)] ),
-                ('givenName', [str(instance.name)] ),
+                ('cn', [cnuser]),
+                ('sn', [snuser]),
+                ('givenName', [ LdapConn.parseattr(instance.name)] ),
                 ('paisdoc', [settings.LDAP_PEOPLE_PAISDOC] ),
                 ('tipodoc', [str(instance.document_type)] ),
                 ('numdoc', [str(instance.document_number)] ),
                 ('uidNumber', [str(new_uid_number)] ),
-                ('homedirectory', ['%s%s' % ( settings.LDAP_PEOPLE_HOMEDIRECTORY_PREFIX, ldap_user_name)]),
+                ('homedirectory', ['%s%s' % ( settings.LDAP_PEOPLE_HOMEDIRECTORY_PREFIX,
+                                              ldap_user_name)]),
                 ('gidNumber', [str(instance.group_id)] ),
                 ('ou', [settings.LDAP_PEOPLE]),
             ]
