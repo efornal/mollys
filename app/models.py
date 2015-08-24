@@ -81,6 +81,21 @@ class Group(models.Model):
         
     def __unicode__(self):
         return self.name
+
+    @classmethod
+    def cn_group_by_gid(cls, gid):
+        ldap_condition = "(gidNumber=%s)" % gid
+        cn_found = None
+        try:
+            r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_GROUP, settings.LDAP_DN),
+                                        ldap.SCOPE_SUBTREE, ldap_condition, ['cn'])
+            for dn,entry in r:
+                if 'cn' in entry and entry['cn'][0]:
+                    cn_found = entry['cn'][0]
+                
+        except ldap.LDAPError, e:
+            logging.error(e)
+        return cn_found
     
     @classmethod
     def all(cls):
@@ -162,10 +177,11 @@ class Person(models.Model):
     def next_ldap_uid(cls):
         ldap_condition = "(uidNumber=*)"
         next_value = 0
+        ldap_dn ="ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN)
         try:
-            r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN),
-                                        ldap.SCOPE_SUBTREE, ldap_condition, ['uidNumber'])
-            
+            r = LdapConn.new().search_s(ldap_dn,ldap.SCOPE_SUBTREE,
+                                        ldap_condition, ['uidNumber'])
+
             for dn,entry in r:
                 if entry['uidNumber'][0] and int(entry['uidNumber'][0]) > next_value:
                     next_value = int(entry['uidNumber'][0])
@@ -175,6 +191,7 @@ class Person(models.Model):
             logging.error(e)
             
         return next_value
+        
 
     @classmethod
     def exists_in_ldap(cls,uid):
@@ -236,18 +253,21 @@ def update_ldap_user(sender, instance, *args, **kwargs):
     elif ldap_user_name:
         try:
 
-
             new_uid_number = Person.next_ldap_uid()
-
+            cn_group = Group.cn_group_by_gid(instance.group_id)
             conn_bind = LdapConn.bind_s()
 
-            dn = "uid=%s,ou=%s,%s" % ( ldap_user_name,
+            udn = "uid=%s,ou=%s,%s" % ( ldap_user_name,
                                        settings.LDAP_PEOPLE,
                                        settings.LDAP_DN )
+            gdn = "cn=%s,ou=%s,%s" % ( cn_group,
+                                        settings.LDAP_GROUP,
+                                        settings.LDAP_DN )
+
             cnuser = LdapConn.parseattr( "%s %s" % (instance.name, instance.surname) )
             snuser = LdapConn.parseattr( "%s" % instance.surname )
-            
-            new_record = [
+
+            new_user = [
                 ('objectclass', settings.LDAP_PEOPLE_OBJECTCLASSES),
                 ('cn', [cnuser]),
                 ('sn', [snuser]),
@@ -256,15 +276,20 @@ def update_ldap_user(sender, instance, *args, **kwargs):
                 ('tipodoc', [str(instance.document_type)] ),
                 ('numdoc', [str(instance.document_number)] ),
                 ('uidNumber', [str(new_uid_number)] ),
-                ('homedirectory', ['%s%s' % ( settings.LDAP_PEOPLE_HOMEDIRECTORY_PREFIX,
-                                              ldap_user_name)]),
+                ('homedirectory', [str('%s%s' % ( settings.LDAP_PEOPLE_HOMEDIRECTORY_PREFIX,
+                                                  ldap_user_name))]),
                 ('gidNumber', [str(instance.group_id)] ),
-                ('ou', [settings.LDAP_PEOPLE]),
+                ('ou', [str(settings.LDAP_PEOPLE)]),
             ]
+            
+            update_group = [( ldap.MOD_ADD, 'memberUid', ldap_user_name )]
         
-            logging.info("Nuevo usuario %s creado en ldap" % new_record )
-            conn_bind.add_s(dn, new_record)
-        
+            logging.info("Creando usuario en ldap: %s " % new_user )
+            conn_bind.add_s(udn, new_user)
+
+            logging.info("Agregando nuevo miembro en ldap: %s " % update_group )
+            conn_bind.modify(gdn, update_group)
+            
         except ldap.LDAPError, e:
             logging.error(e)
 
