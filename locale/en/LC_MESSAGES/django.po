@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 12:28-0300\n"
+"POT-Creation-Date: 2015-08-25 13:04-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -25,6 +25,10 @@ msgstr "All"
 msgid "received_application_required"
 msgstr ""
 "You can not assign a user ldap without confirming the 'application received'"
+
+#: app/admin.py:52
+msgid "required_attribute_group"
+msgstr "Group: This field is required"
 
 #: app/forms.py:10 app/models.py:122 templates/new.html:20
 msgid "names"

@@ -49,7 +49,7 @@ class PersonAdminForm(forms.ModelForm):
             raise forms.ValidationError( _('received_application_required') )
 
         if self.instance.pk and not self.cleaned_data["group_id"]:
-            raise forms.ValidationError( 'Group: This field is required' )
+            raise forms.ValidationError( _('required_attribute_group') )
 
         
 class PersonAdmin(admin.ModelAdmin):
