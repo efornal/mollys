@@ -1,95 +1,121 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-28 12:43-0300\n"
+"POT-Creation-Date: 2015-08-25 12:28-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/forms.py:13 app/forms.py:16 app/forms.py:22
-msgid "required_attribute"
-msgstr "Es un atributo requerido"
-
-#: app/forms.py:17 app/forms.py:23 app/models.py:44
-msgid "invalid_value"
-msgstr "Ingrese un valor válido"
-
-#: app/models.py:19
-msgid "DocumentType"
-msgstr "Tipo Documento"
-
-#: app/models.py:20
-msgid "DocumentTypes"
-msgstr "Tipos de Documentos"
-
-#: app/models.py:27
-msgid "name"
-msgstr "Nombre"
-
-#: app/models.py:31 app/models.py:69 templates/new.html:82
-msgid "office"
-msgstr "Secretaría"
-
-#: app/models.py:32
-msgid "offices"
-msgstr "Secretarías"
-
-#: app/models.py:48 templates/new.html:20
-msgid "names"
-msgstr "Nombres"
-
-#: app/models.py:50 templates/new.html:25
-msgid "surnames"
-msgstr "Apellidos"
-
-#: app/models.py:53
-msgid "document_number"
-msgstr "Número Documento"
-
-#: app/models.py:55
-msgid "document_type"
-msgstr "Tipo Documento"
-
-#: app/models.py:57 app/views.py:155 templates/new.html:74
-msgid "position"
-msgstr "Cargo"
-
-#: app/models.py:59 app/views.py:159 templates/new.html:53
-msgid "work_phone"
-msgstr "Teléfono laboral"
-
-#: app/models.py:61 app/views.py:163
-msgid "home_phone"
-msgstr "Teléfono particular"
-
-#: app/models.py:63 app/views.py:167 templates/new.html:66
-msgid "address"
-msgstr "Domicilio"
-
-#: app/models.py:65
-msgid "created_at"
-msgstr "creado"
-
-#: app/models.py:67
-msgid "updated_at"
-msgstr "actualizado"
-
-#: app/models.py:71 templates/new.html:99
-msgid "other_office"
-msgstr "Otra Secretaría"
-
-#: app/models.py:73
-msgid "ldap_user_name"
-msgstr "Nombre de usuario ldap"
-
-#: app/models.py:76
+#: app/admin.py:13 app/forms.py:42 app/models.py:150
 msgid "received_application"
 msgstr "Solicitud recibida"
 
-#: app/models.py:80
+#: app/admin.py:19
+msgid "No"
+msgstr "No"
+
+#: app/admin.py:20
+msgid "Yes"
+msgstr "Sí"
+
+#: app/admin.py:21
+msgid "All"
+msgstr "Todos"
+
+#: app/admin.py:49
+msgid "received_application_required"
+msgstr ""
+"No es posible asignar un usuario ldap sin antes confirmar la 'solicitud "
+"recibida'"
+
+#: app/forms.py:10 app/models.py:122 templates/new.html:20
+msgid "names"
+msgstr "Nombres"
+
+#: app/forms.py:12 app/models.py:124 templates/new.html:25
+msgid "surnames"
+msgstr "Apellidos"
+
+#: app/forms.py:14 app/models.py:127
+msgid "document_number"
+msgstr "Número Documento"
+
+#: app/forms.py:18 app/models.py:129
+msgid "document_type"
+msgstr "Tipo Documento"
+
+#: app/forms.py:21 app/models.py:131 app/views.py:155 templates/new.html:74
+msgid "position"
+msgstr "Cargo"
+
+#: app/forms.py:26 app/models.py:60 app/models.py:143 templates/new.html:82
+msgid "office"
+msgstr "Secretaría"
+
+#: app/forms.py:28 app/models.py:133 app/views.py:159 templates/new.html:53
+msgid "work_phone"
+msgstr "Teléfono laboral"
+
+#: app/forms.py:30 app/models.py:135 app/views.py:163
+msgid "home_phone"
+msgstr "Teléfono particular"
+
+#: app/forms.py:32 app/models.py:137 app/views.py:167 templates/new.html:66
+msgid "address"
+msgstr "Domicilio"
+
+#: app/forms.py:34 app/models.py:139
+msgid "created_at"
+msgstr "creado"
+
+#: app/forms.py:36 app/models.py:141
+msgid "updated_at"
+msgstr "actualizado"
+
+#: app/forms.py:38 app/models.py:145 templates/new.html:99
+msgid "other_office"
+msgstr "Otra Secretaría"
+
+#: app/forms.py:40 app/models.py:147
+msgid "ldap_user_name"
+msgstr "Nombre de usuario ldap"
+
+#: app/forms.py:44 app/models.py:151
+msgid "group_id"
+msgstr "Grupo"
+
+#: app/models.py:47
+msgid "DocumentType"
+msgstr "Tipo Documento"
+
+#: app/models.py:48
+msgid "DocumentTypes"
+msgstr "Tipos de Documentos"
+
+#: app/models.py:56
+msgid "name"
+msgstr "Nombre"
+
+#: app/models.py:61
+msgid "offices"
+msgstr "Secretarías"
+
+#: app/models.py:72
+msgid "Group"
+msgstr "Grupo"
+
+#: app/models.py:73
+msgid "Groups"
+msgstr "Grupos"
+
+#: app/models.py:118
+msgid "invalid_value"
+msgstr "Ingrese un valor válido"
+
+#: app/models.py:159
 msgid "person"
 msgstr "Persona"
 
-#: app/models.py:81
+#: app/models.py:160
 msgid "people"
 msgstr "Personas"
 
@@ -154,12 +180,11 @@ msgstr "Firma"
 msgid "firm_responsible"
 msgstr "Firma y aclaración del responsable del área/sector"
 
-#: mollys/settings.py:22 mollys/settings.tpl.py:21 templates/base.html:59
+#: mollys/settings.py:21 mollys/settings.tpl.py:21 templates/base.html:59
 msgid "Spanish"
 msgstr "Español"
 
-#: mollys/settings.py:23 mollys/settings.py:24 mollys/settings.tpl.py:22
-#: templates/base.html:61
+#: mollys/settings.py:22 mollys/settings.tpl.py:22 templates/base.html:61
 msgid "English"
 msgstr "Inglés"
 

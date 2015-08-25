@@ -13,7 +13,7 @@ import unicodedata
 
 def validate_group_existence_in_ldap(value):
     if not (value > 0):
-        raise ValidationError('El grupo identificado con %s no existe.' % value)
+        raise ValidationError("The group identified as '%s' does not exist" % value)
 
 
 class LdapConn():
@@ -27,8 +27,7 @@ class LdapConn():
             return connection
 
         except ldap.LDAPError:
-            logging.error("No se pudo establecer la conexión con el servidor Ldap: '%s'" \
-                          % settings.LDAP_SERVER )
+            logging.error("Could not connect to the Ldap server: '%s'" % settings.LDAP_SERVER )
             raise
         except e:
             logging.error(e)
@@ -239,9 +238,9 @@ def update_ldap_user(sender, instance, *args, **kwargs):
     ldap_user_name = str(instance.ldap_user_name) if instance.ldap_user_name else None
 
     if ldap_user_name is None:
-        logging.info("No se proporsinó usuario de ldap. No se actualiza!")
+        logging.info("An LDAP user was not given. It is not updated!")
     elif ldap_user_name and Person.exists_in_ldap(ldap_user_name):
-        logging.info("El usuario %s ya existe en ldap. No se actualiza!" % ldap_user_name)
+        logging.info("User %s already exists in Ldap. It is not updated!" % ldap_user_name)
     elif ldap_user_name:
 
         new_uid_number = Person.next_ldap_uid()
@@ -274,8 +273,8 @@ def update_ldap_user(sender, instance, *args, **kwargs):
             
         update_group = [( ldap.MOD_ADD, 'memberUid', ldap_user_name )]
         
-        logging.info("Creando usuario en ldap: %s " % new_user )
+        logging.info("Creating user in Ldap: %s " % new_user )
         LdapConn.new().add_s(udn, new_user)
 
-        logging.info("Agregando nuevo miembro en ldap: %s " % update_group )
+        logging.info("Adding new member in ldap: %s " % update_group )
         LdapConn.new().modify(gdn, update_group)
