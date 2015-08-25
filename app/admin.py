@@ -74,8 +74,7 @@ class PersonAdmin(admin.ModelAdmin):
             exists_in_ldap = Person.exists_in_ldap( person.ldap_user_name )
             groups = Group.all()
             suggested_ldap_name = Person.suggested_name(object_id)
-        except ldap.LDAPError, e:
-            logging.error(e)
+        except ldap.LDAPError:
             messages.error(request, 'No se pudo establecer la conexión con el servidor Ldap')
     
         context = {'suggested_ldap_name': suggested_ldap_name,
