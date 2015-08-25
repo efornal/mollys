@@ -6,6 +6,8 @@ from django.forms.widgets import HiddenInput
 from django.contrib import admin
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+from django.contrib import messages
+import ldap
 
 class ReceivedApplicationFilter(admin.SimpleListFilter):
     title = _('received_application')
@@ -52,6 +54,8 @@ class PersonAdminForm(forms.ModelForm):
 
         
 class PersonAdmin(admin.ModelAdmin):
+
+
     form = PersonAdminForm
     list_display = ('surname', 'name', 'document_number', 'ldap_user_name',
                     'received_application')
@@ -60,12 +64,24 @@ class PersonAdmin(admin.ModelAdmin):
     list_filter = (ReceivedApplicationFilter,)
     
     def change_view(self, request, object_id, form_url='', extra_context=None):
+
         person = Person.objects.get(id=object_id)
-        exists_in_ldap = Person.exists_in_ldap( person.ldap_user_name )
-        groups = Group.all()
-        context = {'suggested_ldap_name': Person.suggested_name(object_id),
+        exists_in_ldap = None
+        groups = None
+        suggested_ldap_name = ''
+        
+        try:
+            exists_in_ldap = Person.exists_in_ldap( person.ldap_user_name )
+            groups = Group.all()
+            suggested_ldap_name = Person.suggested_name(object_id)
+        except ldap.LDAPError, e:
+            logging.error(e)
+            messages.error(request, 'No se pudo establecer la conexión con el servidor Ldap')
+    
+        context = {'suggested_ldap_name': suggested_ldap_name,
                    'groups': groups,
                    'exists_in_ldap': exists_in_ldap }
+        
         return super(PersonAdmin, self).change_view(request, object_id,'',context)
 
     
