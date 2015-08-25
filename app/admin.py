@@ -66,16 +66,10 @@ class PersonAdmin(admin.ModelAdmin):
     def change_view(self, request, object_id, form_url='', extra_context=None):
 
         person = Person.objects.get(id=object_id)
-        exists_in_ldap = None
-        groups = None
-        suggested_ldap_name = ''
         
-        try:
-            exists_in_ldap = Person.exists_in_ldap( person.ldap_user_name )
-            groups = Group.all()
-            suggested_ldap_name = Person.suggested_name(object_id)
-        except ldap.LDAPError:
-            messages.error(request, 'No se pudo establecer la conexión con el servidor Ldap')
+        exists_in_ldap = Person.exists_in_ldap( person.ldap_user_name )
+        groups = Group.all()
+        suggested_ldap_name = Person.suggested_name(object_id)
     
         context = {'suggested_ldap_name': suggested_ldap_name,
                    'groups': groups,
