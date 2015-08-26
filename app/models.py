@@ -39,9 +39,9 @@ class LdapConn():
             connection = ldap.initialize( settings.LDAP_SERVER )
             connection.simple_bind_s( "cn=%s,%s" % ( settings.LDAP_USER_NAME, settings.LDAP_DN ),
                                       settings.LDAP_USER_PASS )
-            return connection
+            return True
         except ldap.LDAPError, e:
-            return None
+            return False
         
     @classmethod
     def parseattr (cls, s):

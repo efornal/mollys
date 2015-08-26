@@ -66,17 +66,21 @@ class PersonAdmin(admin.ModelAdmin):
     def change_view(self, request, object_id, form_url='', extra_context=None):
 
         person = Person.objects.get(id=object_id)
-        
-        exists_in_ldap = Person.exists_in_ldap( person.ldap_user_name )
-        groups = Group.all()
-        suggested_ldap_name = Person.suggested_name(object_id)
-        hide_save_box = False if LdapConn.enable is None else True
-        if hide_save_box:
+        enable_ldap_connection = LdapConn.enable()
+        exists_in_ldap = None
+        groups = None
+        suggested_ldap_name = ''
+
+        if enable_ldap_connection:
+            exists_in_ldap = Person.exists_in_ldap( person.ldap_user_name )
+            groups = Group.all()
+            suggested_ldap_name = Person.suggested_name(object_id)
+        else:
             messages.warning(request, _('ldap_without_connection'))
         
         context = {'suggested_ldap_name': suggested_ldap_name,
                    'groups': groups,
-                   'hide_save_box': hide_save_box,
+                   'hide_save_box': (not enable_ldap_connection),
                    'exists_in_ldap': exists_in_ldap }
         
         return super(PersonAdmin, self).change_view(request, object_id,'',context)
