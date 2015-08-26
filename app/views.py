@@ -57,7 +57,7 @@ def create(request):
                 request.session['has_registered'] = True
                 return outcome_success(request, f)
             except IntegrityError:
-                logging.error('Error de integridad en la base de datos.')
+                logging.error('Database integrity error')
                 return outcome_error(request, f)
         else:
             return render(request, 'new.html', {'form': form, 'offices': offices,

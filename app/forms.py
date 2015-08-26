@@ -20,7 +20,7 @@ class PersonForm(forms.ModelForm):
     position = forms.CharField(max_length=200, required=False,
                                label=_('position'))
     office   = forms.ModelChoiceField(queryset=Office.objects.all(),
-                                      empty_label="(Especificar Otra)",
+                                      empty_label= "(%s)" % _('specify_other'),
                                       to_field_name= "id",
                                       required=False,
                                       label=_('office'))

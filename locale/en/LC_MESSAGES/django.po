@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-25 13:04-0300\n"
+"POT-Creation-Date: 2015-08-26 08:38-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -49,6 +49,10 @@ msgstr "ID Type"
 #: app/forms.py:21 app/models.py:131 app/views.py:155 templates/new.html:74
 msgid "position"
 msgstr "Job title"
+
+#: app/forms.py:23
+msgid "specify_other"
+msgstr "Specify other"
 
 #: app/forms.py:26 app/models.py:60 app/models.py:143 templates/new.html:82
 msgid "office"
