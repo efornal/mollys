@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-26 08:38-0300\n"
+"POT-Creation-Date: 2015-08-26 10:00-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -51,7 +51,7 @@ msgstr "Tipo Documento"
 msgid "position"
 msgstr "Cargo"
 
-#: app/forms.py:23
+#: app/forms.py:23 templates/new.html:92
 msgid "specify_other"
 msgstr "Especificar otra"
 
@@ -79,7 +79,7 @@ msgstr "creado"
 msgid "updated_at"
 msgstr "actualizado"
 
-#: app/forms.py:38 app/models.py:145 templates/new.html:99
+#: app/forms.py:38 app/models.py:145 templates/new.html:100
 msgid "other_office"
 msgstr "Otra Secretaría"
 
@@ -239,11 +239,15 @@ msgstr "Mollys"
 msgid "short_home_phone"
 msgstr "Particular"
 
-#: templates/new.html:110
+#: templates/new.html:85
+msgid "select_one"
+msgstr "Seleccione una"
+
+#: templates/new.html:111
 msgid "cancel"
 msgstr "Cancelar"
 
-#: templates/new.html:112
+#: templates/new.html:113
 msgid "send_request"
 msgstr "Enviar Solicitud"
 

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-26 08:38-0300\n"
+"POT-Creation-Date: 2015-08-26 10:00-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -50,7 +50,7 @@ msgstr "ID Type"
 msgid "position"
 msgstr "Job title"
 
-#: app/forms.py:23
+#: app/forms.py:23 templates/new.html:92
 msgid "specify_other"
 msgstr "Specify other"
 
@@ -78,7 +78,7 @@ msgstr "Created at"
 msgid "updated_at"
 msgstr "Updated at"
 
-#: app/forms.py:38 app/models.py:145 templates/new.html:99
+#: app/forms.py:38 app/models.py:145 templates/new.html:100
 msgid "other_office"
 msgstr "Another office"
 
@@ -240,11 +240,15 @@ msgstr "Mollys"
 msgid "short_home_phone"
 msgstr "Home Phone"
 
-#: templates/new.html:110
+#: templates/new.html:85
+msgid "select_one"
+msgstr "Select one"
+
+#: templates/new.html:111
 msgid "cancel"
 msgstr "Cancel"
 
-#: templates/new.html:112
+#: templates/new.html:113
 msgid "send_request"
 msgstr "Send request"
 

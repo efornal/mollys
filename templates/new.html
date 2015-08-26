@@ -82,6 +82,7 @@
               <label for="select" class="col-sm-2 control-label">{{ _("office") }} *</label>
               <div class="col-sm-10">
                 <select class="form-control" id="office_id" name="office">
+                  <option value="0">{{ _("select_one") }}</option>
                   {% for office in offices %}
                     <option value="{{office.id}}"
                     {% if office.id == form.office.value|add:0 %}selected="selected"{% endif %}>
