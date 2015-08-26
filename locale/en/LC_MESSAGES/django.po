@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-26 10:00-0300\n"
+"POT-Creation-Date: 2015-08-26 12:16-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/admin.py:13 app/forms.py:42 app/models.py:150
+#: app/admin.py:13 app/forms.py:42 app/models.py:160
 msgid "received_application"
 msgstr "Received application"
 
@@ -30,23 +30,27 @@ msgstr ""
 msgid "required_attribute_group"
 msgstr "Group: This field is required"
 
-#: app/forms.py:10 app/models.py:122 templates/new.html:20
+#: app/admin.py:75
+msgid "ldap_without_connection"
+msgstr "Unable to connect to the LDAP server. Some options are not available"
+
+#: app/forms.py:10 app/models.py:132 templates/new.html:20
 msgid "names"
 msgstr "Names"
 
-#: app/forms.py:12 app/models.py:124 templates/new.html:25
+#: app/forms.py:12 app/models.py:134 templates/new.html:25
 msgid "surnames"
 msgstr "Surnames"
 
-#: app/forms.py:14 app/models.py:127
+#: app/forms.py:14 app/models.py:137
 msgid "document_number"
 msgstr "ID Number"
 
-#: app/forms.py:18 app/models.py:129
+#: app/forms.py:18 app/models.py:139
 msgid "document_type"
 msgstr "ID Type"
 
-#: app/forms.py:21 app/models.py:131 app/views.py:155 templates/new.html:74
+#: app/forms.py:21 app/models.py:141 app/views.py:155 templates/new.html:74
 msgid "position"
 msgstr "Job title"
 
@@ -54,75 +58,75 @@ msgstr "Job title"
 msgid "specify_other"
 msgstr "Specify other"
 
-#: app/forms.py:26 app/models.py:60 app/models.py:143 templates/new.html:82
+#: app/forms.py:26 app/models.py:70 app/models.py:153 templates/new.html:82
 msgid "office"
 msgstr "Office"
 
-#: app/forms.py:28 app/models.py:133 app/views.py:159 templates/new.html:53
+#: app/forms.py:28 app/models.py:143 app/views.py:159 templates/new.html:53
 msgid "work_phone"
 msgstr "Work phone"
 
-#: app/forms.py:30 app/models.py:135 app/views.py:163
+#: app/forms.py:30 app/models.py:145 app/views.py:163
 msgid "home_phone"
 msgstr "Home phone"
 
-#: app/forms.py:32 app/models.py:137 app/views.py:167 templates/new.html:66
+#: app/forms.py:32 app/models.py:147 app/views.py:167 templates/new.html:66
 msgid "address"
 msgstr "Address"
 
-#: app/forms.py:34 app/models.py:139
+#: app/forms.py:34 app/models.py:149
 msgid "created_at"
 msgstr "Created at"
 
-#: app/forms.py:36 app/models.py:141
+#: app/forms.py:36 app/models.py:151
 msgid "updated_at"
 msgstr "Updated at"
 
-#: app/forms.py:38 app/models.py:145 templates/new.html:100
+#: app/forms.py:38 app/models.py:155 templates/new.html:100
 msgid "other_office"
 msgstr "Another office"
 
-#: app/forms.py:40 app/models.py:147
+#: app/forms.py:40 app/models.py:157
 msgid "ldap_user_name"
 msgstr "ldap username"
 
-#: app/forms.py:44 app/models.py:151
+#: app/forms.py:44 app/models.py:161
 msgid "group_id"
 msgstr "Group"
 
-#: app/models.py:47
+#: app/models.py:57
 msgid "DocumentType"
 msgstr "Document Type"
 
-#: app/models.py:48
+#: app/models.py:58
 msgid "DocumentTypes"
 msgstr "Document Types"
 
-#: app/models.py:56
+#: app/models.py:66
 msgid "name"
 msgstr "Name"
 
-#: app/models.py:61
+#: app/models.py:71
 msgid "offices"
 msgstr "Offices"
 
-#: app/models.py:72
+#: app/models.py:82
 msgid "Group"
 msgstr "Group"
 
-#: app/models.py:73
+#: app/models.py:83
 msgid "Groups"
 msgstr "Groups"
 
-#: app/models.py:118
+#: app/models.py:128
 msgid "invalid_value"
 msgstr "Enter a valid value"
 
-#: app/models.py:159
+#: app/models.py:169
 msgid "person"
 msgstr "Person"
 
-#: app/models.py:160
+#: app/models.py:170
 msgid "people"
 msgstr "People"
 

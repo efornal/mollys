@@ -52,8 +52,13 @@
         <button type="button" id="check_ldap_user" class="btn btn-high btn-info">Check</button>
         <p id="ldap_user_name_message"></p>
         <script type="text/javascript">
+          
           $(function(){
           $("#id_group_id").attr('name', 'id_group_id');
+
+          {% if hide_save_box %}
+          $(".save-box").hide();
+          {% endif %}
 
           {% if exists_in_ldap %}
           $("#id_ldap_user_name").prop('readonly', true);

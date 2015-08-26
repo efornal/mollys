@@ -34,6 +34,16 @@ class LdapConn():
             raise
 
     @classmethod
+    def enable(cls):
+        try:
+            connection = ldap.initialize( settings.LDAP_SERVER )
+            connection.simple_bind_s( "cn=%s,%s" % ( settings.LDAP_USER_NAME, settings.LDAP_DN ),
+                                      settings.LDAP_USER_PASS )
+            return connection
+        except ldap.LDAPError, e:
+            return None
+        
+    @classmethod
     def parseattr (cls, s):
         return s.encode("utf8","ignore")
     

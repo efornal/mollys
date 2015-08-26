@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 from django.contrib import admin
-from app.models import Person, Office, Group
+from app.models import Person, Office, Group, LdapConn
 import logging
 from django.forms.widgets import HiddenInput
 from django.contrib import admin
@@ -54,6 +54,7 @@ class PersonAdminForm(forms.ModelForm):
         
 class PersonAdmin(admin.ModelAdmin):
 
+    
 
     form = PersonAdminForm
     list_display = ('surname', 'name', 'document_number', 'ldap_user_name',
@@ -69,9 +70,13 @@ class PersonAdmin(admin.ModelAdmin):
         exists_in_ldap = Person.exists_in_ldap( person.ldap_user_name )
         groups = Group.all()
         suggested_ldap_name = Person.suggested_name(object_id)
-    
+        hide_save_box = False if LdapConn.enable is None else True
+        if hide_save_box:
+            messages.warning(request, _('ldap_without_connection'))
+        
         context = {'suggested_ldap_name': suggested_ldap_name,
                    'groups': groups,
+                   'hide_save_box': hide_save_box,
                    'exists_in_ldap': exists_in_ldap }
         
         return super(PersonAdmin, self).change_view(request, object_id,'',context)
