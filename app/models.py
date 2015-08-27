@@ -250,10 +250,14 @@ def update_ldap_user(sender, instance, *args, **kwargs):
     if ldap_user_name is None:
         logging.info("An LDAP user was not given. It is not updated!")
     elif ldap_user_name and Person.exists_in_ldap(ldap_user_name):
-        logging.info("User %s already exists in Ldap. It is not updated!" % ldap_user_name)
+        logging.info("User '%s' already exists in Ldap. It is not updated!" % ldap_user_name)
     elif ldap_user_name:
 
         new_uid_number = Person.next_ldap_uid()
+        if not (new_uid_number > 0):
+            logging.error("The following 'ldap user uid' could not be determined. " \
+                          "The value obtained was %s" % str(new_uid_number) )
+            
         cn_group = Group.cn_group_by_gid(instance.group_id)
 
         udn = "uid=%s,ou=%s,%s" % ( ldap_user_name,
