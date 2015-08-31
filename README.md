@@ -16,6 +16,8 @@ sudo pip install django==1.8
 sudo pip install django-extensions==1.5.5
 sudo pip install reportlab==3.2.0
 sudo pip install django-bootstrap-themes==3.1.2
+sudo pip install django-auth-ldap==1.2.6
+
 ```
 ### Postgres configuration
 ```bash
