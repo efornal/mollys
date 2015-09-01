@@ -186,7 +186,7 @@ LOCALE_PATHS = (
 DEFAULT_CHARSET = 'utf-8'
 
 SUIT_CONFIG = {
-    'ADMIN_NAME': 'Mollys'
+    'ADMIN_NAME': _('title')
 }
 
 # =================================\
