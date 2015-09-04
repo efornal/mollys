@@ -85,3 +85,11 @@ a2ensite default-ssl
 service apache2 reload
 
 ```
+
+
+### Showing models
+```bash
+sudo aptitude install python-pygraphviz
+
+python manage.py graph_models -a -o myapp_models.pdf
+```
