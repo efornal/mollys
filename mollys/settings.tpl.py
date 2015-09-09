@@ -158,7 +158,7 @@ USE_TZ = True
 
 STATIC_URL='/static/'
 
-LOGIN_URL='/app/login/'
+LOGIN_URL='/login/'
 
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
