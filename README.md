@@ -12,7 +12,7 @@ sudo apt-get install python-ldap=2.4.10-1
 sudo apt-get install python-dev=2.7.9-1
 sudo apt-get install gettext=0.19.3-2
 sudo pip install django-suit==0.2.13
-sudo pip install django==1.8
+sudo pip install django==1.8.5
 sudo pip install django-extensions==1.5.5
 sudo pip install reportlab==3.2.0
 sudo pip install django-bootstrap-themes==3.1.2
