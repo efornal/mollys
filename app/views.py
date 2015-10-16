@@ -16,6 +16,9 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 import json
 from django.utils import translation
+from django.contrib.auth.hashers import make_password
+import base64
+
 
 def set_language(request):
     user_language = request.GET['language'] or 'es'
@@ -24,6 +27,12 @@ def set_language(request):
     return redirect('index')
 
 def index(request):
+    alg = 'sha1'
+    pw = make_password('hello', salt=None, hasher=alg)
+    logging.error("pass=== %s" % pw)
+    encoded = base64.b64encode(pw)
+    hashed = "{SHA1}%s" % encoded;
+    logging.error("pass=== %s" % hashed)
     return redirect('new')
 
 def check_ldap(request):

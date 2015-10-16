@@ -51,10 +51,9 @@ class PersonAdminForm(forms.ModelForm):
         if self.instance.pk and not self.cleaned_data["group_id"]:
             raise forms.ValidationError( _('required_attribute_group') )
 
-        
-class PersonAdmin(admin.ModelAdmin):
 
-    
+class PersonAdmin(admin.ModelAdmin):
+    exclude = ('ldap_user_password',)  
 
     form = PersonAdminForm
     list_display = ('surname', 'name', 'document_number', 'ldap_user_name',
@@ -64,6 +63,7 @@ class PersonAdmin(admin.ModelAdmin):
     list_filter = (ReceivedApplicationFilter,)
     
     def change_view(self, request, object_id, form_url='', extra_context=None):
+#        if not (object_id > 0):
 
         person = Person.objects.get(id=object_id)
         enable_ldap_connection = LdapConn.enable()

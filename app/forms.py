@@ -38,6 +38,10 @@ class PersonForm(forms.ModelForm):
                                    label=_('other_office'))
     ldap_user_name = forms.CharField(max_length=200,required=False,
                                      label=_('ldap_user_name'))
+    ldap_user_password = forms.CharField( min_length=8, max_length=200,
+                                          required=True,
+                                          label=_('ldap_user_password'),
+                                          widget=forms.PasswordInput())
     received_application = forms.BooleanField(required=False,
                                               label=_('received_application'))
     group_id = forms.IntegerField(required=False,
@@ -45,6 +49,7 @@ class PersonForm(forms.ModelForm):
 
     class Meta:
         model = Person
-        fields = ('name', 'surname', 'document_number', 'document_type', 'address',
-                  'position', 'office', 'work_phone', 'home_phone', 'other_office', 'group_id')
+        fields = ('name', 'surname', 'document_number', 'document_type', 'address', 
+                  'position', 'office', 'work_phone', 'home_phone', 'other_office',
+                  'group_id', 'ldap_user_password')
 

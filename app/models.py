@@ -10,6 +10,8 @@ from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.utils.translation import ugettext as _
 import unicodedata
+import hashlib
+import os
 
 def validate_group_existence_in_ldap(value):
     if not (value > 0):
@@ -156,6 +158,10 @@ class Person(models.Model):
     ldap_user_name = models.CharField(max_length=200,null=True, blank=True,
                                       verbose_name=_('ldap_user_name'))#,
                                       #validators=[validate_existence_in_ldap])
+    ldap_user_password = models.CharField(max_length=200,
+                                          null=True, blank=True,
+                                          verbose_name=_('ldap_user_password'))
+                                      
     received_application = models.BooleanField(default=False,
                                                verbose_name=_('received_application'))
     group_id = models.IntegerField(null=True, blank=True, verbose_name=_('group_id'))
@@ -178,6 +184,27 @@ class Person(models.Model):
     def surname_and_name(self):
         return "%s, %s" % (self.surname, self.name)
 
+    @classmethod
+    def make_secret(cls,password):
+        """
+        Encodes the given password as a base64 SSHA hash+salt buffer
+        Taken from: https://gist.github.com/rca/7217540
+        """
+        salt = os.urandom(4)
+
+        # hash the password and append the salt
+        sha = hashlib.sha1(password)
+        sha.update(salt)
+
+        # create a base64 encoded string of the concatenated digest + salt
+        digest_salt_b64 = '{}{}'.format(sha.digest(), salt).encode('base64').strip()
+
+        # now tag the digest above with the {SSHA} tag
+        tagged_digest_salt = '{{SSHA}}{}'.format(digest_salt_b64)
+
+        return tagged_digest_salt
+
+    
     @classmethod
     def next_ldap_uid(cls):
         ldap_condition = "(uidNumber=*)"
@@ -269,7 +296,9 @@ def update_ldap_user(sender, instance, *args, **kwargs):
 
         cnuser = LdapConn.parseattr( "%s %s" % (instance.name, instance.surname) )
         snuser = LdapConn.parseattr( "%s" % instance.surname )
-
+        #ldap_user_password = Person.make_secret( instance.ldap_user_password )
+        logging.error("current pass: %s" %  instance.ldap_user_password)
+        #logging.error("current pass: %s" %  instance.ldap_user_password)
         new_user = [
             ('objectclass', settings.LDAP_PEOPLE_OBJECTCLASSES),
             ('cn', [cnuser]),
@@ -279,6 +308,7 @@ def update_ldap_user(sender, instance, *args, **kwargs):
             ('tipodoc', [str(instance.document_type)] ),
             ('numdoc', [str(instance.document_number)] ),
             ('uidNumber', [str(new_uid_number)] ),
+            ('userPassword', [str(instance.ldap_user_password)] ),
             ('homedirectory', [str('%s%s' % ( settings.LDAP_PEOPLE_HOMEDIRECTORY_PREFIX,
                                               ldap_user_name))]),
             ('gidNumber', [str(instance.group_id)] ),
@@ -292,3 +322,12 @@ def update_ldap_user(sender, instance, *args, **kwargs):
 
         logging.info("Adding new member in ldap: %s " % update_group )
         LdapConn.new().modify(gdn, update_group)
+
+
+@receiver(pre_save, sender=Person)
+def update_user_password(sender, instance, *args, **kwargs):
+    logging.error("new id === %s " % instance.id)
+    if instance.id is None or not (instance.id > 0):
+        logging.error("old pw === %s " % instance.ldap_user_password)
+        instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
+        logging.error("new pw === %s " % instance.ldap_user_password)

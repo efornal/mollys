@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-26 12:16-0300\n"
+"POT-Creation-Date: 2015-10-16 10:05-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/admin.py:13 app/forms.py:42 app/models.py:160
+#: app/admin.py:13 app/forms.py:42 app/models.py:165
 msgid "received_application"
 msgstr "Received application"
 
@@ -30,107 +30,113 @@ msgstr ""
 msgid "required_attribute_group"
 msgstr "Group: This field is required"
 
-#: app/admin.py:75
+#: app/admin.py:79
 msgid "ldap_without_connection"
 msgstr "Unable to connect to the LDAP server. Some options are not available"
 
-#: app/forms.py:10 app/models.py:132 templates/new.html:20
+#: app/forms.py:10 app/models.py:134 templates/new.html:20
 msgid "names"
 msgstr "Names"
 
-#: app/forms.py:12 app/models.py:134 templates/new.html:25
+#: app/forms.py:12 app/models.py:136 templates/new.html:25
 msgid "surnames"
 msgstr "Surnames"
 
-#: app/forms.py:14 app/models.py:137
+#: app/forms.py:14 app/models.py:139
 msgid "document_number"
 msgstr "ID Number"
 
-#: app/forms.py:18 app/models.py:139
+#: app/forms.py:18 app/models.py:141
 msgid "document_type"
 msgstr "ID Type"
 
-#: app/forms.py:21 app/models.py:141 app/views.py:155 templates/new.html:74
+#: app/forms.py:21 app/models.py:143 app/views.py:164 templates/new.html:84
 msgid "position"
 msgstr "Job title"
 
-#: app/forms.py:23 templates/new.html:92
+#: app/forms.py:23 templates/new.html:102
 msgid "specify_other"
 msgstr "Specify other"
 
-#: app/forms.py:26 app/models.py:70 app/models.py:153 templates/new.html:82
+#: app/forms.py:26 app/models.py:72 app/models.py:155 templates/new.html:92
 msgid "office"
 msgstr "Office"
 
-#: app/forms.py:28 app/models.py:143 app/views.py:159 templates/new.html:53
+#: app/forms.py:28 app/models.py:145 app/views.py:168 templates/new.html:53
 msgid "work_phone"
 msgstr "Work phone"
 
-#: app/forms.py:30 app/models.py:145 app/views.py:163
+#: app/forms.py:30 app/models.py:147 app/views.py:172
 msgid "home_phone"
 msgstr "Home phone"
 
-#: app/forms.py:32 app/models.py:147 app/views.py:167 templates/new.html:66
+#: app/forms.py:32 app/models.py:149 app/views.py:176 templates/new.html:76
 msgid "address"
 msgstr "Address"
 
-#: app/forms.py:34 app/models.py:149
+#: app/forms.py:34 app/models.py:151
 msgid "created_at"
 msgstr "Created at"
 
-#: app/forms.py:36 app/models.py:151
+#: app/forms.py:36 app/models.py:153
 msgid "updated_at"
 msgstr "Updated at"
 
-#: app/forms.py:38 app/models.py:155 templates/new.html:100
+#: app/forms.py:38 app/models.py:157 templates/new.html:110
 msgid "other_office"
 msgstr "Another office"
 
-#: app/forms.py:40 app/models.py:157
+#: app/forms.py:40 app/models.py:159
 msgid "ldap_user_name"
 msgstr "ldap username"
 
-#: app/forms.py:44 app/models.py:161
+#: app/forms.py:44 app/models.py:166
 msgid "group_id"
 msgstr "Group"
 
-#: app/models.py:57
+#: app/models.py:59
 msgid "DocumentType"
 msgstr "Document Type"
 
-#: app/models.py:58
+#: app/models.py:60
 msgid "DocumentTypes"
 msgstr "Document Types"
 
-#: app/models.py:66
+#: app/models.py:68
 msgid "name"
 msgstr "Name"
 
-#: app/models.py:71
+#: app/models.py:73
 msgid "offices"
 msgstr "Offices"
 
-#: app/models.py:82
+#: app/models.py:84
 msgid "Group"
 msgstr "Group"
 
-#: app/models.py:83
+#: app/models.py:85
 msgid "Groups"
 msgstr "Groups"
 
-#: app/models.py:128
+#: app/models.py:130
 msgid "invalid_value"
 msgstr "Enter a valid value"
 
-#: app/models.py:169
+#: app/models.py:162 templates/new.html:67
+#, fuzzy
+#| msgid "ldap_user_name"
+msgid "ldap_user_password"
+msgstr "Password"
+
+#: app/models.py:174
 msgid "person"
 msgstr "Person"
 
-#: app/models.py:170
+#: app/models.py:175
 msgid "people"
 msgstr "People"
 
-#: app/views.py:72
+#: app/views.py:81
 msgid "outcome_success"
 msgstr ""
 "Dear <strong>%(surname)s, %(name)s</strong> <br> the request has been "
@@ -138,65 +144,70 @@ msgstr ""
 "with the  <a href='%(url)s' TARGET='_blank'>aplication form</a> printed and "
 "signed by the head of your area"
 
-#: app/views.py:82
+#: app/views.py:91
 msgid "outcome_error"
 msgstr ""
 "Dear <strong>%(surname)s, %(name)s</strong> <br> The request could not be "
 "completed. In order to complete the process we would like to ask you to "
 "approach our office or you couldtry to make the request again later"
 
-#: app/views.py:112
+#: app/views.py:121
 msgid "header_code"
 msgstr "Header code"
 
-#: app/views.py:142 templates/new.html:17
+#: app/views.py:151 templates/new.html:17
 msgid "enabling_account"
 msgstr "Apply for the enabling of a new account"
 
-#: app/views.py:145
+#: app/views.py:154
 msgid "applicant"
 msgstr "Applicant"
 
-#: app/views.py:149 templates/new.html:33
+#: app/views.py:158 templates/new.html:33
 msgid "doc_type"
 msgstr "ID Type"
 
-#: app/views.py:150 templates/new.html:45
+#: app/views.py:159 templates/new.html:45
 msgid "doc_number"
 msgstr "ID number"
 
-#: app/views.py:171
+#: app/views.py:180
 msgid "short_office"
 msgstr "Office"
 
-#: app/views.py:178
+#: app/views.py:187
 msgid "intro_code"
 msgstr ""
 "<strong>Honor code</strong><br></br><br></br>Text ,...<br></br><br></br>"
 
-#: app/views.py:186
+#: app/views.py:195
 msgid "conduct_code"
 msgstr "text ,. .."
 
-#: app/views.py:190
+#: app/views.py:199
 msgid "date"
 msgstr "City, ...... of ............. of 20...."
 
-#: app/views.py:192
+#: app/views.py:201
 msgid "firm"
 msgstr "Signature"
 
-#: app/views.py:195
+#: app/views.py:204
 msgid "firm_responsible"
 msgstr "Signature and clarification from area / Sector manager"
 
-#: mollys/settings.py:21 mollys/settings.tpl.py:21 templates/base.html:59
+#: mollys/settings.py:20 mollys/settings.tpl.py:21 templates/base.html:59
 msgid "Spanish"
 msgstr "Spanish"
 
-#: mollys/settings.py:22 mollys/settings.tpl.py:22 templates/base.html:61
+#: mollys/settings.py:21 mollys/settings.tpl.py:22 templates/base.html:61
 msgid "English"
 msgstr "English"
+
+#: mollys/settings.py:199 mollys/settings.tpl.py:189 templates/base.html:13
+#: templates/base.html.py:45
+msgid "title"
+msgstr "Mollys"
 
 #: templates/admin/change_form.html:21
 msgid "You have unsaved changes"
@@ -236,23 +247,23 @@ msgid_plural " Please correct the errors below."
 msgstr[0] "Please correct the error below."
 msgstr[1] "Please correct the errors below."
 
-#: templates/base.html:13 templates/base.html.py:45
-msgid "title"
-msgstr "Mollys"
-
 #: templates/new.html:58
 msgid "short_home_phone"
 msgstr "Home Phone"
 
-#: templates/new.html:85
+#: templates/new.html:71
+msgid "ldap_user_password_note"
+msgstr "Preliminary password user authentication to provide"
+
+#: templates/new.html:95
 msgid "select_one"
 msgstr "Select one"
 
-#: templates/new.html:111
+#: templates/new.html:121
 msgid "cancel"
 msgstr "Cancel"
 
-#: templates/new.html:113
+#: templates/new.html:123
 msgid "send_request"
 msgstr "Send request"
 
