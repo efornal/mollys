@@ -296,9 +296,7 @@ def update_ldap_user(sender, instance, *args, **kwargs):
 
         cnuser = LdapConn.parseattr( "%s %s" % (instance.name, instance.surname) )
         snuser = LdapConn.parseattr( "%s" % instance.surname )
-        #ldap_user_password = Person.make_secret( instance.ldap_user_password )
-        logging.error("current pass: %s" %  instance.ldap_user_password)
-        #logging.error("current pass: %s" %  instance.ldap_user_password)
+
         new_user = [
             ('objectclass', settings.LDAP_PEOPLE_OBJECTCLASSES),
             ('cn', [cnuser]),
@@ -326,8 +324,5 @@ def update_ldap_user(sender, instance, *args, **kwargs):
 
 @receiver(pre_save, sender=Person)
 def update_user_password(sender, instance, *args, **kwargs):
-    logging.error("new id === %s " % instance.id)
     if instance.id is None or not (instance.id > 0):
-        logging.error("old pw === %s " % instance.ldap_user_password)
         instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
-        logging.error("new pw === %s " % instance.ldap_user_password)
