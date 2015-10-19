@@ -4,6 +4,7 @@ from app.models import Person, Office, Group, LdapConn
 import logging
 from django.forms.widgets import HiddenInput
 from django.contrib import admin
+from django.forms import ModelForm, PasswordInput
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
@@ -43,7 +44,10 @@ class PersonAdminForm(forms.ModelForm):
     class Meta:
         model = Person
         fields = '__all__'
-        
+        widgets = {
+            'ldap_user_password': PasswordInput(render_value=True),
+        }
+
     def clean(self):
         if self.cleaned_data["ldap_user_name"] and not self.cleaned_data["received_application"]:
             raise forms.ValidationError( _('received_application_required') )
@@ -53,7 +57,6 @@ class PersonAdminForm(forms.ModelForm):
 
 
 class PersonAdmin(admin.ModelAdmin):
-    exclude = ('ldap_user_password',)  
 
     form = PersonAdminForm
     list_display = ('surname', 'name', 'document_number', 'ldap_user_name',
@@ -61,6 +64,9 @@ class PersonAdmin(admin.ModelAdmin):
     search_fields = ['surname', 'name', 'document_number', 'ldap_user_name',
                      'received_application']
     list_filter = (ReceivedApplicationFilter,)
+
+#    diabled_fields = ['ldap_user_password',]
+    
     
     def change_view(self, request, object_id, form_url='', extra_context=None):
 
@@ -70,6 +76,13 @@ class PersonAdmin(admin.ModelAdmin):
         groups = None
         suggested_ldap_name = ''
 
+        #if 'ldap_user_password_check' in request.POST:
+            #instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
+        logging.error ("===========%s " % person.ldap_user_password )
+        if 'ldap_user_password' in request.POST:
+            logging.error ("===========%s " % request.POST['ldap_user_password'])
+
+            
         if enable_ldap_connection:
             exists_in_ldap = Person.exists_in_ldap( person.ldap_user_name )
             groups = Group.all()
