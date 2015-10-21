@@ -239,6 +239,20 @@ class Person(models.Model):
                 return True
         return False
 
+
+    @classmethod
+    def get_from_ldap(cls,uid):
+        ldap_condition = "(uid=%s)" % uid
+
+        r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN),
+                                    ldap.SCOPE_SUBTREE,
+                                    ldap_condition)
+        for dn,entry in r:
+            if entry['uid'][0] == uid:
+                return entry
+        return None
+
+    
     @classmethod
     def compose_suggested_name( cls, surname, name ):
         return Person.strip_accents( "%s%s" % ( name.strip()[0].lower(),
@@ -276,10 +290,20 @@ def update_ldap_user(sender, instance, *args, **kwargs):
 
     ldap_user_name = str(instance.ldap_user_name) if instance.ldap_user_name else None
 
+    udn = "uid=%s,ou=%s,%s" % ( ldap_user_name,
+                                settings.LDAP_PEOPLE,
+                                settings.LDAP_DN )
+
     if ldap_user_name is None:
         logging.info("An LDAP user was not given. It is not updated!")
     elif ldap_user_name and Person.exists_in_ldap(ldap_user_name):
-        logging.info("User '%s' already exists in Ldap. It is not updated!" % ldap_user_name)
+        ldap_person = Person.get_from_ldap(ldap_user_name)
+        if ldap_person['userPassword'] != instance.ldap_user_password:
+            update_person = [( ldap.MOD_REPLACE, 'userPassword', str(instance.ldap_user_password) )]
+            LdapConn.new().modify(udn, update_person)
+            logging.info("User '%s' already exists in Ldap. It is updated!" % ldap_user_name)
+        else:
+            logging.info("User '%s' already exists in Ldap. it was not updated!" % ldap_user_name)
     elif ldap_user_name:
 
         new_uid_number = Person.next_ldap_uid()
@@ -289,9 +313,6 @@ def update_ldap_user(sender, instance, *args, **kwargs):
             
         cn_group = Group.cn_group_by_gid(instance.group_id)
 
-        udn = "uid=%s,ou=%s,%s" % ( ldap_user_name,
-                                    settings.LDAP_PEOPLE,
-                                    settings.LDAP_DN )
         gdn = "cn=%s,ou=%s,%s" % ( cn_group,
                                    settings.LDAP_GROUP,
                                    settings.LDAP_DN )
@@ -324,10 +345,7 @@ def update_ldap_user(sender, instance, *args, **kwargs):
         LdapConn.new().modify(gdn, update_group)
 
 
-#@receiver(pre_save, sender=Person)
-#def update_user_password(sender, instance, *args, **kwargs):
-#    logging.error("PAS=%s" % instance.ldap_user_password)
-    #logging.error("PASS EDIT?=%s" % ldap_user_password_is_editable)
-    #if instance.id is None or not (instance.id > 0):
-#    if instance.ldap_user_password_is_editable:
-#        instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
+@receiver(pre_save, sender=Person)
+def update_user_password(sender, instance, *args, **kwargs):
+    if instance.id is None or not (instance.id > 0):
+        instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )

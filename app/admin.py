@@ -65,8 +65,6 @@ class PersonAdmin(admin.ModelAdmin):
                      'received_application']
     list_filter = (ReceivedApplicationFilter,)
 
-#    diabled_fields = ['ldap_user_password',]
-    
     
     def change_view(self, request, object_id, form_url='', extra_context=None):
 
@@ -76,20 +74,16 @@ class PersonAdmin(admin.ModelAdmin):
         groups = None
         suggested_ldap_name = ''
 
-        #if 'ldap_user_password_check' in request.POST:
-            #instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
-        logging.error ("===========%s " % person.ldap_user_password )
-        if 'ldap_user_password' in request.POST:
-            logging.error ("===========%s " % request.POST['ldap_user_password'])
-
-            
+        # FIXME: set form, not request.POST? 
+        if 'ldap_user_password_check' in request.POST:
+            request.POST['ldap_user_password'] = Person.make_secret( request.POST['ldap_user_password'] )
         if enable_ldap_connection:
             exists_in_ldap = Person.exists_in_ldap( person.ldap_user_name )
             groups = Group.all()
             suggested_ldap_name = Person.suggested_name(object_id)
         else:
             messages.warning(request, _('ldap_without_connection'))
-        
+
         context = {'suggested_ldap_name': suggested_ldap_name,
                    'groups': groups,
                    'hide_save_box': (not enable_ldap_connection),
