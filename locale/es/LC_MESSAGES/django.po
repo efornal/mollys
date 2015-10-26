@@ -1,49 +1,49 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-16 10:05-0300\n"
+"POT-Creation-Date: 2015-10-22 13:36-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/admin.py:13 app/forms.py:42 app/models.py:165
+#: app/admin.py:14 app/forms.py:46 app/models.py:166
 msgid "received_application"
 msgstr "Solicitud recibida"
 
-#: app/admin.py:19
+#: app/admin.py:20
 msgid "No"
 msgstr "No"
 
-#: app/admin.py:20
+#: app/admin.py:21
 msgid "Yes"
 msgstr "Sí"
 
-#: app/admin.py:21
+#: app/admin.py:22
 msgid "All"
 msgstr "Todos"
 
-#: app/admin.py:49
+#: app/admin.py:53
 msgid "received_application_required"
 msgstr ""
 "No es posible asignar un usuario ldap sin antes confirmar la 'solicitud "
 "recibida'"
 
-#: app/admin.py:52
+#: app/admin.py:56
 msgid "required_attribute_group"
 msgstr "Grupo: Este campo es obligatorio"
 
-#: app/admin.py:79
+#: app/admin.py:85
 msgid "ldap_without_connection"
 msgstr ""
 "No se pudo establecer una conexión con el servidor Ldap. Algunas opciones no "
 "estarán disponibles."
 
-#: app/forms.py:10 app/models.py:134 templates/new.html:20
-msgid "names"
-msgstr "Nombres"
+#: app/forms.py:10 app/models.py:68 app/models.py:134 templates/new.html:20
+msgid "name"
+msgstr "Nombre"
 
 #: app/forms.py:12 app/models.py:136 templates/new.html:25
-msgid "surnames"
-msgstr "Apellidos"
+msgid "surname"
+msgstr "Apellido"
 
 #: app/forms.py:14 app/models.py:139
 msgid "document_number"
@@ -53,7 +53,7 @@ msgstr "Número Documento"
 msgid "document_type"
 msgstr "Tipo Documento"
 
-#: app/forms.py:21 app/models.py:143 app/views.py:164 templates/new.html:84
+#: app/forms.py:21 app/models.py:143 app/views.py:156 templates/new.html:84
 msgid "position"
 msgstr "Cargo"
 
@@ -65,15 +65,15 @@ msgstr "Especificar otra"
 msgid "office"
 msgstr "Secretaría"
 
-#: app/forms.py:28 app/models.py:145 app/views.py:168 templates/new.html:53
+#: app/forms.py:28 app/models.py:145 app/views.py:160 templates/new.html:53
 msgid "work_phone"
 msgstr "Teléfono laboral"
 
-#: app/forms.py:30 app/models.py:147 app/views.py:172
+#: app/forms.py:30 app/models.py:147 app/views.py:164
 msgid "home_phone"
 msgstr "Teléfono particular"
 
-#: app/forms.py:32 app/models.py:149 app/views.py:176 templates/new.html:76
+#: app/forms.py:32 app/models.py:149 app/views.py:168 templates/new.html:76
 msgid "address"
 msgstr "Domicilio"
 
@@ -93,7 +93,11 @@ msgstr "Otra Secretaría"
 msgid "ldap_user_name"
 msgstr "Nombre de usuario ldap"
 
-#: app/forms.py:44 app/models.py:166
+#: app/forms.py:43 app/models.py:163 templates/new.html:67
+msgid "ldap_user_password"
+msgstr "Contraseña"
+
+#: app/forms.py:48 app/models.py:167
 msgid "group_id"
 msgstr "Grupo"
 
@@ -104,10 +108,6 @@ msgstr "Tipo Documento"
 #: app/models.py:60
 msgid "DocumentTypes"
 msgstr "Tipos de Documentos"
-
-#: app/models.py:68
-msgid "name"
-msgstr "Nombre"
 
 #: app/models.py:73
 msgid "offices"
@@ -125,19 +125,15 @@ msgstr "Grupos"
 msgid "invalid_value"
 msgstr "Ingrese un valor válido"
 
-#: app/models.py:162 templates/new.html:67
-msgid "ldap_user_password"
-msgstr "Contraseña"
-
-#: app/models.py:174
+#: app/models.py:177
 msgid "person"
 msgstr "Persona"
 
-#: app/models.py:175
+#: app/models.py:178
 msgid "people"
 msgstr "Personas"
 
-#: app/views.py:81
+#: app/views.py:73
 msgid "outcome_success"
 msgstr ""
 "Estimado/a <strong>%(surname)s, %(name)s</strong> <br> La solicitud se a "
@@ -145,56 +141,56 @@ msgstr ""
 "nuestra oficina con el siguiente <a href='%(url)s' "
 "TARGET='_blank'>formulario</a> impreso y la firma del responsable de tu área."
 
-#: app/views.py:91
+#: app/views.py:83
 msgid "outcome_error"
 msgstr ""
 "Estimado/a <strong>%(surname)s, %(name)s</strong> <br>La solicitud no pudo "
 "completarse. Para poder realizar el trámite te pedimos que te acerques a "
 "nuestra oficina o intentes realizar la solicitud nuevamente más tarde.<br>"
 
-#: app/views.py:121
+#: app/views.py:113
 msgid "header_code"
 msgstr "Office<br/>Business<br/>Other,.."
 
-#: app/views.py:151 templates/new.html:17
+#: app/views.py:143 templates/new.html:17
 msgid "enabling_account"
 msgstr "Solicitud de habilitación de cuenta"
 
-#: app/views.py:154
+#: app/views.py:146
 msgid "applicant"
 msgstr "Solicitante"
 
-#: app/views.py:158 templates/new.html:33
+#: app/views.py:150 templates/new.html:33
 msgid "doc_type"
 msgstr "Tipo Documento"
 
-#: app/views.py:159 templates/new.html:45
+#: app/views.py:151 templates/new.html:45
 msgid "doc_number"
 msgstr "Número Documento"
 
-#: app/views.py:180
+#: app/views.py:172
 msgid "short_office"
 msgstr "Secretaría"
 
-#: app/views.py:187
+#: app/views.py:179
 msgid "intro_code"
 msgstr ""
 "<strong>Código de conducta</strong><br></br><br></br>Texto ,...<br></"
 "br><br></br>"
 
-#: app/views.py:195
+#: app/views.py:187
 msgid "conduct_code"
 msgstr "texto ,. .."
 
-#: app/views.py:199
+#: app/views.py:191
 msgid "date"
 msgstr "Ciudad, ...... de ............. de 20...."
 
-#: app/views.py:201
+#: app/views.py:193
 msgid "firm"
 msgstr "Firma"
 
-#: app/views.py:204
+#: app/views.py:196
 msgid "firm_responsible"
 msgstr "Firma y aclaración del responsable del área/sector"
 
@@ -277,3 +273,4 @@ msgstr "Realizar una nueva solicitud"
 #: templates/outcome_success.html:24
 msgid "print_request"
 msgstr "Imprimir Solicitud"
+

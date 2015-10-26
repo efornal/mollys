@@ -131,9 +131,9 @@ class Person(models.Model):
 
     id = models.AutoField(primary_key=True, null=False)
     name = models.CharField(max_length=200, null=False,
-                            verbose_name=_('names'))
+                            verbose_name=_('name'))
     surname = models.CharField(max_length=200,null=False,
-                               verbose_name=_('surnames'))
+                               verbose_name=_('surname'))
     document_number = models.CharField(max_length=200,null=False,
                                        validators=[document_regex],
                                        verbose_name=_('document_number'))
