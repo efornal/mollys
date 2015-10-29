@@ -55,11 +55,6 @@ class PersonForm(forms.ModelForm):
     group_id = forms.IntegerField(required=False,
                                               label=_('group_id'))
 
-    # def __init__(self, *args, **kwargs):
-    #     super(PersonForm, self).__init__(*args, **kwargs)
-
-    #     self.fields['ldap_user_password'].required = False
-    #     self.fields['ldap_user_password_confirm'].required = False
         
     class Meta:
         model = Person
