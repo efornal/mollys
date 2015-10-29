@@ -1,102 +1,116 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 13:36-0300\n"
+"POT-Creation-Date: 2015-10-28 13:07-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/admin.py:14 app/forms.py:46 app/models.py:166
+#: app/admin.py:15 app/forms.py:54 app/models.py:165
 msgid "received_application"
 msgstr "Received application"
 
-#: app/admin.py:20
+#: app/admin.py:21
 msgid "No"
 msgstr "No"
 
-#: app/admin.py:21
+#: app/admin.py:22
 msgid "Yes"
 msgstr "Yes"
 
-#: app/admin.py:22
+#: app/admin.py:23
 msgid "All"
 msgstr "All"
 
-#: app/admin.py:53
+#: app/admin.py:54
 msgid "received_application_required"
 msgstr ""
 "You can not assign a user ldap without confirming the 'application received'"
 
-#: app/admin.py:56
+#: app/admin.py:57
 msgid "required_attribute_group"
 msgstr "Group: This field is required"
 
-#: app/admin.py:85
+#: app/admin.py:83
+#, fuzzy
+#| msgid "ldap_user_password_note"
+msgid "ldap_user_password_too_short"
+msgstr "The ldap user password is too short"
+
+#: app/admin.py:89
 msgid "ldap_without_connection"
 msgstr "Unable to connect to the LDAP server. Some options are not available"
 
-#: app/forms.py:10 app/models.py:68 app/models.py:134 templates/new.html:20
+#: app/forms.py:14 app/models.py:68 app/models.py:134 templates/new.html:20
 msgid "name"
 msgstr "Name"
 
-#: app/forms.py:12 app/models.py:136 templates/new.html:25
+#: app/forms.py:16 app/models.py:136 templates/new.html:25
 msgid "surname"
 msgstr "Surname"
 
-#: app/forms.py:14 app/models.py:139
+#: app/forms.py:18 app/models.py:139
 msgid "document_number"
 msgstr "ID Number"
 
-#: app/forms.py:18 app/models.py:141
+#: app/forms.py:22 app/models.py:141
 msgid "document_type"
 msgstr "ID Type"
 
-#: app/forms.py:21 app/models.py:143 app/views.py:156 templates/new.html:84
+#: app/forms.py:25 app/models.py:143 app/views.py:156 templates/new.html:90
 msgid "position"
 msgstr "Job title"
 
-#: app/forms.py:23 templates/new.html:102
+#: app/forms.py:27 templates/new.html:108
 msgid "specify_other"
 msgstr "Specify other"
 
-#: app/forms.py:26 app/models.py:72 app/models.py:155 templates/new.html:92
+#: app/forms.py:30 app/models.py:72 app/models.py:155 templates/new.html:98
 msgid "office"
 msgstr "Office"
 
-#: app/forms.py:28 app/models.py:145 app/views.py:160 templates/new.html:53
+#: app/forms.py:32 app/models.py:145 app/views.py:160 templates/new.html:53
 msgid "work_phone"
 msgstr "Work phone"
 
-#: app/forms.py:30 app/models.py:147 app/views.py:164
+#: app/forms.py:34 app/models.py:147 app/views.py:164
 msgid "home_phone"
 msgstr "Home phone"
 
-#: app/forms.py:32 app/models.py:149 app/views.py:168 templates/new.html:76
+#: app/forms.py:36 app/models.py:149 app/views.py:168 templates/new.html:82
 msgid "address"
 msgstr "Address"
 
-#: app/forms.py:34 app/models.py:151
+#: app/forms.py:38 app/models.py:151
 msgid "created_at"
 msgstr "Created at"
 
-#: app/forms.py:36 app/models.py:153
+#: app/forms.py:40 app/models.py:153
 msgid "updated_at"
 msgstr "Updated at"
 
-#: app/forms.py:38 app/models.py:157 templates/new.html:110
+#: app/forms.py:42 app/models.py:157 templates/new.html:116
 msgid "other_office"
 msgstr "Another office"
 
-#: app/forms.py:40 app/models.py:159
+#: app/forms.py:44 app/models.py:159
 msgid "ldap_user_name"
 msgstr "ldap username"
 
-#: app/forms.py:43 app/models.py:163 templates/new.html:67
+#: app/forms.py:47 app/models.py:163 templates/new.html:67
 msgid "ldap_user_password"
 msgstr "Password"
 
-#: app/forms.py:48 app/models.py:167
+#: app/forms.py:51 templates/new.html:74
+msgid "ldap_user_password_confirm"
+msgstr "Password confirm"
+
+#: app/forms.py:56 app/models.py:166
 msgid "group_id"
 msgstr "Group"
+
+#: app/forms.py:75
+msgid "password_dont_match"
+msgstr "Passwords don't match"
 
 #: app/models.py:59
 msgid "DocumentType"
@@ -122,11 +136,11 @@ msgstr "Groups"
 msgid "invalid_value"
 msgstr "Enter a valid value"
 
-#: app/models.py:177
+#: app/models.py:176
 msgid "person"
 msgstr "Person"
 
-#: app/models.py:178
+#: app/models.py:177
 msgid "people"
 msgstr "People"
 
@@ -198,7 +212,7 @@ msgstr "Spanish"
 msgid "English"
 msgstr "English"
 
-#: mollys/settings.py:199 mollys/settings.tpl.py:189 templates/base.html:13
+#: mollys/settings.py:199 mollys/settings.tpl.py:190 templates/base.html:13
 #: templates/base.html.py:45
 msgid "title"
 msgstr "Mollys"
@@ -245,19 +259,19 @@ msgstr[1] "Please correct the errors below."
 msgid "short_home_phone"
 msgstr "Home Phone"
 
-#: templates/new.html:71
+#: templates/new.html:70
 msgid "ldap_user_password_note"
 msgstr "Preliminary password user authentication to provide"
 
-#: templates/new.html:95
+#: templates/new.html:101
 msgid "select_one"
 msgstr "Select one"
 
-#: templates/new.html:121
+#: templates/new.html:127
 msgid "cancel"
 msgstr "Cancel"
 
-#: templates/new.html:123
+#: templates/new.html:129
 msgid "send_request"
 msgstr "Send request"
 

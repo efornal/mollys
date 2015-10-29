@@ -61,7 +61,7 @@
           if ( $("#id_ldap_user_password_check").attr('checked') == 'checked') {
             $("#id_ldap_user_password").prop('readonly', false);
           } else {
-            $("#id_ldap_user_password").val('');
+            $("#id_ldap_user_password").val($("#id_ldap_user_password_check").attr('data-name'));
             $("#id_ldap_user_password").prop('readonly', true);
             }
           });
@@ -112,7 +112,7 @@
 
         {% if field.field.name == 'ldap_user_password' %}
         &nbsp;&nbsp;&nbsp;
-        <input type="checkbox" id="id_ldap_user_password_check" name="ldap_user_password_check" value=""> Permitir modificar
+        <input type="checkbox" data-name="{{ field.field.value }}" id="id_ldap_user_password_check" name="ldap_user_password_check" value=""> Permitir modificar
         {% endif %}
 
         

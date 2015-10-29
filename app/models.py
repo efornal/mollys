@@ -161,16 +161,10 @@ class Person(models.Model):
     ldap_user_password = models.CharField(max_length=200,
                                           null=True, blank=True,
                                           verbose_name=_('ldap_user_password'))
-
     received_application = models.BooleanField(default=False,
                                                verbose_name=_('received_application'))
     group_id = models.IntegerField(null=True, blank=True, verbose_name=_('group_id'))
 
-#    ldap_user_password_is_editable = False
-    
-    # models.IntegerField(null=True, blank=True,
-    #                                verbose_name=_('group_id'),
-    #                                validators=[validate_group_existence_in_ldap])
     
     class Meta:
         db_table = 'people'
@@ -347,5 +341,4 @@ def update_ldap_user(sender, instance, *args, **kwargs):
 
 @receiver(pre_save, sender=Person)
 def update_user_password(sender, instance, *args, **kwargs):
-    if instance.id is None or not (instance.id > 0):
-        instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
+    instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )

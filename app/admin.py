@@ -8,7 +8,10 @@ from django.forms import ModelForm, PasswordInput
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
+from django.conf import settings
 import ldap
+from django.core.exceptions import ValidationError
+
 
 class ReceivedApplicationFilter(admin.SimpleListFilter):
     title = _('received_application')
@@ -55,6 +58,9 @@ class PersonAdminForm(forms.ModelForm):
         if self.instance.pk and not self.cleaned_data["group_id"]:
             raise forms.ValidationError( _('required_attribute_group') )
 
+        if len(self.cleaned_data['ldap_user_password']) < settings.MIN_LENGTH_LDAP_USER_PASSWORD:
+            raise ValidationError(_('ldap_user_password_too_short'))
+
 
 class PersonAdmin(admin.ModelAdmin):
 
@@ -74,9 +80,6 @@ class PersonAdmin(admin.ModelAdmin):
         groups = None
         suggested_ldap_name = ''
 
-        # FIXME: set form, not request.POST? 
-        if 'ldap_user_password_check' in request.POST:
-            request.POST['ldap_user_password'] = Person.make_secret( request.POST['ldap_user_password'] )
         if enable_ldap_connection:
             exists_in_ldap = Person.exists_in_ldap( person.ldap_user_name )
             groups = Group.all()
