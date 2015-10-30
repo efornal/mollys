@@ -366,4 +366,10 @@ def update_ldap_user(sender, instance, *args, **kwargs):
 
 @receiver(pre_save, sender=Person)
 def update_user_password(sender, instance, *args, **kwargs):
-    instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
+    if instance.pk and instance.pk > 0:  #update!
+        current = Person.objects.get(id=instance.pk)
+        if current.ldap_user_password != instance.ldap_user_password:
+            instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
+    else: # nuevo!
+        instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
+
