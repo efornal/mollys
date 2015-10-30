@@ -1,63 +1,71 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-28 13:07-0300\n"
+"POT-Creation-Date: 2015-10-30 09:19-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/admin.py:15 app/forms.py:54 app/models.py:165
+#: app/admin.py:17 app/forms.py:54 app/models.py:171
 msgid "received_application"
 msgstr "Solicitud recibida"
 
-#: app/admin.py:21
+#: app/admin.py:23
 msgid "No"
 msgstr "No"
 
-#: app/admin.py:22
+#: app/admin.py:24
 msgid "Yes"
 msgstr "Sí"
 
-#: app/admin.py:23
+#: app/admin.py:25
 msgid "All"
 msgstr "Todos"
 
-#: app/admin.py:54
+#: app/admin.py:56
 msgid "received_application_required"
 msgstr ""
 "No es posible asignar un usuario ldap sin antes confirmar la 'solicitud "
 "recibida'"
 
-#: app/admin.py:57
+#: app/admin.py:59
 msgid "required_attribute_group"
 msgstr "Grupo: Este campo es obligatorio"
 
-#: app/admin.py:83
+#: app/admin.py:62
 msgid "ldap_user_password_too_short"
 msgstr "La contraseña de autenticación del usuario es muy corta"
 
-#: app/admin.py:89
+#: app/admin.py:65 app/models.py:23
+msgid "ldap_user_password_invalid"
+msgstr "La contraseña del usuario ldap no es un valor apropiado"
+
+#: app/admin.py:68
+msgid "ldap_user_name_invalid"
+msgstr "El nombre de usuario ldap no es un valor apropiado"
+
+#: app/admin.py:94
 msgid "ldap_without_connection"
 msgstr ""
 "No se pudo establecer una conexión con el servidor Ldap. Algunas opciones no "
 "estarán disponibles."
 
-#: app/forms.py:14 app/models.py:68 app/models.py:134 templates/new.html:20
+#: app/forms.py:14 app/models.py:73 app/models.py:139 templates/new.html:20
 msgid "name"
 msgstr "Nombre"
 
-#: app/forms.py:16 app/models.py:136 templates/new.html:25
+#: app/forms.py:16 app/models.py:141 templates/new.html:25
 msgid "surname"
 msgstr "Apellido"
 
-#: app/forms.py:18 app/models.py:139
+#: app/forms.py:18 app/models.py:144
 msgid "document_number"
 msgstr "Número Documento"
 
-#: app/forms.py:22 app/models.py:141
+#: app/forms.py:22 app/models.py:146
 msgid "document_type"
 msgstr "Tipo Documento"
 
-#: app/forms.py:25 app/models.py:143 app/views.py:156 templates/new.html:90
+#: app/forms.py:25 app/models.py:148 app/views.py:156 templates/new.html:90
 msgid "position"
 msgstr "Cargo"
 
@@ -65,39 +73,39 @@ msgstr "Cargo"
 msgid "specify_other"
 msgstr "Especificar otra"
 
-#: app/forms.py:30 app/models.py:72 app/models.py:155 templates/new.html:98
+#: app/forms.py:30 app/models.py:77 app/models.py:160 templates/new.html:98
 msgid "office"
 msgstr "Secretaría"
 
-#: app/forms.py:32 app/models.py:145 app/views.py:160 templates/new.html:53
+#: app/forms.py:32 app/models.py:150 app/views.py:160 templates/new.html:53
 msgid "work_phone"
 msgstr "Teléfono laboral"
 
-#: app/forms.py:34 app/models.py:147 app/views.py:164
+#: app/forms.py:34 app/models.py:152 app/views.py:164
 msgid "home_phone"
 msgstr "Teléfono particular"
 
-#: app/forms.py:36 app/models.py:149 app/views.py:168 templates/new.html:82
+#: app/forms.py:36 app/models.py:154 app/views.py:168 templates/new.html:82
 msgid "address"
 msgstr "Domicilio"
 
-#: app/forms.py:38 app/models.py:151
+#: app/forms.py:38 app/models.py:156
 msgid "created_at"
 msgstr "creado"
 
-#: app/forms.py:40 app/models.py:153
+#: app/forms.py:40 app/models.py:158
 msgid "updated_at"
 msgstr "actualizado"
 
-#: app/forms.py:42 app/models.py:157 templates/new.html:116
+#: app/forms.py:42 app/models.py:162 templates/new.html:116
 msgid "other_office"
 msgstr "Otra Secretaría"
 
-#: app/forms.py:44 app/models.py:159
+#: app/forms.py:44 app/models.py:164
 msgid "ldap_user_name"
 msgstr "Nombre de usuario ldap"
 
-#: app/forms.py:47 app/models.py:163 templates/new.html:67
+#: app/forms.py:47 app/models.py:168 templates/new.html:67
 msgid "ldap_user_password"
 msgstr "Contraseña"
 
@@ -105,43 +113,43 @@ msgstr "Contraseña"
 msgid "ldap_user_password_confirm"
 msgstr "Confirma Contraseña"
 
-#: app/forms.py:56 app/models.py:166
+#: app/forms.py:56 app/models.py:172
 msgid "group_id"
 msgstr "Grupo"
 
-#: app/forms.py:75
+#: app/forms.py:70
 msgid "password_dont_match"
 msgstr "Las contraseñas no coinciden"
 
-#: app/models.py:59
+#: app/models.py:64
 msgid "DocumentType"
 msgstr "Tipo Documento"
 
-#: app/models.py:60
+#: app/models.py:65
 msgid "DocumentTypes"
 msgstr "Tipos de Documentos"
 
-#: app/models.py:73
+#: app/models.py:78
 msgid "offices"
 msgstr "Secretarías"
 
-#: app/models.py:84
+#: app/models.py:89
 msgid "Group"
 msgstr "Grupo"
 
-#: app/models.py:85
+#: app/models.py:90
 msgid "Groups"
 msgstr "Grupos"
 
-#: app/models.py:130
+#: app/models.py:135
 msgid "invalid_value"
 msgstr "Ingrese un valor válido"
 
-#: app/models.py:176
+#: app/models.py:177
 msgid "person"
 msgstr "Persona"
 
-#: app/models.py:177
+#: app/models.py:178
 msgid "people"
 msgstr "Personas"
 

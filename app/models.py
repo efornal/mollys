@@ -12,11 +12,20 @@ from django.utils.translation import ugettext as _
 import unicodedata
 import hashlib
 import os
+import re
 
 def validate_group_existence_in_ldap(value):
     if not (value > 0):
         raise ValidationError("The group identified as '%s' does not exist" % value)
 
+def validate_ldap_user_password(value):
+    if not Person.ldap_password_valid(value):
+        raise ValidationError(_('ldap_user_password_invalid'))
+
+def validate_ldap_user_name(value):
+    if not Person.ldap_user_name_valid(value):
+        raise ValidationError(_('ldap_user_name_invalid'))
+    
 
 class LdapConn():
 
@@ -48,8 +57,8 @@ class LdapConn():
     @classmethod
     def parseattr (cls, s):
         return s.encode("utf8","ignore")
-    
-    
+
+
 class DocumentType(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     name = models.CharField(max_length=100,null=False)
@@ -156,11 +165,12 @@ class Person(models.Model):
     other_office = models.CharField(max_length=200,null=True, blank=True,
                                     verbose_name=_('other_office'))
     ldap_user_name = models.CharField(max_length=200,null=True, blank=True,
-                                      verbose_name=_('ldap_user_name'))#,
-                                      #validators=[validate_existence_in_ldap])
+                                      verbose_name=_('ldap_user_name'),
+                                      validators=[validate_ldap_user_name])
     ldap_user_password = models.CharField(max_length=200,
                                           null=True, blank=True,
-                                          verbose_name=_('ldap_user_password'))
+                                          verbose_name=_('ldap_user_password'),
+                                          validators=[validate_ldap_user_password])
     received_application = models.BooleanField(default=False,
                                                verbose_name=_('received_application'))
     group_id = models.IntegerField(null=True, blank=True, verbose_name=_('group_id'))
@@ -179,6 +189,21 @@ class Person(models.Model):
 
     def surname_and_name(self):
         return "%s, %s" % (self.surname, self.name)
+
+    @classmethod
+    def ldap_user_name_valid (cls, username):
+        if re.match('^[a-z0-9]+$', username ):
+            return True
+        else:
+            return False
+
+    @classmethod
+    def ldap_password_valid (cls, password):
+        if re.match( r'.{8,}([A-Za-z0-9@#$%^&+=]*)', password ):
+        #if re.match( r'^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$', password ):
+            return True
+        else:
+            return False
 
     @classmethod
     def make_secret(cls,password):

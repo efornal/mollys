@@ -61,6 +61,12 @@ class PersonAdminForm(forms.ModelForm):
         if len(self.cleaned_data['ldap_user_password']) < settings.MIN_LENGTH_LDAP_USER_PASSWORD:
             raise ValidationError(_('ldap_user_password_too_short'))
 
+        # if not Person.ldap_password_valid( self.cleaned_data["ldap_user_password"] ):
+        #     raise forms.ValidationError( _('ldap_user_password_invalid') )
+
+        # if not Person.ldap_user_name_valid( self.cleaned_data["ldap_user_name"] ):
+        #     raise forms.ValidationError( _('ldap_user_name_invalid') )
+
 
 class PersonAdmin(admin.ModelAdmin):
 
