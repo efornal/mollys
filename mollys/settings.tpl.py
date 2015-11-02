@@ -43,6 +43,7 @@ USE_I18N = True
 #LDAP_PEOPLE_FIELDS = ['uid','cn'] # idfirst!
 #LDAP_GROUP_MIN_VALUE = 500 # min group_id (group_id>= 500) for ldap search filter
 #MIN_LENGTH_LDAP_USER_PASSWORD = 8
+#LDAP_DEFAULT_GROUPS = ['audio','cdrom'] # ldap default groups for each new user
 
 # Params for create new people in ldap
 #LDAP_PEOPLE_OBJECTCLASSES = ['agente','hordeperson','inetOrgPerson',

@@ -330,11 +330,6 @@ def update_ldap_user(sender, instance, *args, **kwargs):
             logging.error("The following 'ldap user uid' could not be determined. " \
                           "The value obtained was %s" % str(new_uid_number) )
             
-        cn_group = Group.cn_group_by_gid(instance.group_id)
-
-        gdn = "cn=%s,ou=%s,%s" % ( cn_group,
-                                   settings.LDAP_GROUP,
-                                   settings.LDAP_DN )
 
         cnuser = LdapConn.parseattr( "%s %s" % (instance.name, instance.surname) )
         snuser = LdapConn.parseattr( "%s" % instance.surname )
@@ -354,15 +349,33 @@ def update_ldap_user(sender, instance, *args, **kwargs):
             ('gidNumber', [str(instance.group_id)] ),
             ('ou', [str(settings.LDAP_PEOPLE)]),
         ]
-            
-        update_group = [( ldap.MOD_ADD, 'memberUid', ldap_user_name )]
         
-        logging.info("Creating user in Ldap: %s " % new_user )
-        LdapConn.new().add_s(udn, new_user)
-
-        logging.info("Adding new member in ldap: %s " % update_group )
-        LdapConn.new().modify(gdn, update_group)
-
+        try:
+            logging.info("Creating user in Ldap: %s " % new_user )
+            LdapConn.new().add_s(udn, new_user)
+        except LDAPError, e:
+            if 'desc' in e.message:
+                logging.error( "LDAP error: %s" % e.message['desc'] )
+            else: 
+                logging.error( "%s" % e )
+                    
+        update_group = [( ldap.MOD_ADD, 'memberUid', ldap_user_name )]
+        cn_group = Group.cn_group_by_gid(instance.group_id)
+        cn_groups = ['%s' % cn_group]
+        if settings.LDAP_DEFAULT_GROUPS:
+            cn_groups += settings.LDAP_DEFAULT_GROUPS
+        for group in cn_groups:
+            try:
+                gdn = "cn=%s,ou=%s,%s" % ( group,
+                                           settings.LDAP_GROUP,
+                                           settings.LDAP_DN )
+                logging.info("Adding new member %s in ldap group: %s \n" % (ldap_user_name,group) )
+                LdapConn.new().modify(gdn, update_group)
+            except LDAPError, e:
+                if 'desc' in e.message:
+                    logging.error( "LDAP error: %s" % e.message['desc'] )
+                else: 
+                    logging.error( "%s" % e )
 
 @receiver(pre_save, sender=Person)
 def update_user_password(sender, instance, *args, **kwargs):
