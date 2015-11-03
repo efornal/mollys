@@ -1,4 +1,18 @@
 {% load suit_tags %}
+{% load staticfiles %}
+
+<style type="text/css">
+  .arrow-up {
+    height:14px;
+    width:14px;
+    overflow: hidden;
+    display: in-line;
+    padding: 4px;
+    border: 1px solid transparent;
+    background-position: -292px -92px;
+    background-image: url("{% static 'bootstrap/img/glyphicons-halflings.png' %}");
+  }
+</style>
 
 <fieldset class="module aligned{{ fieldset.name|yesno:' with-legend, first' }} {{ fieldset.classes }}">
     {% if fieldset.name %}
@@ -56,6 +70,10 @@
           $(function(){
           $("#id_group_id").attr('name', 'id_group_id');
 
+          $("#suggested_ldap_name_arrow").click(function(){
+            $("#id_ldap_user_name").val($("#suggested_ldap_name_arrow").attr('data-name'));
+          });
+          
           $("#id_ldap_user_password_check").change(function(){
 
           if ( $("#id_ldap_user_password_check").attr('checked') == 'checked') {
@@ -106,7 +124,12 @@
           });
                     });
         </script>
-        {% if not field.field.value %}<p >Nombre sugerido: <strong>{{ suggested_ldap_name }}</strong> </p>{% endif %}
+        {% if not field.field.value %}
+        
+        <p>Nombre sugerido: &nbsp; <strong>{{ suggested_ldap_name }}</strong>
+          &nbsp; &nbsp; <a href="#" id='suggested_ldap_name_arrow' class="arrow-up" data-name="{{ suggested_ldap_name }}" ></a>
+        </p>
+        {% endif %}
 
         {% endif %}
 
