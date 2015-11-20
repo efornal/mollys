@@ -53,7 +53,7 @@ def create(request):
         form = PersonForm(request.POST)
         if form.is_valid():
             try:
-                f = form.save(commit=False)
+                f = form.save()
                 f.save()
                 request.session['has_registered'] = True
                 return outcome_success(request, f)
