@@ -200,7 +200,6 @@ class Person(models.Model):
     @classmethod
     def ldap_password_valid (cls, password):
         if re.match( r'.{8,}([A-Za-z0-9@#$%^&+=]*)', password ):
-        #if re.match( r'^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$', password ):
             return True
         else:
             return False
