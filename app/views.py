@@ -28,8 +28,15 @@ def index(request):
     return redirect('new')
 
 def check_ldap(request):
-    result = Person.exists_in_ldap(request.POST['ldap_user_name'])
-    topic_list = json.dumps({'exists': result})
+    existing_uid_in_ldap = Person.exists_in_ldap( request.POST['ldap_user_name'] )
+    doc_type =  DocumentType.objects.get(pk=request.POST['doc_type'])
+    existing_name_in_ldap = Person.ldap_uid_by_id( request.POST['doc_num'],  doc_type.name.upper() )
+    if ( existing_uid_in_ldap or existing_name_in_ldap ):
+        result = True
+    else :
+        result = False
+        
+    topic_list = json.dumps({'exists': result, 'uid_in_ldap': existing_name_in_ldap})
     return HttpResponse(topic_list)
 
 def new(request):

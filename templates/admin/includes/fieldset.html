@@ -99,24 +99,25 @@
            $.ajax({
                type: "POST",
                url: "{% url 'check_ldap' %}",
-               data: {'ldap_user_name': $('#id_ldap_user_name').attr('value'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               data: {'ldap_user_name': $('#id_ldap_user_name').attr('value'), 'csrfmiddlewaretoken': '{{ csrf_token }}','doc_num': $('#id_document_number').attr('value'),'doc_type': $('#id_document_type').attr('value')},
                dataType: "json",
                success: function(response) {
                var $p = $("#id_ldap_user_name");
                if ( response.exists ) {
-                 $("#ldap_user_name_message").text("El usuario actualmente existe en ldap");
+                 if ( response.uid_in_ldap != $('#id_ldap_user_name').attr('value') ){
+                   msg = "El usuario ya existe en ldap con uid '" + response.uid_in_ldap + "'";
+                 }else{
+                   msg = "El usuario actualmente existe en ldap";
+                 }
+                 $("#ldap_user_name_message").text(msg);
                  $p.show(4000, function() {
                  $p.css("background-color","#F78181");
                  });
                } else {
-               //$p.show(4000, function() {
                  $("#ldap_user_name_message").text("El usuario no existe en ldap");
                  $p.css("background-color","#BEF781")
-                 //});
                }
-
-
-                },
+               },
                 error: function(rs, e) {
                        alert("La validación del usuario ldap no puedo realizarse.");
                 }

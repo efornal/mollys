@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 from django.contrib import admin
-from app.models import Person, Office, Group, LdapConn
+from app.models import Person, Office, Group, LdapConn, DocumentType
 import logging
 from django.forms.widgets import HiddenInput
 from django.contrib import admin
@@ -53,13 +53,24 @@ class PersonAdminForm(forms.ModelForm):
 
     def clean(self):
         if self.cleaned_data["ldap_user_name"] and not self.cleaned_data["received_application"]:
-            raise forms.ValidationError( _('received_application_required') )
+            self.add_error('received_application',_('received_application_required') )
 
         if self.instance.pk and not self.cleaned_data["group_id"]:
-            raise forms.ValidationError( _('required_attribute_group') )
+            self.add_error('group_id',_('required_attribute_group') )
+            raise ValidationError(_('required_attribute_group'))
 
         if len(self.cleaned_data['ldap_user_password']) < settings.MIN_LENGTH_LDAP_USER_PASSWORD:
             raise ValidationError(_('ldap_user_password_too_short'))
+
+        if self.cleaned_data["ldap_user_name"]:
+            existing_name_in_ldap = Person.ldap_uid_by_id( self.cleaned_data['document_number'],
+                                                           self.cleaned_data['document_type'] )
+            if existing_name_in_ldap:
+                logging.info("User has already exists in Ldap with uid '%s'. it was not updated!" \
+                             % existing_name_in_ldap)
+                self.add_error('document_number',
+                               "Ya existe en Ldap un usuario con este Documento cuyo uid es '%s'" \
+                               % existing_name_in_ldap)
 
 
 class PersonAdmin(admin.ModelAdmin):

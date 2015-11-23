@@ -245,7 +245,24 @@ class Person(models.Model):
         
 
     @classmethod
-    def exists_in_ldap(cls,uid):
+    def ldap_uid_by_id(cls, doc_num, type_num, nationality=''):
+        nationality = nationality or settings.LDAP_PEOPLE_PAISDOC
+        
+        ldap_condition = "(&(numdoc=%s)(tipodoc=%s)(paisdoc=%s))" % (doc_num, type_num, nationality)
+
+        r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN),
+                                    ldap.SCOPE_SUBTREE,
+                                    ldap_condition,
+                                    ['uid'])
+        uids = []
+        for dn,entry in r:
+            uids.append( entry['uid'][0] )
+        return uids
+
+    
+    @classmethod
+    def exists_in_ldap(cls, uid):
+        
         ldap_condition = "(uid=%s)" % uid
 
         r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN),
@@ -303,13 +320,61 @@ class Person(models.Model):
         else:
             return first_try
 
+        
+    @classmethod
+    def ldap_udn_for( cls, ldap_user_name ):
+        return "uid=%s,ou=%s,%s" % ( ldap_user_name,
+                                     settings.LDAP_PEOPLE,
+                                     settings.LDAP_DN )
+        
+
+        
+    @classmethod
+    def update_ldap_user_password( cls, ldap_user_name, new_password ):
+        try:
+            update_person = [( ldap.MOD_REPLACE, 'userPassword', new_password )]
+            udn = Person.ldap_udn_for( ldap_user_name )
+            LdapConn.new().modify(udn, update_person)
+        except ldap.LDAPError, e:
+            logging.error( "Error updating ldap user password for %s \n" % ldap_user_name)
+            logging.error( e )
+
+            
+    @classmethod
+    def create_ldap_user( cls,  ldap_user_name, new_ldap_user ):
+        try:
+            udn = Person.ldap_udn_for( ldap_user_name )
+            res = LdapConn.new().add_s(udn, new_ldap_user)
+            logging.info("Created new user in Ldap: %s " % new_ldap_user )
+            logging.warning(res )
+        except ldap.LDAPError, e:
+            logging.error( "Error adding ldap user %s \n" % ldap_user_name)
+            logging.error( e )
+
+            
+    @classmethod
+    def update_ldap_user_groups( cls,  ldap_user_name, cn_groups ):
+
+        update_group = [( ldap.MOD_ADD, 'memberUid', ldap_user_name )]
+
+        for group in cn_groups:
+            try:
+                
+                gdn = "cn=%s,ou=%s,%s" % ( group,
+                                           settings.LDAP_GROUP,
+                                           settings.LDAP_DN )
+                LdapConn.new().modify_s(gdn, update_group)
+                logging.info("Added new member %s in ldap group: %s \n" % (ldap_user_name,group) )
+            except ldap.LDAPError, e:
+                logging.error( "Error adding member %s in ldap group: %s \n" % (ldap_user_name,group) )
+                logging.error( e )
+
+                
 @receiver(post_save, sender=Person)
 def update_ldap_user(sender, instance, *args, **kwargs):
 
     ldap_user_name = str(instance.ldap_user_name) if instance.ldap_user_name else None
-    udn = "uid=%s,ou=%s,%s" % ( ldap_user_name,
-                                settings.LDAP_PEOPLE,
-                                settings.LDAP_DN )
+    udn = Person.ldap_udn_for( ldap_user_name )
 
     if (not ldap_user_name) or (ldap_user_name is None):
         logging.info("An LDAP user was not given. It is not updated!")
@@ -318,8 +383,7 @@ def update_ldap_user(sender, instance, *args, **kwargs):
     if Person.exists_in_ldap(ldap_user_name): # actualizar
         ldap_person = Person.get_from_ldap(ldap_user_name)
         if ldap_person['userPassword'] != instance.ldap_user_password:
-            update_person = [( ldap.MOD_REPLACE, 'userPassword', str(instance.ldap_user_password) )]
-            LdapConn.new().modify(udn, update_person)
+            Person.update_ldap_user_password ( ldap_user_name, str(instance.ldap_user_password) )
             logging.info("User '%s' already exists in Ldap. It was updated!" % ldap_user_name)
         else:
             logging.info("User '%s' already exists in Ldap. it was not updated!" % ldap_user_name)
@@ -330,9 +394,9 @@ def update_ldap_user(sender, instance, *args, **kwargs):
                           "The value obtained was %s" % str(new_uid_number) )
             
 
+        # Create new ldapp user
         cnuser = LdapConn.parseattr( "%s %s" % (instance.name, instance.surname) )
         snuser = LdapConn.parseattr( "%s" % instance.surname )
-
         new_user = [
             ('objectclass', settings.LDAP_PEOPLE_OBJECTCLASSES),
             ('cn', [cnuser]),
@@ -348,31 +412,15 @@ def update_ldap_user(sender, instance, *args, **kwargs):
             ('gidNumber', [str(instance.group_id)] ),
             ('ou', [str(settings.LDAP_PEOPLE)]),
         ]
-        
-        try:
-            res=LdapConn.new().add_s(udn, new_user)
-            logging.info("Created new user in Ldap: %s " % new_user )
-            logging.warning(res )
-        except ldap.LDAPError, e:
-            logging.error( "Error adding ldap user %s \n" % ldap_user_name)
-            logging.error( e )
+        Person.create_ldap_user( ldap_user_name, new_user )
 
-                               
-        update_group = [( ldap.MOD_ADD, 'memberUid', ldap_user_name )]
+        # Update ldap groups
         cn_group = Group.cn_group_by_gid(instance.group_id)
         cn_groups = ['%s' % cn_group]
         if settings.LDAP_DEFAULT_GROUPS:
             cn_groups += settings.LDAP_DEFAULT_GROUPS
-        for group in cn_groups:
-            try:
-                gdn = "cn=%s,ou=%s,%s" % ( group,
-                                           settings.LDAP_GROUP,
-                                           settings.LDAP_DN )
-                LdapConn.new().modify_s(gdn, update_group)
-                logging.info("Added new member %s in ldap group: %s \n" % (ldap_user_name,group) )
-            except ldap.LDAPError, e:
-                logging.error( "Error adding member %s in ldap group: %s \n" % (ldap_user_name,group) )
-                logging.error( e )
+        Person.update_ldap_user_groups( ldap_user_name, cn_groups )
+                               
 
                 
 @receiver(pre_save, sender=Person)
