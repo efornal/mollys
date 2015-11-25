@@ -278,14 +278,15 @@ class Person(models.Model):
     @classmethod
     def get_from_ldap(cls,uid):
         ldap_condition = "(uid=%s)" % uid
-
+        fields = {}
         r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN),
                                     ldap.SCOPE_SUBTREE,
                                     ldap_condition)
         for dn,entry in r:
             if entry['uid'][0] == uid:
-                return entry
-        return None
+                for field in entry:
+                    fields[field] = entry[field][0]
+        return fields
 
     
     @classmethod
@@ -414,13 +415,13 @@ def update_ldap_user(sender, instance, *args, **kwargs):
     if Person.exists_in_ldap(ldap_user_name): # actualizar
         ldap_person = Person.get_from_ldap(ldap_user_name)
         # update password
-        if str(ldap_person['userPassword'][0]) != str(instance.ldap_user_password):
+        if str(ldap_person['userPassword']) != str(instance.ldap_user_password):
             logging.info("User '%s' already exists in Ldap. changing password.." % ldap_user_name)
             Person.update_ldap_user_password ( ldap_user_name, str(instance.ldap_user_password) )
         # update group
-        if str(ldap_person['gidNumber'][0]) != str(instance.group_id):
+        if str(ldap_person['gidNumber']) != str(instance.group_id):
             new_gidgroup = Group.cn_group_by_gid( str(instance.group_id) )
-            old_gidgroup = Group.cn_group_by_gid( str(ldap_person['gidNumber'][0]) )
+            old_gidgroup = Group.cn_group_by_gid( str(ldap_person['gidNumber']) )
             logging.info("User '%s' already exists in Ldap. Changing group '%s' by '%s'.." % \
                          (ldap_user_name, old_gidgroup, new_gidgroup ) )
             Person.update_ldap_user_group ( ldap_user_name, new_gidgroup )
