@@ -342,6 +342,10 @@ class Person(models.Model):
             
     @classmethod
     def create_ldap_user( cls,  ldap_user_name, new_ldap_user ):
+        if not (ldap_user_name and new_ldap_user):
+            logging.error( "Error creating user %s. Missing parameter.\n" % new_ldap_user )
+            return
+        
         try:
             udn = Person.ldap_udn_for( ldap_user_name )
             res = LdapConn.new().add_s(udn, new_ldap_user)
@@ -351,23 +355,50 @@ class Person(models.Model):
             logging.error( "Error adding ldap user %s \n" % ldap_user_name)
             logging.error( e )
 
+
+    @classmethod
+    def delete_ldap_user_group( cls,  ldap_user_name, ldap_group ):
+        if not (ldap_user_name and ldap_group):
+            logging.error( "Error deleting group %s of member: %s. Missing parameter.\n" \
+                           % (ldap_group,ldap_user_name) )
+            return
+            
+        delete_group = [(ldap.MOD_DELETE , 'memberUid', ldap_user_name )]
+        try:
+            gdn = "cn=%s,ou=%s,%s" % ( ldap_group,
+                                       settings.LDAP_GROUP,
+                                       settings.LDAP_DN )
+            LdapConn.new().modify_s(gdn,delete_group)
+            logging.info("Deleted group %s for member: %s \n" % (ldap_group,ldap_user_name) )
+        except ldap.LDAPError, e:
+            logging.error( "Error deleting group %s of member: %s \n" % (ldap_group,ldap_user_name) )
+            logging.error( e )
+
+            
+    @classmethod
+    def update_ldap_user_group( cls,  ldap_user_name, ldap_group ):
+        if not (ldap_user_name and ldap_group):
+            logging.error( "Error updating group %s of member: %s. Missing parameter.\n" \
+                           % (ldap_group,ldap_user_name) )
+            return
+
+        update_group = [( ldap.MOD_ADD, 'memberUid', ldap_user_name )]
+        try:
+            gdn = "cn=%s,ou=%s,%s" % ( ldap_group,
+                                       settings.LDAP_GROUP,
+                                       settings.LDAP_DN )
+            LdapConn.new().modify_s(gdn, update_group)
+            logging.info("Added new member %s in ldap group: %s \n" % (ldap_user_name,ldap_group) )
+        except ldap.LDAPError, e:
+            logging.error( "Error adding member %s in ldap group: %s \n" % (ldap_user_name,ldap_group) )
+            logging.error( e )
+
             
     @classmethod
     def update_ldap_user_groups( cls,  ldap_user_name, cn_groups ):
-
         update_group = [( ldap.MOD_ADD, 'memberUid', ldap_user_name )]
-
         for group in cn_groups:
-            try:
-                
-                gdn = "cn=%s,ou=%s,%s" % ( group,
-                                           settings.LDAP_GROUP,
-                                           settings.LDAP_DN )
-                LdapConn.new().modify_s(gdn, update_group)
-                logging.info("Added new member %s in ldap group: %s \n" % (ldap_user_name,group) )
-            except ldap.LDAPError, e:
-                logging.error( "Error adding member %s in ldap group: %s \n" % (ldap_user_name,group) )
-                logging.error( e )
+            Person.update_ldap_user_group(ldap_user_name,group)
 
                 
 @receiver(post_save, sender=Person)
@@ -382,11 +413,19 @@ def update_ldap_user(sender, instance, *args, **kwargs):
 
     if Person.exists_in_ldap(ldap_user_name): # actualizar
         ldap_person = Person.get_from_ldap(ldap_user_name)
-        if ldap_person['userPassword'] != instance.ldap_user_password:
+        # update password
+        if str(ldap_person['userPassword'][0]) != str(instance.ldap_user_password):
+            logging.info("User '%s' already exists in Ldap. changing password.." % ldap_user_name)
             Person.update_ldap_user_password ( ldap_user_name, str(instance.ldap_user_password) )
-            logging.info("User '%s' already exists in Ldap. It was updated!" % ldap_user_name)
-        else:
-            logging.info("User '%s' already exists in Ldap. it was not updated!" % ldap_user_name)
+        # update group
+        if str(ldap_person['gidNumber'][0]) != str(instance.group_id):
+            new_gidgroup = Group.cn_group_by_gid( str(instance.group_id) )
+            old_gidgroup = Group.cn_group_by_gid( str(ldap_person['gidNumber'][0]) )
+            logging.info("User '%s' already exists in Ldap. Changing group '%s' by '%s'.." % \
+                         (ldap_user_name, old_gidgroup, new_gidgroup ) )
+            Person.update_ldap_user_group ( ldap_user_name, new_gidgroup )
+            Person.delete_ldap_user_group ( ldap_user_name, old_gidgroup )
+
     else: # crear nuevo
         new_uid_number = Person.next_ldap_uid()
         if not (new_uid_number > 0):

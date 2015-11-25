@@ -61,11 +61,13 @@ class PersonAdminForm(forms.ModelForm):
 
         if len(self.cleaned_data['ldap_user_password']) < settings.MIN_LENGTH_LDAP_USER_PASSWORD:
             raise ValidationError(_('ldap_user_password_too_short'))
+        existing_name_in_ldap = Person.ldap_uid_by_id( self.cleaned_data['document_number'],
+                                                       self.cleaned_data['document_type'] )
 
         if self.cleaned_data["ldap_user_name"]:
             existing_name_in_ldap = Person.ldap_uid_by_id( self.cleaned_data['document_number'],
                                                            self.cleaned_data['document_type'] )
-            if existing_name_in_ldap:
+            if existing_name_in_ldap and (existing_name_in_ldap is self.cleaned_data["ldap_user_name"]):
                 logging.info("User has already exists in Ldap with uid '%s'. it was not updated!" \
                              % existing_name_in_ldap)
                 self.add_error('document_number',
