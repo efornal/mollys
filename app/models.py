@@ -335,11 +335,25 @@ class Person(models.Model):
         try:
             update_person = [( ldap.MOD_REPLACE, 'userPassword', new_password )]
             udn = Person.ldap_udn_for( ldap_user_name )
-            LdapConn.new().modify(udn, update_person)
+            LdapConn.new().modify_s(udn, update_person)
         except ldap.LDAPError, e:
             logging.error( "Error updating ldap user password for %s \n" % ldap_user_name)
             logging.error( e )
 
+            
+    @classmethod
+    def update_ldap_user_gidgroup( cls, ldap_user_name, new_group_id ):
+        try:
+            update_person = [( ldap.MOD_REPLACE, 'gidNumber', new_group_id )]
+            udn = Person.ldap_udn_for( ldap_user_name )
+            LdapConn.new().modify_s(udn, update_person)
+            logging.info("Changed group to '%s' for ldap group id '%s'\n" % \
+                         (ldap_user_name,new_group_id) )
+        except ldap.LDAPError, e:
+            logging.error( "Error updating ldap user gidGroup '%s' for ldap user '%s' \n" % \
+                           (ldap_user_name, new_group_id) )
+            logging.error( e )
+            
             
     @classmethod
     def create_ldap_user( cls,  ldap_user_name, new_ldap_user ):
@@ -411,9 +425,11 @@ def update_ldap_user(sender, instance, *args, **kwargs):
     if (not ldap_user_name) or (ldap_user_name is None):
         logging.info("An LDAP user was not given. It is not updated!")
         return
-
     if Person.exists_in_ldap(ldap_user_name): # actualizar
         ldap_person = Person.get_from_ldap(ldap_user_name)
+        logging.error("%s-%s" % (instance.group_id,Group.cn_group_by_gid( str(instance.group_id))))
+        logging.error("%s-%s" % (ldap_person['gidNumber'],Group.cn_group_by_gid( str(ldap_person['gidNumber']))))
+
         # update password
         if str(ldap_person['userPassword']) != str(instance.ldap_user_password):
             logging.info("User '%s' already exists in Ldap. changing password.." % ldap_user_name)
@@ -424,8 +440,9 @@ def update_ldap_user(sender, instance, *args, **kwargs):
             old_gidgroup = Group.cn_group_by_gid( str(ldap_person['gidNumber']) )
             logging.info("User '%s' already exists in Ldap. Changing group '%s' by '%s'.." % \
                          (ldap_user_name, old_gidgroup, new_gidgroup ) )
-            Person.update_ldap_user_group ( ldap_user_name, new_gidgroup )
-            Person.delete_ldap_user_group ( ldap_user_name, old_gidgroup )
+            Person.update_ldap_user_gidgroup( ldap_user_name, str(instance.group_id) ) 
+            Person.update_ldap_user_group( ldap_user_name, new_gidgroup )
+            Person.delete_ldap_user_group( ldap_user_name, old_gidgroup )
 
     else: # crear nuevo
         new_uid_number = Person.next_ldap_uid()
@@ -472,3 +489,13 @@ def update_user_password(sender, instance, *args, **kwargs):
     else: # nuevo!
         instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
 
+# ERROR root: 549-admin
+#  ERROR root: 1026-compras
+#  INFO root: User 'mxelios' already exists in Ldap. Changing group 'compras' by 'admin'..
+#  ERROR root: Error updating ldap user gidGroup 'mxelios' for ldap user 'admin' 
+
+#  ERROR root: {'info': 'gidNumber: value #0 invalid per syntax', 'desc': 'Invalid syntax'}
+#  INFO root: Added new member mxelios in ldap group: admin 
+
+
+#  INFO root: Deleted group compras for member: mxelios 
