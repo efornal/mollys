@@ -14,19 +14,23 @@ import hashlib
 import os
 import re
 
+
 def validate_group_existence_in_ldap(value):
     if not (value > 0):
         raise ValidationError("The group identified as '%s' does not exist" % value)
 
+    
 def validate_ldap_user_password(value):
     if not Person.ldap_password_valid(value):
         raise ValidationError(_('ldap_user_password_invalid'))
 
+    
 def validate_ldap_user_name(value):
     if not Person.ldap_user_name_valid(value):
         raise ValidationError(_('ldap_user_name_invalid'))
     
 
+    
 class LdapConn():
 
     @classmethod
@@ -44,6 +48,7 @@ class LdapConn():
             logging.error(e)
             raise
 
+        
     @classmethod
     def enable(cls):
         try:
@@ -59,6 +64,7 @@ class LdapConn():
         return s.encode("utf8","ignore")
 
 
+    
 class DocumentType(models.Model):
     id = models.AutoField(primary_key=True,null=False)
     name = models.CharField(max_length=100,null=False)
@@ -70,6 +76,7 @@ class DocumentType(models.Model):
         
     def __unicode__(self):
         return self.name
+
 
     
 class Office(models.Model):
@@ -84,6 +91,7 @@ class Office(models.Model):
     def __unicode__(self):
         return self.name
 
+
     
 class Group(models.Model):
     group_id = models.IntegerField()
@@ -94,10 +102,10 @@ class Group(models.Model):
         verbose_name_plural = _('Groups')
         managed = False
         
-        
     def __unicode__(self):
         return self.name
 
+    
     @classmethod
     def cn_group_by_gid(cls, gid):
         ldap_condition = "(gidNumber=%s)" % gid
@@ -112,6 +120,7 @@ class Group(models.Model):
                 cn_found = entry['cn'][0]
 
         return cn_found
+
     
     @classmethod
     def all(cls):
@@ -181,15 +190,19 @@ class Person(models.Model):
         verbose_name = _('person')
         verbose_name_plural = _('people')
 
+        
     def __unicode__(self):
         return self.name
 
+    
     def name_and_surname(self):
         return "%s, %s" % (self.name, self.surname)
 
+    
     def surname_and_name(self):
         return "%s, %s" % (self.surname, self.name)
 
+    
     @classmethod
     def ldap_user_name_valid (cls, username):
         if re.match('^[a-z0-9]+$', username ):
@@ -197,6 +210,7 @@ class Person(models.Model):
         else:
             return False
 
+        
     @classmethod
     def ldap_password_valid (cls, password):
         if re.match( r'.{8,}([A-Za-z0-9@#$%^&+=]*)', password ):
@@ -204,6 +218,7 @@ class Person(models.Model):
         else:
             return False
 
+        
     @classmethod
     def make_secret(cls,password):
         """
@@ -294,6 +309,7 @@ class Person(models.Model):
         return Person.strip_accents( "%s%s" % ( name.strip()[0].lower(),
                                                 surname.lower().strip().partition(" ")[0] ) )
 
+    
     @classmethod
     def compose_extended_suggested_name( cls, surname, name ):
         names = ""
@@ -311,6 +327,7 @@ class Person(models.Model):
             return ''.join(c for c in unicodedata.normalize('NFD', s)
                            if unicodedata.category(c) != 'Mn')
 
+        
     @classmethod
     def suggested_name( cls, object_id ):
         person = Person.objects.get(id=object_id)
@@ -425,15 +442,15 @@ def update_ldap_user(sender, instance, *args, **kwargs):
     if (not ldap_user_name) or (ldap_user_name is None):
         logging.info("An LDAP user was not given. It is not updated!")
         return
+    
     if Person.exists_in_ldap(ldap_user_name): # actualizar
         ldap_person = Person.get_from_ldap(ldap_user_name)
-        logging.error("%s-%s" % (instance.group_id,Group.cn_group_by_gid( str(instance.group_id))))
-        logging.error("%s-%s" % (ldap_person['gidNumber'],Group.cn_group_by_gid( str(ldap_person['gidNumber']))))
 
         # update password
         if str(ldap_person['userPassword']) != str(instance.ldap_user_password):
             logging.info("User '%s' already exists in Ldap. changing password.." % ldap_user_name)
             Person.update_ldap_user_password ( ldap_user_name, str(instance.ldap_user_password) )
+
         # update group
         if str(ldap_person['gidNumber']) != str(instance.group_id):
             new_gidgroup = Group.cn_group_by_gid( str(instance.group_id) )
@@ -489,13 +506,3 @@ def update_user_password(sender, instance, *args, **kwargs):
     else: # nuevo!
         instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
 
-# ERROR root: 549-admin
-#  ERROR root: 1026-compras
-#  INFO root: User 'mxelios' already exists in Ldap. Changing group 'compras' by 'admin'..
-#  ERROR root: Error updating ldap user gidGroup 'mxelios' for ldap user 'admin' 
-
-#  ERROR root: {'info': 'gidNumber: value #0 invalid per syntax', 'desc': 'Invalid syntax'}
-#  INFO root: Added new member mxelios in ldap group: admin 
-
-
-#  INFO root: Deleted group compras for member: mxelios 
