@@ -27,30 +27,30 @@ USE_I18N = True
 # LDAP CONFIGURATION ====================\
 
 # LDAP server
-#LDAP_SERVER = 'ldap://host_ldap:port'
+LDAP_SERVER = 'ldap://host_ldap:port'
 
 # Dn for entry
-#LDAP_DN = 'dc=domain,dc=edu,dc=ar'
+LDAP_DN = 'dc=domain,dc=edu,dc=ar'
 
 # LDAP authentication
-#LDAP_USER_NAME='user_name'
-#LDAP_USER_PASS='password'
+LDAP_USER_NAME='user_name'
+LDAP_USER_PASS='password'
 
 # Organizational Unit for Person and Person Group
-#LDAP_GROUP  = 'Group' # ou=Entry
-#LDAP_PEOPLE = 'People' # ou=Entry
-#LDAP_GROUP_FIELDS  = ['gidNumber','cn']  # id first!
-#LDAP_PEOPLE_FIELDS = ['uid','cn'] # idfirst!
-#LDAP_GROUP_MIN_VALUE = 500 # min group_id (group_id>= 500) for ldap search filter
-#MIN_LENGTH_LDAP_USER_PASSWORD = 8
-#LDAP_DEFAULT_GROUPS = ['audio','cdrom'] # ldap default groups for each new user
+LDAP_GROUP  = 'Group' # ou=Entry
+LDAP_PEOPLE = 'People' # ou=Entry
+LDAP_GROUP_FIELDS  = ['gidNumber','cn']  # id first!
+LDAP_PEOPLE_FIELDS = ['uid','cn'] # idfirst!
+LDAP_GROUP_MIN_VALUE = 500 # min group_id (group_id>= 500) for ldap search filter
+MIN_LENGTH_LDAP_USER_PASSWORD = 8
+LDAP_DEFAULT_GROUPS = ['audio','cdrom'] # ldap default groups for each new user
 
 # Params for create new people in ldap
-#LDAP_PEOPLE_OBJECTCLASSES = ['agente','hordeperson','inetOrgPerson',
-#                             'organizationalperson','person','posixaccount',
-#                             'shadowaccount', 'top']
-#LDAP_PEOPLE_PAISDOC = "ARG"
-#LDAP_PEOPLE_HOMEDIRECTORY_PREFIX = "/home/"
+LDAP_PEOPLE_OBJECTCLASSES = ['agente','hordeperson','inetOrgPerson',
+                             'organizationalperson','person','posixaccount',
+                             'shadowaccount', 'top']
+LDAP_PEOPLE_PAISDOC = "ARG"
+LDAP_PEOPLE_HOMEDIRECTORY_PREFIX = "/home/"
 
 # =======================================/
 
