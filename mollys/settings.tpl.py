@@ -24,6 +24,17 @@ LANGUAGES = (
 USE_I18N = True
 
 
+# CONFIGURATION FOR PRODUCTION  ====================\
+#STATIC_ROOT = os.path.join(BASE_DIR, "mollys/static_produccion")
+#STATICFILES_DIRS = (
+#    os.path.join(BASE_DIR, "static"),
+#)
+#STATIC_URL='/mollys/static_production/'
+#DEBUG = False
+#TEMPLATE_DEBUG = False
+# ==================================================/
+
+
 # LDAP CONFIGURATION ====================\
 
 # LDAP server
@@ -58,16 +69,12 @@ LDAP_PEOPLE_HOMEDIRECTORY_PREFIX = "/home/"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
-# set static path for production
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'tfp%=#=oszs#x4wea8mkm60p=nmg3l9)jq5g1%s_ev#_4$w#&-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-#TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -101,18 +108,23 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'mollys.urls'
 
-import os
-SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
+STATIC_URL='/static/'
+
+LOGIN_URL='/login/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
     '/static/',
 )
 
+LOCALE_PATHS = (
+     BASE_DIR + '/locale', )
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(SETTINGS_PATH, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,7 +142,6 @@ WSGI_APPLICATION = 'mollys.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -145,7 +156,6 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
-
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -154,15 +164,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
-
-STATIC_URL='/static/'
-
-LOGIN_URL='/login/'
-
-PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
+DEFAULT_CHARSET = 'utf-8'
 
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
@@ -171,29 +173,16 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
 
-LOCALE_PATHS = (
-     BASE_DIR + '/locale', )
 
-# loggin querys in develompent
-# if DEBUG:
-#     import logging
-#     l = logging.getLogger('django.db.backends')
-#     l.setLevel(logging.DEBUG)
-#     l.addHandler(logging.StreamHandler())
-#     logging.basicConfig(
-#         level = logging.DEBUG,
-#         format = " %(levelname)s %(name)s: %(message)s",
-#     )
 
-DEFAULT_CHARSET = 'utf-8'
 
+# =================================\
+# django configuration
 SUIT_CONFIG = {
     'ADMIN_NAME': _('title')
 }
 
-# =================================\
 # django ldap configuration
-
 import ldap
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
@@ -221,3 +210,15 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 # =================================/
+
+
+# loggin querys in develompent
+# if DEBUG:
+#     import logging
+#     l = logging.getLogger('django.db.backends')
+#     l.setLevel(logging.DEBUG)
+#     l.addHandler(logging.StreamHandler())
+#     logging.basicConfig(
+#         level = logging.DEBUG,
+#         format = " %(levelname)s %(name)s: %(message)s",
+#     )
