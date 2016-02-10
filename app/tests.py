@@ -104,5 +104,3 @@ class PersonTests(TestCase):
 
     def test_ldap_password_hash_valid(self):
         self.assertTrue( Person.ldap_password_valid('{SSHA}DJtONDDSJ3SnEKRJ0aMDzUMOkMOsOhp/') )
-
-        

@@ -68,3 +68,10 @@ class PersonForm(forms.ModelForm):
         ldap_user_password_confirm = self.cleaned_data.get('ldap_user_password_confirm')
         if ldap_user_password and ldap_user_password != ldap_user_password_confirm:
             self.add_error('ldap_user_password_confirm' , _('password_dont_match') )
+
+    def clean_name(self):
+        return self.cleaned_data['name'].title()
+
+    def clean_surname(self):
+        return self.cleaned_data['surname'].title()
+
