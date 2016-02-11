@@ -258,8 +258,22 @@ class Person(models.Model):
             next_value += 1
 
         return next_value
-        
 
+    
+    @classmethod
+    def exist_ldap_uidNumber(cls, uidnumber):
+        ldap_condition = "(uidNumber=%s)" % uidnumber
+        ldap_dn ="ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN)
+
+        r = LdapConn.new().search_s(ldap_dn,ldap.SCOPE_SUBTREE,
+                                    ldap_condition,
+                                    ['uidNumber'])
+        for dn,entry in r:
+            if int(entry['uidNumber'][0]) == int(uidnumber):
+                return True
+        return False
+
+    
     @classmethod
     def ldap_uid_by_id(cls, doc_num, type_num, nationality=''):
         nationality = nationality or settings.LDAP_PEOPLE_PAISDOC
@@ -383,7 +397,6 @@ class Person(models.Model):
             udn = Person.ldap_udn_for( ldap_user_name )
             res = LdapConn.new().add_s(udn, new_ldap_user)
             logging.info("Created new user in Ldap: %s " % new_ldap_user )
-            logging.warning(res )
         except ldap.LDAPError, e:
             logging.error( "Error adding ldap user %s \n" % ldap_user_name)
             logging.error( e )
@@ -467,7 +480,10 @@ def update_ldap_user(sender, instance, *args, **kwargs):
         if not (new_uid_number > 0):
             logging.error("The following 'ldap user uid' could not be determined. " \
                           "The value obtained was %s" % str(new_uid_number) )
-            
+
+        if Person.exist_ldap_uidNumber(new_uid_number):
+            logging.error("The ldap user uidNumber '%s' already exist!." % str(new_uid_number))
+            new_uid_number = 0
 
         # Create new ldapp user
         cnuser = LdapConn.parseattr( "%s %s" % (instance.name, instance.surname) )
@@ -506,4 +522,5 @@ def update_user_password(sender, instance, *args, **kwargs):
             instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
     else: # nuevo!
         instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
+
 
