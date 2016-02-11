@@ -502,6 +502,7 @@ def update_ldap_user(sender, instance, *args, **kwargs):
                                               ldap_user_name))]),
             ('gidNumber', [str(instance.group_id)] ),
             ('ou', [str(settings.LDAP_PEOPLE)]),
+            ('loginShell', [str(settings.LDAP_PEOPLE_LOGIN_SHELL)]),
         ]
         Person.create_ldap_user( ldap_user_name, new_user )
 

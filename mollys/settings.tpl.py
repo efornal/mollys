@@ -62,7 +62,7 @@ LDAP_PEOPLE_OBJECTCLASSES = ['agente','hordeperson','inetOrgPerson',
                              'shadowaccount', 'top']
 LDAP_PEOPLE_PAISDOC = "ARG"
 LDAP_PEOPLE_HOMEDIRECTORY_PREFIX = "/home/"
-
+LDAP_PEOPLE_LOGIN_SHELL = "/bin/bash"
 # =======================================/
 
 
