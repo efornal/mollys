@@ -253,8 +253,9 @@ class Person(models.Model):
         for dn,entry in r:
             if entry['uidNumber'][0] and int(entry['uidNumber'][0]) > next_value:
                 next_value = int(entry['uidNumber'][0])
-                if next_value > 0:
-                    next_value += 1
+
+        if next_value > 0:
+            next_value += 1
 
         return next_value
         
