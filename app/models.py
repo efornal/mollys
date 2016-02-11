@@ -241,7 +241,7 @@ class Person(models.Model):
 
     
     @classmethod
-    def next_ldap_uid(cls):
+    def next_ldap_uidNumber(cls):
         ldap_condition = "(uidNumber=*)"
         next_value = 0
         ldap_dn ="ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN)
@@ -462,7 +462,7 @@ def update_ldap_user(sender, instance, *args, **kwargs):
             Person.delete_ldap_user_group( ldap_user_name, old_gidgroup )
 
     else: # crear nuevo
-        new_uid_number = Person.next_ldap_uid()
+        new_uid_number = Person.next_ldap_uidNumber()
         if not (new_uid_number > 0):
             logging.error("The following 'ldap user uid' could not be determined. " \
                           "The value obtained was %s" % str(new_uid_number) )
