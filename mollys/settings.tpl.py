@@ -206,7 +206,9 @@ AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=%s,%s" % (LDAP_PEOPLE,LDAP_DN),
 AUTH_LDAP_USER_ATTR_MAP = {
     "first_name": "givenName",
     "last_name": "sn",
-    "email": "mail"
+    "email": "mail",
+    "username": "uid",
+    "password": "userPassword",
 }
 
 AUTHENTICATION_BACKENDS = (
