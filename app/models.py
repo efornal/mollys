@@ -604,10 +604,16 @@ def update_user_password(sender, instance, *args, **kwargs):
         
 @receiver(user_logged_in)
 def sig_user_logged_in_check(sender, user, request, **kwargs):
-    if settings.LDAP_GROUP_VALIDATION:
-        if not Group.is_member_in_groups( str(user),
-                                          settings.LDAP_GROUPS_VALID) \
-                                          and not request.user.is_superuser:
-            logging.warning("The user %s does not have permissions ldap in groups %s" % \
-                            (user, settings.LDAP_GROUPS_VALID))
+    try:
+        if settings.LDAP_GROUP_VALIDATION:
+            if not Group.is_member_in_groups( str(user),
+                                              settings.LDAP_GROUPS_VALID) \
+                                              and not request.user.is_superuser:
+                logging.warning("The user %s does not have permissions ldap in groups %s" % \
+                                (user, settings.LDAP_GROUPS_VALID))
+                logout(request)
+    except ldap.LDAPError, e:
+        logging.error( "Error during authentication with LDAP server for user %s.\n" % user )
+        logging.error( e )
+        if not request.user.is_superuser:
             logout(request)
