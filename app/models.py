@@ -3,6 +3,8 @@ from django.db import models
 from datetime import datetime
 from django.core.validators import RegexValidator
 from django.db.models.signals import pre_save, post_save
+from django.contrib.auth import logout
+from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
 import logging
 import ldap
@@ -34,17 +36,34 @@ def validate_ldap_user_name(value):
 class LdapConn():
 
     @classmethod
-    def new(cls):
+    def new(cls, ldap_username='', ldap_password=''):
         try:
             connection = ldap.initialize( settings.LDAP_SERVER )
-            connection.simple_bind_s( "cn=%s,%s" % ( settings.LDAP_USER_NAME, settings.LDAP_DN ),
-                                      settings.LDAP_USER_PASS )
+            if ldap_username and ldap_password:
+                connection.simple_bind_s( "uid=%s,ou=%s,%s" % ( ldap_username,
+                                                                settings.LDAP_PEOPLE,
+                                                                settings.LDAP_DN ),
+                                          ldap_userpassword )
+            else:
+                connection.simple_bind_s()
+                
             return connection
 
-        except ldap.LDAPError:
+        except ldap.LDAPError, e:
             logging.error("Could not connect to the Ldap server: '%s'" % settings.LDAP_SERVER )
+            logging.error(e)
             raise
-        except e:
+
+    @classmethod
+    def new_admin(cls):
+        try:
+            connection = ldap.initialize( settings.LDAP_SERVER )
+            connection.simple_bind_s( "cn=%s,%s" % ( settings.LDAP_ADMIN_USERNAME, settings.LDAP_DN ),
+                                      settings.LDAP_ADMIN_USERPASS )
+            return connection
+
+        except ldap.LDAPError, e:
+            logging.error("Could not connect to the Ldap server: '%s'" % settings.LDAP_SERVER )
             logging.error(e)
             raise
 
@@ -53,8 +72,7 @@ class LdapConn():
     def enable(cls):
         try:
             connection = ldap.initialize( settings.LDAP_SERVER )
-            connection.simple_bind_s( "cn=%s,%s" % ( settings.LDAP_USER_NAME, settings.LDAP_DN ),
-                                      settings.LDAP_USER_PASS )
+            connection.simple_bind_s()
             return True
         except ldap.LDAPError, e:
             return False
@@ -77,6 +95,14 @@ class DocumentType(models.Model):
     def __unicode__(self):
         return self.name
 
+    @classmethod
+    def get_from_name(cls,doc_name):
+        doc = DocumentType.objects.get(name=doc_name)
+        if doc.pk:
+            return doc
+        else:
+            None
+
 
     
 class Office(models.Model):
@@ -90,7 +116,6 @@ class Office(models.Model):
 
     def __unicode__(self):
         return self.name
-
 
     
 class Group(models.Model):
@@ -121,6 +146,31 @@ class Group(models.Model):
 
         return cn_found
 
+    @classmethod
+    def members_of(cls, group_cns=[]):
+        ldap_condition = ''
+        members = []
+        for group in group_cns:
+            ldap_condition += "(cn=%s)" % group
+        if len(group_cns) > 1:
+            ldap_condition = "(|%s)" % ldap_condition
+
+        r = LdapConn.new_admin().search_s("ou=%s,%s" %(settings.LDAP_GROUP, settings.LDAP_DN),
+                                    ldap.SCOPE_SUBTREE,
+                                          ldap_condition, ['memberUid'])
+        for dn,entry in r:
+             members.append(entry['memberUid'])
+        return members[0]
+
+
+    @classmethod
+    def is_member_in_groups(cls,member,groups):
+        members = Group.members_of(groups)
+        if member in members:
+            return True
+        else:
+            return False
+            
     
     @classmethod
     def all(cls):
@@ -143,7 +193,7 @@ class Group(models.Model):
 
     
 class Person(models.Model):
-
+    
     document_regex = RegexValidator(regex=r'^\d{6,10}$',
                                     message=_('invalid_value'))
 
@@ -202,7 +252,17 @@ class Person(models.Model):
     def surname_and_name(self):
         return "%s, %s" % (self.surname, self.name)
 
-    
+    @classmethod
+    def ldap_fields_map(cls):
+        return {'gidNumber': 'group_id',
+                'numdoc': 'document_number',
+                'sn': 'surname',
+                'givenName': 'name',
+                'uid': 'ldap_user_name',
+                'userPassword': 'ldap_user_password',
+                'tipodoc': 'document_type'}
+
+     
     @classmethod
     def ldap_user_name_valid (cls, username):
         if re.match('^[a-z0-9]+$', username ):
@@ -304,19 +364,36 @@ class Person(models.Model):
                 return True
         return False
 
+    
+    @classmethod
+    def map_ldap_field(cls,ldap_field):
+        fields = Person.ldap_fields_map()
+        for field in fields:
+            if field == ldap_field:
+                return fields["%s" % field] 
+        return None
+        
 
+    
     @classmethod
     def get_from_ldap(cls,uid):
         ldap_condition = "(uid=%s)" % uid
-        fields = {}
-        r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN),
+        ldap_person = None
+        r = LdapConn.new_admin().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN),
                                     ldap.SCOPE_SUBTREE,
                                     ldap_condition)
         for dn,entry in r:
             if entry['uid'][0] == uid:
+                ldap_person = Person()
                 for field in entry:
-                    fields[field] = entry[field][0]
-        return fields
+                    if not Person.map_ldap_field(field) is None:
+                        object_field = Person.map_ldap_field(field)
+                        if object_field == 'document_type':
+                            setattr(ldap_person,object_field,
+                                    DocumentType.get_from_name(entry[field][0]))
+                        else:
+                            setattr(ldap_person,object_field,str(entry[field][0]))
+        return ldap_person
 
     
     @classmethod
@@ -367,7 +444,7 @@ class Person(models.Model):
         try:
             update_person = [( ldap.MOD_REPLACE, 'userPassword', new_password )]
             udn = Person.ldap_udn_for( ldap_user_name )
-            LdapConn.new().modify_s(udn, update_person)
+            LdapConn.new_admin().modify_s(udn, update_person)
         except ldap.LDAPError, e:
             logging.error( "Error updating ldap user password for %s \n" % ldap_user_name)
             logging.error( e )
@@ -378,7 +455,7 @@ class Person(models.Model):
         try:
             update_person = [( ldap.MOD_REPLACE, 'gidNumber', new_group_id )]
             udn = Person.ldap_udn_for( ldap_user_name )
-            LdapConn.new().modify_s(udn, update_person)
+            LdapConn.new_admin().modify_s(udn, update_person)
             logging.info("Changed group to '%s' for ldap group id '%s'\n" % \
                          (ldap_user_name,new_group_id) )
         except ldap.LDAPError, e:
@@ -395,7 +472,7 @@ class Person(models.Model):
         
         try:
             udn = Person.ldap_udn_for( ldap_user_name )
-            res = LdapConn.new().add_s(udn, new_ldap_user)
+            res = LdapConn.new_admin().add_s(udn, new_ldap_user)
             logging.info("Created new user in Ldap: %s " % new_ldap_user )
         except ldap.LDAPError, e:
             logging.error( "Error adding ldap user %s \n" % ldap_user_name)
@@ -414,7 +491,7 @@ class Person(models.Model):
             gdn = "cn=%s,ou=%s,%s" % ( ldap_group,
                                        settings.LDAP_GROUP,
                                        settings.LDAP_DN )
-            LdapConn.new().modify_s(gdn,delete_group)
+            LdapConn.new_admin().modify_s(gdn,delete_group)
             logging.info("Deleted group %s for member: %s \n" % (ldap_group,ldap_user_name) )
         except ldap.LDAPError, e:
             logging.error( "Error deleting group %s of member: %s \n" % (ldap_group,ldap_user_name) )
@@ -433,7 +510,7 @@ class Person(models.Model):
             gdn = "cn=%s,ou=%s,%s" % ( ldap_group,
                                        settings.LDAP_GROUP,
                                        settings.LDAP_DN )
-            LdapConn.new().modify_s(gdn, update_group)
+            LdapConn.new_admin().modify_s(gdn, update_group)
             logging.info("Added new member %s in ldap group: %s \n" % (ldap_user_name,ldap_group) )
         except ldap.LDAPError, e:
             logging.error( "Error adding member %s in ldap group: %s \n" % (ldap_user_name,ldap_group) )
@@ -461,14 +538,14 @@ def update_ldap_user(sender, instance, *args, **kwargs):
         ldap_person = Person.get_from_ldap(ldap_user_name)
 
         # update password
-        if str(ldap_person['userPassword']) != str(instance.ldap_user_password):
+        if ldap_person.ldap_user_password != instance.ldap_user_password:
             logging.info("User '%s' already exists in Ldap. changing password.." % ldap_user_name)
             Person.update_ldap_user_password ( ldap_user_name, str(instance.ldap_user_password) )
 
         # update group
-        if str(ldap_person['gidNumber']) != str(instance.group_id):
+        if ldap_person.group_id != instance.group_id:
             new_gidgroup = Group.cn_group_by_gid( str(instance.group_id) )
-            old_gidgroup = Group.cn_group_by_gid( str(ldap_person['gidNumber']) )
+            old_gidgroup = Group.cn_group_by_gid( ldap_person.group_id )
             logging.info("User '%s' already exists in Ldap. Changing group '%s' by '%s'.." % \
                          (ldap_user_name, old_gidgroup, new_gidgroup ) )
             Person.update_ldap_user_gidgroup( ldap_user_name, str(instance.group_id) ) 
@@ -524,4 +601,13 @@ def update_user_password(sender, instance, *args, **kwargs):
     else: # nuevo!
         instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
 
-
+        
+@receiver(user_logged_in)
+def sig_user_logged_in_check(sender, user, request, **kwargs):
+    if settings.LDAP_GROUP_VALIDATION:
+        if not Group.is_member_in_groups( str(user),
+                                          settings.LDAP_GROUPS_VALID) \
+                                          and not request.user.is_superuser:
+            logging.warning("The user %s does not have permissions ldap in groups %s" % \
+                            (user, settings.LDAP_GROUPS_VALID))
+            logout(request)

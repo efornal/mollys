@@ -44,13 +44,17 @@ LDAP_SERVER = 'ldap://host_ldap:port'
 LDAP_DN = 'dc=domain,dc=edu,dc=ar'
 
 # LDAP authentication
-LDAP_USER_NAME='user_name'
-LDAP_USER_PASS='password'
+LDAP_ADMIN_USERNAME='admin_username'
+LDAP_ADMIN_USERPASS='admin_password'
+LDAP_USERNAME='username'
+LDAP_USERPASS='password'
 
 # Organizational Unit for Person and Person Group
 LDAP_GROUP  = 'Group' # ou=Entry
 LDAP_PEOPLE = 'People' # ou=Entry
 LDAP_GROUP_FIELDS  = ['gidNumber','cn']  # id first!
+LDAP_GROUP_VALIDATION = True
+LDAP_GROUPS_VALID   = ['admin','stecnico']  # id first!
 LDAP_PEOPLE_FIELDS = ['uid','cn'] # idfirst!
 LDAP_GROUP_MIN_VALUE = 500 # min group_id (group_id>= 500) for ldap search filter
 MIN_LENGTH_LDAP_USER_PASSWORD = 8
@@ -194,8 +198,8 @@ logger.setLevel(logging.DEBUG)
 
 AUTH_LDAP_SERVER_URI = LDAP_SERVER
 
-AUTH_LDAP_BIND_DN = "cn=%s,%s" % ( LDAP_USER_NAME, LDAP_DN )
-AUTH_LDAP_BIND_PASSWORD = LDAP_USER_PASS
+AUTH_LDAP_BIND_DN = ''
+AUTH_LDAP_BIND_PASSWORD = ''
 
 AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=%s,%s" % (LDAP_PEOPLE,LDAP_DN),
                                    ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
