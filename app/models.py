@@ -43,7 +43,7 @@ class LdapConn():
                 connection.simple_bind_s( "uid=%s,ou=%s,%s" % ( ldap_username,
                                                                 settings.LDAP_PEOPLE,
                                                                 settings.LDAP_DN ),
-                                          ldap_userpassword )
+                                          ldap_password )
             else:
                 connection.simple_bind_s()
                 
@@ -67,6 +67,19 @@ class LdapConn():
             logging.error(e)
             raise
 
+    @classmethod
+    def new_user(cls):
+        try:
+            connection = ldap.initialize( settings.LDAP_SERVER )
+            connection.simple_bind_s( "cn=%s,%s" % ( settings.LDAP_USERNAME, settings.LDAP_DN ),
+                                      settings.LDAP_USERPASS )
+            return connection
+
+        except ldap.LDAPError, e:
+            logging.error("Could not connect to the Ldap server: '%s'" % settings.LDAP_SERVER )
+            logging.error(e)
+            raise
+        
         
     @classmethod
     def enable(cls):
@@ -252,6 +265,12 @@ class Person(models.Model):
     def surname_and_name(self):
         return "%s, %s" % (self.surname, self.name)
 
+    def office_name(self):
+        if self.office:
+            return self.office.name
+        else:
+            return self.other_office
+    
     @classmethod
     def ldap_fields_map(cls):
         return {'gidNumber': 'group_id',
@@ -306,7 +325,7 @@ class Person(models.Model):
         next_value = 0
         ldap_dn ="ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN)
 
-        r = LdapConn.new().search_s(ldap_dn,ldap.SCOPE_SUBTREE,
+        r = LdapConn.new_admin().search_s(ldap_dn,ldap.SCOPE_SUBTREE,
                                     ldap_condition,
                                     ['uidNumber'])
 
@@ -437,8 +456,19 @@ class Person(models.Model):
                                      settings.LDAP_PEOPLE,
                                      settings.LDAP_DN )
         
+    def update_ldap_data_from(self,person):
+        try:
+            update_person = [( ldap.MOD_REPLACE, 'telephoneNumber', str(person.work_phone)),
+                             ( ldap.MOD_REPLACE, 'physicalDeliveryOfficeName',
+                               LdapConn.parseattr(person.office_name()))]
+            udn = Person.ldap_udn_for( person.ldap_user_name )
+            LdapConn.new_user().modify_s(udn, update_person)
+            logging.info( "Updated ldap user data for %s \n" % person.ldap_user_name)
+        except ldap.LDAPError, e:
+            logging.error( "Error updating ldap user data for %s \n" % person.ldap_user_name)
+            logging.error( e )
 
-        
+     
     @classmethod
     def update_ldap_user_password( cls, ldap_user_name, new_password ):
         try:
@@ -537,6 +567,9 @@ def update_ldap_user(sender, instance, *args, **kwargs):
     if Person.exists_in_ldap(ldap_user_name): # actualizar
         ldap_person = Person.get_from_ldap(ldap_user_name)
 
+        # update data
+        ldap_person.update_ldap_data_from(instance)
+        
         # update password
         if ldap_person.ldap_user_password != instance.ldap_user_password:
             logging.info("User '%s' already exists in Ldap. changing password.." % ldap_user_name)
@@ -575,10 +608,10 @@ def update_ldap_user(sender, instance, *args, **kwargs):
             ('numdoc', [str(instance.document_number)] ),
             ('uidNumber', [str(new_uid_number)] ),
             ('userPassword', [str(instance.ldap_user_password)] ),
+            ('telephoneNumber', [str(instance.work_phone)] ),
             ('homedirectory', [str('%s%s' % ( settings.LDAP_PEOPLE_HOMEDIRECTORY_PREFIX,
                                               ldap_user_name))]),
             ('gidNumber', [str(instance.group_id)] ),
-            ('ou', [str(settings.LDAP_PEOPLE)]),
             ('loginShell', [str(settings.LDAP_PEOPLE_LOGIN_SHELL)]),
         ]
         Person.create_ldap_user( ldap_user_name, new_user )
