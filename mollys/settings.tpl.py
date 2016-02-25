@@ -36,14 +36,16 @@ USE_I18N = True
 
 
 # LDAP CONFIGURATION ====================\
-
 # LDAP server
 LDAP_SERVER = 'ldap://host_ldap:port'
-
 # Dn for entry
 LDAP_DN = 'dc=domain,dc=edu,dc=ar'
 
 # LDAP authentication
+# The admin user is used in building operations
+# and modification (password and group) of a user
+# The user does not admin, is used to modify only
+# certain attributes (office and telephoneNumber)
 LDAP_ADMIN_USERNAME='admin_username'
 LDAP_ADMIN_USERPASS='admin_password'
 LDAP_USERNAME='username'
@@ -52,21 +54,29 @@ LDAP_USERPASS='password'
 # Organizational Unit for Person and Person Group
 LDAP_GROUP  = 'Group' # ou=Entry
 LDAP_PEOPLE = 'People' # ou=Entry
+LDAP_PEOPLE_FIELDS = ['uid','cn'] # idfirst!
 LDAP_GROUP_FIELDS  = ['gidNumber','cn']  # id first!
+
+# It requires user authentication check further
+# certain allocating a group ldap
 LDAP_GROUP_VALIDATION = True
 LDAP_GROUPS_VALID   = ['admin','stecnico']  # id first!
-LDAP_PEOPLE_FIELDS = ['uid','cn'] # idfirst!
-LDAP_GROUP_MIN_VALUE = 500 # min group_id (group_id>= 500) for ldap search filter
-MIN_LENGTH_LDAP_USER_PASSWORD = 8
-LDAP_DEFAULT_GROUPS = ['audio','cdrom'] # ldap default groups for each new user
 
-# Params for create new people in ldap
-LDAP_PEOPLE_OBJECTCLASSES = ['agente','hordeperson','inetOrgPerson',
-                             'organizationalperson','person','posixaccount',
-                             'shadowaccount', 'top']
+# Performs filtering to obtain LDAP groups
+# min group_id (group_id>= 500) for ldap search filter
+LDAP_GROUP_MIN_VALUE = 500 
+
+# Minimum size which is required to create an LDAP user
+MIN_LENGTH_LDAP_USER_PASSWORD = 8
+
+# Attributes that are assigned by default to create a new user
+LDAP_DEFAULT_GROUPS = ['audio','cdrom']
 LDAP_PEOPLE_PAISDOC = "ARG"
 LDAP_PEOPLE_HOMEDIRECTORY_PREFIX = "/home/"
 LDAP_PEOPLE_LOGIN_SHELL = "/bin/bash"
+LDAP_PEOPLE_OBJECTCLASSES = ['agente','hordeperson','inetOrgPerson',
+                             'organizationalperson','person','posixaccount',
+                             'shadowaccount', 'top']
 # =======================================/
 
 
