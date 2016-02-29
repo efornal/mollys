@@ -107,7 +107,80 @@ class PersonAdmin(admin.ModelAdmin):
         
         return super(PersonAdmin, self).change_view(request, object_id,'',context)
 
+
+
+    def save_model(self, request, obj, form, change):
+
+        ldap_user_name = str(obj.ldap_user_name) if obj.ldap_user_name else None
+        udn = Person.ldap_udn_for( ldap_user_name )
+
+        if (not ldap_user_name) or (ldap_user_name is None):
+            logging.info("An LDAP user was not given. It is not updated!")
+            return
     
+        if Person.exists_in_ldap(ldap_user_name): # actualizar
+            ldap_person = Person.get_from_ldap(ldap_user_name)
+
+            # update data
+            ldap_person.update_ldap_data_from(obj)
+        
+            # update password
+            if str(ldap_person.ldap_user_password) != str(obj.ldap_user_password):
+                logging.info("User '%s' already exists in Ldap. changing password.." % ldap_user_name)
+                Person.update_ldap_user_password ( ldap_user_name, str(obj.ldap_user_password) )
+
+            # update group
+            if str(ldap_person.group_id) != str(obj.group_id):
+                logging.info("User '%s' already exists in Ldap. Changing group '%s' by '%s'.." % \
+                             (ldap_user_name,ldap_person.group_id, obj.group_id ) )
+                Group.add_member_to(ldap_user_name, {'group_id': str(obj.group_id)})
+                Group.remove_member_of(ldap_user_name, ldap_person.group_id)
+                ldap_person.update_ldap_gidgroup( str(obj.group_id) ) 
+
+        else: # crear nuevo
+            new_uid_number = Person.next_ldap_uidNumber()
+            if not (new_uid_number > 0):
+                logging.error("The following 'ldap user uid' could not be determined. " \
+                              "The value obtained was %s" % str(new_uid_number) )
+
+            if Person.exist_ldap_uidNumber(new_uid_number):
+                logging.error("The ldap user uidNumber '%s' already exist!." % str(new_uid_number))
+                new_uid_number = 0
+
+            # Create new ldapp user
+            cnuser = LdapConn.parseattr( "%s %s" % (obj.name, obj.surname) )
+            snuser = LdapConn.parseattr( "%s" % obj.surname )
+            new_user = [
+                ('objectclass', settings.LDAP_PEOPLE_OBJECTCLASSES),
+                ('cn', [cnuser]),
+                ('sn', [snuser]),
+                ('givenName', [ LdapConn.parseattr(obj.name)] ),
+                ('paisdoc', [settings.LDAP_PEOPLE_PAISDOC] ),
+                ('tipodoc', [str(obj.document_type)] ),
+                ('numdoc', [str(obj.document_number)] ),
+                ('uidNumber', [str(new_uid_number)] ),
+                ('userPassword', [str(obj.ldap_user_password)] ),
+                ('telephoneNumber', [str(obj.work_phone)] ),
+                ('physicalDeliveryOfficeName', [str(obj.office_name())] ),
+                ('homedirectory', [str('%s%s' % ( settings.LDAP_PEOPLE_HOMEDIRECTORY_PREFIX,
+                                                  ldap_user_name))]),
+                ('gidNumber', [str(obj.group_id)] ),
+                ('loginShell', [str(settings.LDAP_PEOPLE_LOGIN_SHELL)]),]
+
+            Person.create_ldap_user( ldap_user_name, new_user )
+
+            # Update ldap groups
+            cn_group = Group.cn_group_by_gid(obj.group_id)
+            cn_groups = ['%s' % str(cn_group)]
+            if settings.LDAP_DEFAULT_GROUPS:
+                cn_groups += settings.LDAP_DEFAULT_GROUPS
+            Group.add_member_in_groups( ldap_user_name, cn_groups )
+
+        # apply changes
+        obj.save()
+
+
+        
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Office)
 
