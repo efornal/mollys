@@ -76,7 +76,6 @@ def create(request):
 
 def outcome_success(request,form):
     from django.core.urlresolvers import reverse
-    logging.error("Form: %s" % form )
     msg = _("outcome_success") % {'name': form.name,
                                   'surname': form.surname,
                                   'url': reverse('print_request', args=(form.id,)) }
@@ -86,7 +85,6 @@ def outcome_success(request,form):
 
 
 def outcome_error(request,form):
-    logging.error("Form: %s" % form )
     msg = _("outcome_error") % {'name': form.name,
                                 'surname': form.surname}
     context = {'form': form, 'msg': msg}
