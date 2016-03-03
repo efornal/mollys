@@ -172,8 +172,8 @@ class Group(models.Model):
                                     ldap.SCOPE_SUBTREE,
                                           ldap_condition, ['memberUid'])
         for dn,entry in r:
-             members.append(entry['memberUid'])
-        return members[0]
+            members.append(entry['memberUid'])
+        return sum(members,[])
 
 
     @classmethod
