@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-07 09:34-0300\n"
+"POT-Creation-Date: 2016-03-07 12:40-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -222,11 +222,11 @@ msgstr "Signature"
 msgid "firm_responsible"
 msgstr "Signature and clarification from area / Sector manager"
 
-#: mollys/settings.py:21 mollys/settings.tpl.py:21 templates/base.html:59
+#: mollys/settings.py:22 mollys/settings.tpl.py:21 templates/base.html:59
 msgid "Spanish"
 msgstr "Spanish"
 
-#: mollys/settings.py:22 mollys/settings.tpl.py:22 templates/base.html:61
+#: mollys/settings.py:23 mollys/settings.tpl.py:22 templates/base.html:61
 msgid "English"
 msgstr "English"
 

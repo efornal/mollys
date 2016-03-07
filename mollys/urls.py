@@ -6,10 +6,13 @@ urlpatterns = [
     # Examples:
     # url(r'^$', 'mollys.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^', include('app.urls')),
+    #    url(r'^admin/', include(admin.site.urls)),
+    #    url(r'^', include('app.urls')),
 ]
 
 urlpatterns += i18n_patterns(
     url(r'^', include('app.urls')),
+)
+urlpatterns += i18n_patterns(
+    url(r'^admin/', include(admin.site.urls)),
 )
