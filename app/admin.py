@@ -61,18 +61,15 @@ class PersonAdminForm(forms.ModelForm):
 
         if len(self.cleaned_data['ldap_user_password']) < settings.MIN_LENGTH_LDAP_USER_PASSWORD:
             raise ValidationError(_('ldap_user_password_too_short'))
-        existing_name_in_ldap = Person.ldap_uid_by_id( self.cleaned_data['document_number'],
-                                                       self.cleaned_data['document_type'] )
 
         if self.cleaned_data["ldap_user_name"]:
-            existing_name_in_ldap = Person.ldap_uid_by_id( self.cleaned_data['document_number'],
-                                                           self.cleaned_data['document_type'] )
-            if existing_name_in_ldap and (existing_name_in_ldap is self.cleaned_data["ldap_user_name"]):
+            existing_names_in_ldap = Person.ldap_uid_by_id( self.cleaned_data['document_number'],
+                                                            self.cleaned_data['document_type'] )
+            if existing_names_in_ldap and (self.cleaned_data["ldap_user_name"] not in existing_names_in_ldap):
                 logging.info("User has already exists in Ldap with uid '%s'. it was not updated!" \
-                             % existing_name_in_ldap)
+                             % ','.join(existing_names_in_ldap))
                 self.add_error('document_number',
-                               "Ya existe en Ldap un usuario con este Documento cuyo uid es '%s'" \
-                               % existing_name_in_ldap)
+                               _("user_ID_ldap_already_exists") % {'uid':','.join(existing_names_in_ldap)})
 
 
 class PersonAdmin(admin.ModelAdmin):
@@ -114,10 +111,10 @@ class PersonAdmin(admin.ModelAdmin):
         
         try:
             if (not ldap_user_name) or (ldap_user_name is None):
-                message = "An LDAP user was not given. It is not updated!"
-                logging.warning(message)
-                raise ValidationError(message)
-    
+                logging.info("An LDAP user was not given. It is not updated!")
+                super(PersonAdmin, self).save_model(request, obj, form, change)
+                return
+            
             if Person.exists_in_ldap(ldap_user_name): # actualizar
                 ldap_person = Person.get_from_ldap(ldap_user_name)
 
@@ -170,7 +167,7 @@ class PersonAdmin(admin.ModelAdmin):
                     ('uidNumber', [str(new_uid_number)] ),
                     ('userPassword', [str(obj.ldap_user_password)] ),
                     ('telephoneNumber', [str(obj.work_phone)] ),
-                    ('physicalDeliveryOfficeName', [str(obj.office_name())] ),
+                    ('physicalDeliveryOfficeName', [LdapConn.parseattr(obj.office_name())] ),
                     ('homedirectory', [str('%s%s' % ( settings.LDAP_PEOPLE_HOMEDIRECTORY_PREFIX,
                                                       ldap_user_name))]),
                     ('gidNumber', [str(obj.group_id)] ),
