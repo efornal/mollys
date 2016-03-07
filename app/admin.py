@@ -128,7 +128,7 @@ class PersonAdmin(admin.ModelAdmin):
                         logging.warning("User '%s' already exists in Ldap. changing password.." % ldap_user_name)
                         Person.update_ldap_user_password ( ldap_user_name, str(obj.ldap_user_password) )
                     else:
-                        raise ValidationError(_('cant_change_password'))
+                        raise ValidationError( _('cant_change_password') )
                     
                 # update group only for superuser
                 if str(ldap_person.group_id) != str(obj.group_id):
@@ -139,19 +139,19 @@ class PersonAdmin(admin.ModelAdmin):
                         Group.remove_member_of(ldap_user_name, ldap_person.group_id)
                         ldap_person.update_ldap_gidgroup( str(obj.group_id) )
                     else:
-                        raise ValidationError(_('cant_change_group'))
+                        raise ValidationError( _('cant_change_group') )
 
             else: # crear nuevo
                 new_uid_number = Person.next_ldap_uidNumber()
                 if not (new_uid_number > 0):
                     logging.error( "The following 'ldap user uid' could not be determined. " \
                                    "The value obtained was %s" % str(new_uid_number))
-                    raise ValidationError("The 'ldap user uid' could not be determined.'")
+                    raise ValidationError( _('without_ldap_user_uid') )
 
                 if Person.exist_ldap_uidNumber(new_uid_number):
                     logging.error("The ldap user uidNumber '%s' already exist!." % str(new_uid_number))
                     new_uid_number = 0
-                    raise ValidationError("The ldap user uidNumber already exist!")
+                    raise ValidationError( _('uidnumber_already_exist') % {'uidnumber':str(new_uid_number)} )
 
                 # Create new ldapp user
                 cnuser = LdapConn.parseattr( "%s %s" % (obj.name, obj.surname) )
@@ -187,7 +187,7 @@ class PersonAdmin(admin.ModelAdmin):
             
         except ValidationError as e:
             messages.set_level(request, messages.ERROR)
-            messages.error(request,"Error updating user. %s" % e[0])
+            messages.error(request,"%s" % e[0])
 
         
 admin.site.register(Person, PersonAdmin)

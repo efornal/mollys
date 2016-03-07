@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-07 12:40-0300\n"
+"POT-Creation-Date: 2016-03-07 14:15-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -52,6 +52,14 @@ msgstr "El usuario no tiene permisos para cambiar la contraseña"
 #: app/admin.py:142
 msgid "cant_change_group"
 msgstr "El usuario no tiene permisos para cambiar el grupo"
+
+#: app/admin.py:149
+msgid "without_ldap_user_uid"
+msgstr "No se pudo determinar el uid del usuario ldap"
+
+#: app/admin.py:154
+msgid "uidnumber_already_exist"
+msgstr "Ya existe en Ldap un usuario con el uidNumber %(uidnumber)s"
 
 #: app/forms.py:14 app/models.py:123 app/models.py:266 templates/new.html:20
 msgid "name"
@@ -226,15 +234,15 @@ msgstr "Firma"
 msgid "firm_responsible"
 msgstr "Firma y aclaración del responsable del área/sector"
 
-#: mollys/settings.py:22 mollys/settings.tpl.py:21 templates/base.html:59
+#: mollys/settings.py:21 mollys/settings.tpl.py:21 templates/base.html:59
 msgid "Spanish"
 msgstr "Español"
 
-#: mollys/settings.py:23 mollys/settings.tpl.py:22 templates/base.html:61
+#: mollys/settings.py:22 mollys/settings.tpl.py:22 templates/base.html:61
 msgid "English"
 msgstr "Inglés"
 
-#: mollys/settings.py:185 mollys/settings.tpl.py:196 templates/base.html:13
+#: mollys/settings.py:183 mollys/settings.tpl.py:196 templates/base.html:13
 #: templates/base.html.py:45
 msgid "title"
 msgstr "Mollys"
