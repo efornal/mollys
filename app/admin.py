@@ -128,7 +128,7 @@ class PersonAdmin(admin.ModelAdmin):
                         logging.warning("User '%s' already exists in Ldap. changing password.." % ldap_user_name)
                         Person.update_ldap_user_password ( ldap_user_name, str(obj.ldap_user_password) )
                     else:
-                        raise ValidationError('The user does not have permission to change the password')
+                        raise ValidationError(_('cant_change_password'))
                     
                 # update group
                 if str(ldap_person.group_id) != str(obj.group_id):
