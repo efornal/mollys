@@ -130,7 +130,7 @@ class PersonAdmin(admin.ModelAdmin):
                     else:
                         raise ValidationError(_('cant_change_password'))
                     
-                # update group
+                # update group only for superuser
                 if str(ldap_person.group_id) != str(obj.group_id):
                     if request.user.is_superuser:
                         logging.warning("User '%s' already exists in Ldap. Changing group '%s' by '%s'.." % \
@@ -139,7 +139,7 @@ class PersonAdmin(admin.ModelAdmin):
                         Group.remove_member_of(ldap_user_name, ldap_person.group_id)
                         ldap_person.update_ldap_gidgroup( str(obj.group_id) )
                     else:
-                        raise ValidationError('The user does not have permission to change the group')
+                        raise ValidationError(_('cant_change_group'))
 
             else: # crear nuevo
                 new_uid_number = Person.next_ldap_uidNumber()

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-07 09:11-0300\n"
+"POT-Creation-Date: 2016-03-07 09:34-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -45,6 +45,10 @@ msgstr "Unable to connect to the LDAP server. Some options are not available"
 #: app/admin.py:131
 msgid "cant_change_password"
 msgstr "The user does not have permission to change the password"
+
+#: app/admin.py:142
+msgid "cant_change_group"
+msgstr "The user does not have permission to change the group"
 
 #: app/forms.py:14 app/models.py:123 app/models.py:266 templates/new.html:20
 msgid "name"
