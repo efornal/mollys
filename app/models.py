@@ -17,10 +17,6 @@ import os
 import re
 
 
-def validate_group_existence_in_ldap(value):
-    if not (value > 0):
-        raise ValidationError("The group identified as '%s' does not exist" % value)
-
     
 def validate_ldap_user_password(value):
     if not Person.ldap_password_valid(value):
