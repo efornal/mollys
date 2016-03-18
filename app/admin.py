@@ -166,12 +166,14 @@ class PersonAdmin(admin.ModelAdmin):
                     ('numdoc', [str(obj.document_number)] ),
                     ('uidNumber', [str(new_uid_number)] ),
                     ('userPassword', [str(obj.ldap_user_password)] ),
-                    ('telephoneNumber', [str(obj.work_phone)] ),
-                    ('physicalDeliveryOfficeName', [LdapConn.parseattr(obj.office_name())] ),
                     ('homedirectory', [str('%s%s' % ( settings.LDAP_PEOPLE_HOMEDIRECTORY_PREFIX,
                                                       ldap_user_name))]),
                     ('gidNumber', [str(obj.group_id)] ),
                     ('loginShell', [str(settings.LDAP_PEOPLE_LOGIN_SHELL)]),]
+                if obj.work_phone:
+                    new_user.append(('telephoneNumber', [str(obj.work_phone)]))
+                if obj.office_name():
+                    new_user.append(('physicalDeliveryOfficeName', [str(LdapConn.parseattr(obj.office_name()))]))
 
                 Person.create_ldap_user( ldap_user_name, new_user )
 
