@@ -122,7 +122,8 @@ class Office(models.Model):
         db_table = 'offices'
         verbose_name = _('office')
         verbose_name_plural = _('offices')
-
+        ordering = ['name']
+        
     def __unicode__(self):
         return self.name
 
@@ -249,7 +250,7 @@ class Group(models.Model):
                 row[settings.LDAP_GROUP_FIELDS[0]] = int(entry[settings.LDAP_GROUP_FIELDS[0]][0])
                 row[settings.LDAP_GROUP_FIELDS[1]] = entry[settings.LDAP_GROUP_FIELDS[1]][0]
                 rows.append(row)
-        return rows
+        return sorted(rows)
 
     
 class Person(models.Model):
