@@ -31,7 +31,7 @@ USE_I18N = True
 #)
 #STATIC_URL='/mollys/static_production/'
 #DEBUG = False
-#TEMPLATE_DEBUG = False
+
 # ==================================================/
 
 
@@ -88,7 +88,6 @@ SECRET_KEY = 'tfp%=#=oszs#x4wea8mkm60p=nmg3l9)jq5g1%s_ev#_4$w#&-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -180,15 +179,6 @@ USE_L10N = True
 USE_TZ = True
 
 DEFAULT_CHARSET = 'utf-8'
-
-
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
-
-TEMPLATE_CONTEXT_PROCESSORS = TCP + (
-    'django.core.context_processors.request',
-)
-
-
 
 
 # =================================\
