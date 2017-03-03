@@ -141,6 +141,7 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
+            'debug': True,
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -160,11 +161,19 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'mollys_db',
+        'USER': 'mollys_user',
+        'PASSWORD': 'user',
+        'PORT': '5432',        
+        'HOST': 'localhost',
+    },
+    'mollys_owner': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mollys_db',
         'USER': 'mollys_owner',
         'PASSWORD': 'owner',
         'PORT': '5432',        
         'HOST': 'localhost',
-    }
+    },
 }
 
 
