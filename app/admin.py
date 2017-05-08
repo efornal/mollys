@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from django.contrib import admin
 from app.models import Person, Office, Group, LdapConn, DocumentType
 import logging
