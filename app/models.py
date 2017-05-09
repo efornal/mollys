@@ -405,31 +405,50 @@ class Person(models.Model):
     def ldap_uid_by_id(cls, doc_num, type_num, nationality=''):
         nationality = nationality or settings.LDAP_PEOPLE_PAISDOC
         
-        ldap_condition = "(&(numdoc=%s)(tipodoc=%s)(paisdoc=%s))" % (doc_num, type_num, nationality)
+        ldap_condition = "(&(numdoc=%s)(tipodoc=%s)(paisdoc=%s))" % (doc_num,
+                                                                     type_num,
+                                                                     nationality)
+        try:
+            r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE,
+                                                     settings.LDAP_DN),
+                                        ldap.SCOPE_SUBTREE,
+                                        ldap_condition,
+                                        ['uid'])
+            uids = []
+            for dn,entry in r:
+                uids.append( entry['uid'][0] )
 
-        r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN),
-                                    ldap.SCOPE_SUBTREE,
-                                    ldap_condition,
-                                    ['uid'])
-        uids = []
-        for dn,entry in r:
-            uids.append( entry['uid'][0] )
-        return uids
+            return uids
+        
+        except ldap.LDAPError, e:
+            logging.error(e)
+            logging.error('Could not get uid from id.')
+
+
+
 
     
     @classmethod
     def exists_in_ldap(cls, uid):
         
         ldap_condition = "(uid=%s)" % uid
+        try:
+            r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE,
+                                                     settings.LDAP_DN),
+                                        ldap.SCOPE_SUBTREE,
+                                        ldap_condition,
+                                        settings.LDAP_PEOPLE_FIELDS)
+            for dn,entry in r:
+                if entry['uid'][0] == uid:
+                    return True
+                
+            return False
 
-        r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE, settings.LDAP_DN),
-                                    ldap.SCOPE_SUBTREE,
-                                    ldap_condition,
-                                    settings.LDAP_PEOPLE_FIELDS)
-        for dn,entry in r:
-            if entry['uid'][0] == uid:
-                return True
-        return False
+        except ldap.LDAPError, e:
+            logging.error(e)
+            logging.error("It was not possible to verify the existence of: '%s'" % uid )
+
+
 
     
     @classmethod

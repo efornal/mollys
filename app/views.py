@@ -28,9 +28,20 @@ def index(request):
     return redirect('new')
 
 def check_ldap(request):
-    existing_uid_in_ldap = Person.exists_in_ldap( request.POST['ldap_user_name'] )
-    doc_type =  DocumentType.objects.get(pk=request.POST['doc_type'])
-    existing_name_in_ldap = Person.ldap_uid_by_id( request.POST['doc_num'],  doc_type.name.upper() )
+    existing_uid_in_ldap = None
+    existing_name_in_ldap = None
+    doc_type = None
+
+    if 'ldap_user_name' in request.POST and request.POST['ldap_user_name']:
+        existing_uid_in_ldap = Person.exists_in_ldap( request.POST['ldap_user_name'] )
+        existing_name_in_ldap = request.POST['ldap_user_name']
+    
+    if 'doc_type' in request.POST and request.POST['doc_type']:
+        doc_type = DocumentType.objects.get(pk=request.POST['doc_type'])
+        if 'doc_num'  in request.POST and request.POST['doc_num']:
+            existing_name_in_ldap = Person.ldap_uid_by_id( request.POST['doc_num'],
+                                                           doc_type.name.upper() )
+            
     if ( existing_uid_in_ldap or existing_name_in_ldap ):
         result = True
     else :
