@@ -341,6 +341,16 @@ class Person(models.Model):
     group_id = models.IntegerField(
         null=True, 
         blank=True, verbose_name=_('group_id'))
+    floor = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('floor'))
+    area = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('area'))
 
     
     class Meta:
@@ -587,8 +597,18 @@ class Person(models.Model):
                                      settings.LDAP_DN )
         
     def update_ldap_data_from(self,person):
+        logging.error(person)
         try:
-            update_person = [( ldap.MOD_REPLACE, 'telephoneNumber', str(person.work_phone) or None),
+            update_person = [( ldap.MOD_REPLACE, 'telephoneNumber',
+                               str(person.work_phone) or None),
+                             ( ldap.MOD_REPLACE, 'employeeType',
+                               str(person.position) or None),
+                             ( ldap.MOD_REPLACE, 'departmentNumber',
+                               str(person.floor) or None),
+                             ( ldap.MOD_REPLACE, 'destinationIndicator',
+                               str(person.area) or None),
+                              ( ldap.MOD_REPLACE, 'homePhone',
+                               str(person.home_phone) or None),
                              ( ldap.MOD_REPLACE, 'physicalDeliveryOfficeName',
                                LdapConn.parseattr(person.office_name()))]
             udn = Person.ldap_udn_for( person.ldap_user_name )

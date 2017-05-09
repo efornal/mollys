@@ -56,6 +56,7 @@ class PersonAdminForm(forms.ModelForm):
         if "received_application" in self.cleaned_data \
            and self.cleaned_data["received_application"]:
             email = ''
+            exists = False
             if "email" in self.cleaned_data and self.cleaned_data["email"]:
                 email = self.cleaned_data['email']
                 exists = Person.ldap_uid_by_email(email)
@@ -176,6 +177,9 @@ class PersonAdmin(admin.ModelAdmin):
                     ('tipodoc', [str(obj.document_type)] ),
                     ('numdoc', [str(obj.document_number)] ),
                     ('uidNumber', [str(new_uid_number)] ),
+                    ('employeeType', [str(obj.position)] ),
+                    ('departmentNumber', [str(obj.floor)] ),
+                    ('destinationIndicator', [str(obj.area)] ),
                     ('userPassword', [str(obj.ldap_user_password)] ),
                     ('homedirectory', [str('%s%s' % ( settings.LDAP_PEOPLE_HOMEDIRECTORY_PREFIX,
                                                       ldap_user_name))]),
@@ -183,8 +187,11 @@ class PersonAdmin(admin.ModelAdmin):
                     ('loginShell', [str(settings.LDAP_PEOPLE_LOGIN_SHELL)]),]
                 if obj.work_phone:
                     new_user.append(('telephoneNumber', [str(obj.work_phone)]))
-                if obj.office_name():
-                    new_user.append(('physicalDeliveryOfficeName', [str(LdapConn.parseattr(obj.office_name()))]))
+                if obj.home_phone:
+                    new_user.append(('homePhone', [str(obj.home_phone)]))
+                if obj.home_phone():
+                    new_user.append(('physicalDeliveryOfficeName',
+                                     [str(LdapConn.parseattr(obj.office_name()))]))
 
                 Person.create_ldap_user( ldap_user_name, new_user )
 
