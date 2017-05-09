@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-08 08:51-0300\n"
+"POT-Creation-Date: 2017-05-09 11:34-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/admin.py:17 app/forms.py:54 app/models.py:299
+#: app/admin.py:17 app/forms.py:86 app/models.py:340
 msgid "received_application"
 msgstr "Received application"
 
@@ -21,156 +21,168 @@ msgstr "Yes"
 msgid "All"
 msgstr "All"
 
-#: app/admin.py:56
+#: app/admin.py:62
+msgid "the_mail_is_required"
+msgstr "Email address '%(email)s' already exists."
+
+#: app/admin.py:66
 msgid "received_application_required"
 msgstr ""
 "You can not assign a user ldap without confirming the 'application received'"
 
-#: app/admin.py:59 app/admin.py:60
+#: app/admin.py:69 app/admin.py:70
 msgid "required_attribute_group"
 msgstr "Group: This field is required"
 
-#: app/admin.py:63
+#: app/admin.py:73
 msgid "ldap_user_password_too_short"
 msgstr "The ldap user password is too short"
 
-#: app/admin.py:72
+#: app/admin.py:82
 msgid "user_ID_ldap_already_exists"
 msgstr "Ldap user already exists with this document whose uid is %(uid)s"
 
-#: app/admin.py:98
+#: app/admin.py:108
 msgid "ldap_without_connection"
 msgstr "Unable to connect to the LDAP server. Some options are not available"
 
-#: app/admin.py:131
+#: app/admin.py:141
 msgid "cant_change_password"
 msgstr "The user does not have permission to change the password"
 
-#: app/admin.py:142
+#: app/admin.py:152
 msgid "cant_change_group"
 msgstr "The user does not have permission to change the group"
 
-#: app/admin.py:149
+#: app/admin.py:159
 msgid "without_ldap_user_uid"
 msgstr "The ldap user uid could not be determined"
 
-#: app/admin.py:154
+#: app/admin.py:164
 msgid "uidnumber_already_exist"
 msgstr "The ldap user with uidNumber %(uidnumber)s already exist"
 
-#: app/forms.py:14 app/models.py:124 app/models.py:267 templates/new.html:20
+#: app/forms.py:16 app/models.py:119 app/models.py:268 templates/new.html:20
 msgid "name"
 msgstr "Name"
 
-#: app/forms.py:16 app/models.py:269 templates/new.html:25
+#: app/forms.py:20 app/models.py:272 templates/new.html:25
 msgid "surname"
 msgstr "Surname"
 
-#: app/forms.py:18 app/models.py:272
+#: app/forms.py:24 app/models.py:276
 msgid "document_number"
 msgstr "ID Number"
 
-#: app/forms.py:22 app/models.py:274
+#: app/forms.py:29 app/models.py:281
 msgid "document_type"
 msgstr "ID Type"
 
-#: app/forms.py:25 app/models.py:276 app/views.py:161 templates/new.html:90
+#: app/forms.py:39 app/models.py:294 app/views.py:172 templates/new.html:90
 msgid "position"
 msgstr "Job title"
 
-#: app/forms.py:27 templates/new.html:108
+#: app/forms.py:42 templates/new.html:108
 msgid "specify_other"
 msgstr "Specify other"
 
-#: app/forms.py:30 app/models.py:128 app/models.py:288 templates/new.html:98
+#: app/forms.py:45 app/models.py:123 app/models.py:320 templates/new.html:98
 msgid "office"
 msgstr "Office"
 
-#: app/forms.py:32 app/models.py:278 app/views.py:165 templates/new.html:53
+#: app/forms.py:49 app/models.py:299 app/views.py:176 templates/new.html:53
 msgid "work_phone"
 msgstr "Work phone"
 
-#: app/forms.py:34 app/models.py:280 app/views.py:169
+#: app/forms.py:53 app/models.py:304 app/views.py:180
 msgid "home_phone"
 msgstr "Home phone"
 
-#: app/forms.py:36 app/models.py:282 app/views.py:173 templates/new.html:82
+#: app/forms.py:57 app/models.py:309 app/views.py:184 templates/new.html:82
 msgid "address"
 msgstr "Address"
 
-#: app/forms.py:38 app/models.py:284
+#: app/forms.py:60 app/models.py:312
 msgid "created_at"
 msgstr "Created at"
 
-#: app/forms.py:40 app/models.py:286
+#: app/forms.py:63 app/models.py:315
 msgid "updated_at"
 msgstr "Updated at"
 
-#: app/forms.py:42 app/models.py:290 templates/new.html:116
+#: app/forms.py:67 app/models.py:325 templates/new.html:116
 msgid "other_office"
 msgstr "Another office"
 
-#: app/forms.py:44 app/models.py:292
+#: app/forms.py:71 app/models.py:330
 msgid "ldap_user_name"
 msgstr "ldap username"
 
-#: app/forms.py:47 app/models.py:296 templates/new.html:67
+#: app/forms.py:76 app/models.py:336 templates/new.html:67
 msgid "ldap_user_password"
 msgstr "Password"
 
-#: app/forms.py:51 templates/new.html:74
+#: app/forms.py:82 templates/new.html:74
 msgid "ldap_user_password_confirm"
 msgstr "Password confirm"
 
-#: app/forms.py:56 app/models.py:300
+#: app/forms.py:89 app/models.py:343
 msgid "group_id"
 msgstr "Group"
 
-#: app/forms.py:70
+#: app/forms.py:104
 msgid "password_dont_match"
 msgstr "Passwords don't match"
 
-#: app/models.py:28
+#: app/models.py:23
 msgid "ldap_user_password_invalid"
 msgstr "The Ldap user password is not an appropriate value"
 
-#: app/models.py:33
+#: app/models.py:28
 msgid "ldap_user_name_invalid"
 msgstr "Ldap user name is not an appropriate value"
 
-#: app/models.py:106
+#: app/models.py:101
 msgid "DocumentType"
 msgstr "Document Type"
 
-#: app/models.py:107
+#: app/models.py:102
 msgid "DocumentTypes"
 msgstr "Document Types"
 
-#: app/models.py:129
+#: app/models.py:124
 msgid "offices"
 msgstr "Offices"
 
-#: app/models.py:140
+#: app/models.py:136
 msgid "Group"
 msgstr "Group"
 
-#: app/models.py:141
+#: app/models.py:137
 msgid "Groups"
 msgstr "Groups"
 
-#: app/models.py:263
+#: app/models.py:260
 msgid "invalid_value"
 msgstr "Enter a valid value"
 
-#: app/models.py:305
+#: app/models.py:285
+msgid "email"
+msgstr "email"
+
+#: app/models.py:289
+msgid "alternative_email"
+msgstr "alternative email"
+
+#: app/models.py:348
 msgid "person"
 msgstr "Person"
 
-#: app/models.py:306
+#: app/models.py:349
 msgid "people"
 msgstr "People"
 
-#: app/views.py:79
+#: app/views.py:90
 msgid "outcome_success"
 msgstr ""
 "Dear <strong>%(surname)s, %(name)s</strong> <br> the request has been "
@@ -178,68 +190,68 @@ msgstr ""
 "with the  <a href='%(url)s' TARGET='_blank'>aplication form</a> printed and "
 "signed by the head of your area"
 
-#: app/views.py:88
+#: app/views.py:99
 msgid "outcome_error"
 msgstr ""
 "Dear <strong>%(surname)s, %(name)s</strong> <br> The request could not be "
 "completed. In order to complete the process we would like to ask you to "
 "approach our office or you couldtry to make the request again later"
 
-#: app/views.py:118
+#: app/views.py:129
 msgid "header_code"
 msgstr "Header code"
 
-#: app/views.py:148 templates/new.html:17
+#: app/views.py:159 templates/new.html:17
 msgid "enabling_account"
 msgstr "Apply for the enabling of a new account"
 
-#: app/views.py:151
+#: app/views.py:162
 msgid "applicant"
 msgstr "Applicant"
 
-#: app/views.py:155 templates/new.html:33
+#: app/views.py:166 templates/new.html:33
 msgid "doc_type"
 msgstr "ID Type"
 
-#: app/views.py:156 templates/new.html:45
+#: app/views.py:167 templates/new.html:45
 msgid "doc_number"
 msgstr "ID number"
 
-#: app/views.py:177
+#: app/views.py:188
 msgid "short_office"
 msgstr "Office"
 
-#: app/views.py:184
+#: app/views.py:195
 msgid "intro_code"
 msgstr ""
 "<strong>Honor code</strong><br></br><br></br>Text ,...<br></br><br></br>"
 
-#: app/views.py:192
+#: app/views.py:203
 msgid "conduct_code"
 msgstr "text ,. .."
 
-#: app/views.py:196
+#: app/views.py:207
 msgid "date"
 msgstr "City, ...... of ............. of 20...."
 
-#: app/views.py:198
+#: app/views.py:209
 msgid "firm"
 msgstr "Signature"
 
-#: app/views.py:201
+#: app/views.py:212
 msgid "firm_responsible"
 msgstr "Signature and clarification from area / Sector manager"
 
-#: mollys/settings.py:21 mollys/settings.tpl.py:21 templates/base.html:59
+#: mollys/settings.py:22 mollys/settings.tpl.py:21 templates/base.html:59
 msgid "Spanish"
 msgstr "Spanish"
 
-#: mollys/settings.py:22 mollys/settings.tpl.py:22 templates/base.html:61
+#: mollys/settings.py:23 mollys/settings.tpl.py:22 templates/base.html:61
 msgid "English"
 msgstr "English"
 
-#: mollys/settings.py:183 mollys/settings.tpl.py:196 templates/base.html:13
-#: templates/base.html.py:45
+#: mollys/settings.py:200 mollys/settings.tpl.py:196 templates/base.html:13
+#: templates/base.html:45
 msgid "title"
 msgstr "Mollys"
 

@@ -255,45 +255,92 @@ class Group(models.Model):
     
 class Person(models.Model):
     
-    document_regex = RegexValidator(regex=r'^\d{6,10}$',
-                                    message=_('invalid_value'))
+    document_regex = RegexValidator(
+        regex=r'^\d{6,10}$',
+        message=_('invalid_value'))
 
-    id = models.AutoField(primary_key=True, null=False)
-    name = models.CharField(max_length=200, null=False,
-                            verbose_name=_('name'))
-    surname = models.CharField(max_length=200,null=False,
-                               verbose_name=_('surname'))
-    document_number = models.CharField(max_length=200,null=False,
-                                       validators=[document_regex],
-                                       verbose_name=_('document_number'))
-    document_type = models.ForeignKey(DocumentType, null=False, blank=False,
-                                      verbose_name=_('document_type'))
-    position = models.CharField(max_length=200,null=True, blank=True,
-                                verbose_name=_('position'))
-    work_phone = models.CharField(max_length=200,null=True, blank=True,
-                                  verbose_name=_('work_phone'))
-    home_phone = models.CharField(max_length=200,null=True, blank=True,
-                                  verbose_name=_('home_phone'))
-    address = models.CharField(max_length=200,null=True, blank=True,
-                               verbose_name=_('address'))
-    created_at = models.DateTimeField(auto_now_add=True,
-                                      verbose_name=_('created_at'))
-    updated_at = models.DateTimeField(auto_now=True,
-                                      verbose_name=_('updated_at'))
-    office = models.ForeignKey(Office, null=True, blank=True,
-                               verbose_name=_('office'))
-    other_office = models.CharField(max_length=200,null=True, blank=True,
-                                    verbose_name=_('other_office'))
-    ldap_user_name = models.CharField(max_length=200,null=True, blank=True,
-                                      verbose_name=_('ldap_user_name'),
-                                      validators=[validate_ldap_user_name])
-    ldap_user_password = models.CharField(max_length=200,
-                                          null=True, blank=True,
-                                          verbose_name=_('ldap_user_password'),
-                                          validators=[validate_ldap_user_password])
-    received_application = models.BooleanField(default=False,
-                                               verbose_name=_('received_application'))
-    group_id = models.IntegerField(null=True, blank=True, verbose_name=_('group_id'))
+    id = models.AutoField(
+        primary_key=True,
+        null=False)
+    name = models.CharField(
+        max_length=200,
+        null=False,
+        verbose_name=_('name'))
+    surname = models.CharField(
+        max_length=200,
+        null=False,
+        verbose_name=_('surname'))
+    document_number = models.CharField(
+        max_length=200,null=False,
+        validators=[document_regex],
+        verbose_name=_('document_number'))
+    document_type = models.ForeignKey(
+        DocumentType,
+        null=False,
+        blank=False,
+        verbose_name=_('document_type'))
+    email = models.EmailField(
+        null=True,
+        blank=True,
+        verbose_name=_('email'))
+    alternative_email = models.EmailField(
+        null=True,
+        blank=True,
+        verbose_name=_('alternative_email'))
+    position = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('position'))
+    work_phone = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('work_phone'))
+    home_phone = models.CharField(
+        max_length=200,
+        null=True, 
+        blank=True,
+        verbose_name=_('home_phone'))
+    address = models.CharField(
+        max_length=200,
+        null=True, 
+        blank=True,
+        verbose_name=_('address'))
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name=_('created_at'))
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name=_('updated_at'))
+    office = models.ForeignKey(
+        Office, 
+        null=True, 
+        blank=True,
+        verbose_name=_('office'))
+    other_office = models.CharField(
+        max_length=200,
+        null=True, 
+        blank=True,
+        verbose_name=_('other_office'))
+    ldap_user_name = models.CharField(
+        max_length=200,
+        null=True, 
+        blank=True,
+        verbose_name=_('ldap_user_name'),
+        validators=[validate_ldap_user_name])
+    ldap_user_password = models.CharField(
+        max_length=200,
+        null=True, 
+        blank=True,
+        verbose_name=_('ldap_user_password'),
+        validators=[validate_ldap_user_password])
+    received_application = models.BooleanField(
+        default=False,
+        verbose_name=_('received_application'))
+    group_id = models.IntegerField(
+        null=True, 
+        blank=True, verbose_name=_('group_id'))
 
     
     class Meta:
@@ -425,7 +472,23 @@ class Person(models.Model):
             logging.error('Could not get uid from id.')
 
 
+    @classmethod
+    def ldap_uid_by_email(cls, email):
+        ldap_condition = "(mail=%s)" % email
+        try:
+            r = LdapConn.new_admin().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE,
+                                                     settings.LDAP_DN),
+                                        ldap.SCOPE_SUBTREE,
+                                        ldap_condition,
+                                        ['uid'])
+            uids = []
+            for dn,entry in r:
+                uids.append( entry['uid'][0] )
 
+            return uids
+        
+        except ldap.LDAPError, e:
+            logging.error(e)
 
     
     @classmethod

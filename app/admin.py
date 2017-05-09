@@ -51,7 +51,18 @@ class PersonAdminForm(forms.ModelForm):
             'ldap_user_password': PasswordInput(render_value=True),
         }
 
+    
     def clean(self):
+        if "received_application" in self.cleaned_data \
+           and self.cleaned_data["received_application"]:
+            email = ''
+            if "email" in self.cleaned_data and self.cleaned_data["email"]:
+                email = self.cleaned_data['email']
+                exists = Person.ldap_uid_by_email(email)
+            if exists:
+                self.add_error('email', _('the_mail_is_required') % {'email':email}  )
+
+
         if self.cleaned_data["ldap_user_name"] and not self.cleaned_data["received_application"]:
             self.add_error('received_application',_('received_application_required') )
 

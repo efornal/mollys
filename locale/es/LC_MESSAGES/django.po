@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-08 08:51-0300\n"
+"POT-Creation-Date: 2017-05-09 11:34-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/admin.py:17 app/forms.py:54 app/models.py:299
+#: app/admin.py:17 app/forms.py:86 app/models.py:340
 msgid "received_application"
 msgstr "Solicitud recibida"
 
@@ -21,159 +21,171 @@ msgstr "Sí"
 msgid "All"
 msgstr "Todos"
 
-#: app/admin.py:56
+#: app/admin.py:62
+msgid "the_mail_is_required"
+msgstr "La dirección de correo electrónico '%(email)s' ya existe"
+
+#: app/admin.py:66
 msgid "received_application_required"
 msgstr ""
 "No es posible asignar un usuario ldap sin antes confirmar la 'solicitud "
 "recibida'"
 
-#: app/admin.py:59 app/admin.py:60
+#: app/admin.py:69 app/admin.py:70
 msgid "required_attribute_group"
 msgstr "Grupo: Este campo es obligatorio"
 
-#: app/admin.py:63
+#: app/admin.py:73
 msgid "ldap_user_password_too_short"
 msgstr "La contraseña de autenticación del usuario es muy corta"
 
-#: app/admin.py:72
+#: app/admin.py:82
 msgid "user_ID_ldap_already_exists"
 msgstr "Ya existe en Ldap un usuario con este Documento cuyo uid es %(uid)s"
 
-#: app/admin.py:98
+#: app/admin.py:108
 msgid "ldap_without_connection"
 msgstr ""
 "No se pudo establecer una conexión con el servidor Ldap. Algunas opciones no "
 "estarán disponibles."
 
-#: app/admin.py:131
+#: app/admin.py:141
 msgid "cant_change_password"
 msgstr "El usuario no tiene permisos para cambiar la contraseña"
 
-#: app/admin.py:142
+#: app/admin.py:152
 msgid "cant_change_group"
 msgstr "El usuario no tiene permisos para cambiar el grupo"
 
-#: app/admin.py:149
+#: app/admin.py:159
 msgid "without_ldap_user_uid"
 msgstr "No se pudo determinar el uid del usuario ldap"
 
-#: app/admin.py:154
+#: app/admin.py:164
 msgid "uidnumber_already_exist"
 msgstr "Ya existe en Ldap un usuario con el uidNumber %(uidnumber)s"
 
-#: app/forms.py:14 app/models.py:124 app/models.py:267 templates/new.html:20
+#: app/forms.py:16 app/models.py:119 app/models.py:268 templates/new.html:20
 msgid "name"
 msgstr "Nombre"
 
-#: app/forms.py:16 app/models.py:269 templates/new.html:25
+#: app/forms.py:20 app/models.py:272 templates/new.html:25
 msgid "surname"
 msgstr "Apellido"
 
-#: app/forms.py:18 app/models.py:272
+#: app/forms.py:24 app/models.py:276
 msgid "document_number"
 msgstr "Número Documento"
 
-#: app/forms.py:22 app/models.py:274
+#: app/forms.py:29 app/models.py:281
 msgid "document_type"
 msgstr "Tipo Documento"
 
-#: app/forms.py:25 app/models.py:276 app/views.py:161 templates/new.html:90
+#: app/forms.py:39 app/models.py:294 app/views.py:172 templates/new.html:90
 msgid "position"
 msgstr "Cargo"
 
-#: app/forms.py:27 templates/new.html:108
+#: app/forms.py:42 templates/new.html:108
 msgid "specify_other"
 msgstr "Especificar otra"
 
-#: app/forms.py:30 app/models.py:128 app/models.py:288 templates/new.html:98
+#: app/forms.py:45 app/models.py:123 app/models.py:320 templates/new.html:98
 msgid "office"
 msgstr "Secretaría"
 
-#: app/forms.py:32 app/models.py:278 app/views.py:165 templates/new.html:53
+#: app/forms.py:49 app/models.py:299 app/views.py:176 templates/new.html:53
 msgid "work_phone"
 msgstr "Teléfono laboral"
 
-#: app/forms.py:34 app/models.py:280 app/views.py:169
+#: app/forms.py:53 app/models.py:304 app/views.py:180
 msgid "home_phone"
 msgstr "Teléfono particular"
 
-#: app/forms.py:36 app/models.py:282 app/views.py:173 templates/new.html:82
+#: app/forms.py:57 app/models.py:309 app/views.py:184 templates/new.html:82
 msgid "address"
 msgstr "Domicilio"
 
-#: app/forms.py:38 app/models.py:284
+#: app/forms.py:60 app/models.py:312
 msgid "created_at"
 msgstr "creado"
 
-#: app/forms.py:40 app/models.py:286
+#: app/forms.py:63 app/models.py:315
 msgid "updated_at"
 msgstr "actualizado"
 
-#: app/forms.py:42 app/models.py:290 templates/new.html:116
+#: app/forms.py:67 app/models.py:325 templates/new.html:116
 msgid "other_office"
 msgstr "Otra Secretaría"
 
-#: app/forms.py:44 app/models.py:292
+#: app/forms.py:71 app/models.py:330
 msgid "ldap_user_name"
 msgstr "Nombre de usuario ldap"
 
-#: app/forms.py:47 app/models.py:296 templates/new.html:67
+#: app/forms.py:76 app/models.py:336 templates/new.html:67
 msgid "ldap_user_password"
 msgstr "Contraseña"
 
-#: app/forms.py:51 templates/new.html:74
+#: app/forms.py:82 templates/new.html:74
 msgid "ldap_user_password_confirm"
 msgstr "Confirma Contraseña"
 
-#: app/forms.py:56 app/models.py:300
+#: app/forms.py:89 app/models.py:343
 msgid "group_id"
 msgstr "Grupo"
 
-#: app/forms.py:70
+#: app/forms.py:104
 msgid "password_dont_match"
 msgstr "Las contraseñas no coinciden"
 
-#: app/models.py:28
+#: app/models.py:23
 msgid "ldap_user_password_invalid"
 msgstr "La contraseña del usuario ldap no es un valor apropiado"
 
-#: app/models.py:33
+#: app/models.py:28
 msgid "ldap_user_name_invalid"
 msgstr "El nombre de usuario ldap no es un valor apropiado"
 
-#: app/models.py:106
+#: app/models.py:101
 msgid "DocumentType"
 msgstr "Tipo Documento"
 
-#: app/models.py:107
+#: app/models.py:102
 msgid "DocumentTypes"
 msgstr "Tipos de Documentos"
 
-#: app/models.py:129
+#: app/models.py:124
 msgid "offices"
 msgstr "Secretarías"
 
-#: app/models.py:140
+#: app/models.py:136
 msgid "Group"
 msgstr "Grupo"
 
-#: app/models.py:141
+#: app/models.py:137
 msgid "Groups"
 msgstr "Grupos"
 
-#: app/models.py:263
+#: app/models.py:260
 msgid "invalid_value"
 msgstr "Ingrese un valor válido"
 
-#: app/models.py:305
+#: app/models.py:285
+msgid "email"
+msgstr "email"
+
+#: app/models.py:289
+msgid "alternative_email"
+msgstr "email alternativo"
+
+#: app/models.py:348
 msgid "person"
 msgstr "Persona"
 
-#: app/models.py:306
+#: app/models.py:349
 msgid "people"
 msgstr "Personas"
 
-#: app/views.py:79
+#: app/views.py:90
 msgid "outcome_success"
 msgstr ""
 "Estimado/a <strong>%(surname)s, %(name)s</strong> <br> La solicitud se a "
@@ -181,69 +193,69 @@ msgstr ""
 "nuestra oficina con el siguiente <a href='%(url)s' "
 "TARGET='_blank'>formulario</a> impreso y la firma del responsable de tu área."
 
-#: app/views.py:88
+#: app/views.py:99
 msgid "outcome_error"
 msgstr ""
 "Estimado/a <strong>%(surname)s, %(name)s</strong> <br>La solicitud no pudo "
 "completarse. Para poder realizar el trámite te pedimos que te acerques a "
 "nuestra oficina o intentes realizar la solicitud nuevamente más tarde.<br>"
 
-#: app/views.py:118
+#: app/views.py:129
 msgid "header_code"
 msgstr "Office<br/>Business<br/>Other,.."
 
-#: app/views.py:148 templates/new.html:17
+#: app/views.py:159 templates/new.html:17
 msgid "enabling_account"
 msgstr "Solicitud de habilitación de cuenta"
 
-#: app/views.py:151
+#: app/views.py:162
 msgid "applicant"
 msgstr "Solicitante"
 
-#: app/views.py:155 templates/new.html:33
+#: app/views.py:166 templates/new.html:33
 msgid "doc_type"
 msgstr "Tipo Documento"
 
-#: app/views.py:156 templates/new.html:45
+#: app/views.py:167 templates/new.html:45
 msgid "doc_number"
 msgstr "Número Documento"
 
-#: app/views.py:177
+#: app/views.py:188
 msgid "short_office"
 msgstr "Secretaría"
 
-#: app/views.py:184
+#: app/views.py:195
 msgid "intro_code"
 msgstr ""
 "<strong>Código de conducta</strong><br></br><br></br>Texto ,...<br></"
 "br><br></br>"
 
-#: app/views.py:192
+#: app/views.py:203
 msgid "conduct_code"
 msgstr "texto ,. .."
 
-#: app/views.py:196
+#: app/views.py:207
 msgid "date"
 msgstr "Ciudad, ...... de ............. de 20...."
 
-#: app/views.py:198
+#: app/views.py:209
 msgid "firm"
 msgstr "Firma"
 
-#: app/views.py:201
+#: app/views.py:212
 msgid "firm_responsible"
 msgstr "Firma y aclaración del responsable del área/sector"
 
-#: mollys/settings.py:21 mollys/settings.tpl.py:21 templates/base.html:59
+#: mollys/settings.py:22 mollys/settings.tpl.py:21 templates/base.html:59
 msgid "Spanish"
 msgstr "Español"
 
-#: mollys/settings.py:22 mollys/settings.tpl.py:22 templates/base.html:61
+#: mollys/settings.py:23 mollys/settings.tpl.py:22 templates/base.html:61
 msgid "English"
 msgstr "Inglés"
 
-#: mollys/settings.py:183 mollys/settings.tpl.py:196 templates/base.html:13
-#: templates/base.html.py:45
+#: mollys/settings.py:200 mollys/settings.tpl.py:196 templates/base.html:13
+#: templates/base.html:45
 msgid "title"
 msgstr "Mollys"
 
