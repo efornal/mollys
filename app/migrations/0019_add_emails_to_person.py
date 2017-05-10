@@ -20,6 +20,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='person',
             name='email',
-            field=models.EmailField(default=None, max_length=254, verbose_name='email'),
+            field=models.EmailField(blank=True, null=True, default=None, max_length=254, verbose_name='email'),
         ),
     ]
