@@ -1,82 +1,18 @@
 body {
-    background: url("http://www.unl.edu.ar/img/bgpattern.png") repeat scroll 0% 0%;
-    border-top: 5px solid #008bb8;
+    padding-top: 70px;
 }
 
-.page-header {
-    margin: 30px 0px 20px;
+.navbar-brand > small {
+    font-size: 75%;
 }
 
-.page-header h1 {
-    font-size: 30px;
+.navbar-brand > p {
+    padding: 0px;
+    margin: 0px;
+    margin-top: -6px;
 }
 
-.logo-header {
-    color: #008BB8; 
-    font-size: 30px; 
-    line-height: 86px; 
-    text-align: right; 
-    margin-right: 10px;
-    height:50px;
-}
-
-.titulo{
-    font-size: 20px; 
-    color: #008BB8 !important;
-    font-family: "Open Sans" !important;
-    position: absolute !important;
-    right: 0px !important;
-    margin-right:80px !important;
-    width: 700px !important;
-}
-
-.table-sortable tbody tr {
-    cursor: move;
-}
-.navbar-default{
-    opacity: 0.85;
-    filter: alpha(opacity=85); /* For IE8 and earlier */
-}
-.navbar-fixed-top {
-    top: 6px;
-}
-
-#footer{
-    position:absolute;
-    bottom:0;
-    width:100%;
-}
-
-
-#footer-presentation-content{
-    overflow:hidden;
-    height:40px;
-    text-align:left;
-    background:url("http://www.unl.edu.ar/img/footer/unl.png") no-repeat;
-    position:relative;
-    z-index:1000;
-    margin:3px;
-    width:915px;
-    margin-left:auto;
-    margin-right:auto;
-}
-
-#logo-header{
-    background:url("http://www.unl.edu.ar/img/header/universidad-nacional-del-litoral.png") no-repeat;
-    background-size: 181px 50px;
-    width:915px;
-    font-size: 30px; 
-    line-height: 86px; 
-    text-align: right; 
-    margin-right: 10px;
-    height:50px;
-    position: absolute;
-}
-
-#terms{
-    color:#a5a5a5;
-    float:right;
-    padding-top:15px;
-    margin-right:4px;
-    font-size:12px;
+.logo-header{
+    float: left;
+    margin-right: 20px;
 }
