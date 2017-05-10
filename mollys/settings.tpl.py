@@ -14,6 +14,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+APPLICATION_NAME= "Mollys"
+APPLICATION_DESC= "LDAP Users"
 
 from django.utils.translation import ugettext_lazy as _
 LANGUAGE_CODE = 'es'
@@ -117,7 +119,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'app.middleware.ForceLangMiddleware',
 )
 
 ROOT_URLCONF = 'mollys.urls'

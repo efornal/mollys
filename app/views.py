@@ -18,14 +18,15 @@ import json
 from django.utils import translation
 
 
-def set_language(request):
-    user_language = request.GET['language'] or 'es'
-    translation.activate(user_language)
-    request.session[translation.LANGUAGE_SESSION_KEY] = user_language
+def set_language(request, lang='es'):
+    translation.activate(lang)
+    request.session[translation.LANGUAGE_SESSION_KEY] = lang
     return redirect('index')
+
 
 def index(request):
     return redirect('new')
+
 
 def check_ldap(request):
     existing_uid_in_ldap = None
