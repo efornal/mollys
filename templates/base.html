@@ -44,8 +44,8 @@
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download"
                  title="{{ _('language') }}">
                 <i class="glyphicon glyphicon-flag"></i>
-                {% if LANGUAGE_CODE = 'es' %} {{ _('spanish') }} {% endif %}
-                {% if LANGUAGE_CODE = 'en' %} {{ _('english') }} {% endif %}
+                {% if LANGUAGE_CODE == 'es' %} {{ _('spanish') }} {% endif %}
+                {% if LANGUAGE_CODE == 'en' %} {{ _('english') }} {% endif %}
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" aria-labelledby="download">
