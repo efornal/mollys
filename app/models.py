@@ -597,20 +597,60 @@ class Person(models.Model):
                                      settings.LDAP_DN )
         
     def update_ldap_data_from(self,person):
-        logging.error(person)
         try:
-            update_person = [( ldap.MOD_REPLACE, 'telephoneNumber',
-                               str(person.work_phone) or None),
-                             ( ldap.MOD_REPLACE, 'employeeType',
-                               str(person.position) or None),
-                             ( ldap.MOD_REPLACE, 'departmentNumber',
-                               str(person.floor) or None),
-                             ( ldap.MOD_REPLACE, 'destinationIndicator',
-                               str(person.area) or None),
-                              ( ldap.MOD_REPLACE, 'homePhone',
-                               str(person.home_phone) or None),
-                             ( ldap.MOD_REPLACE, 'physicalDeliveryOfficeName',
-                               LdapConn.parseattr(person.office_name()))]
+            update_person = [( ldap.MOD_REPLACE, 'physicalDeliveryOfficeName',
+                               LdapConn.parseattr(person.office_name())),]
+
+            if person.work_phone is not None:
+                if person.work_phone:
+                    update_person.append(( ldap.MOD_REPLACE,
+                                        'telephoneNumber',
+                                        str(person.work_phone)))
+                else:
+                    update_person.append(( ldap.MOD_DELETE,
+                                        'telephoneNumber',
+                                        None))
+                          
+            if person.home_phone is not None:
+                if person.home_phone:
+                    update_person.append(( ldap.MOD_REPLACE,
+                                        'homePhone',
+                                        str(person.home_phone)))
+                else:
+                    update_person.append(( ldap.MOD_DELETE,
+                                        'homePhone',
+                                        None))
+
+            if person.floor is not None:
+                if person.floor:
+                    update_person.append(( ldap.MOD_REPLACE,
+                                        'departmentNumber',
+                                        str(person.floor)))
+                else:
+                    update_person.append(( ldap.MOD_DELETE,
+                                        'departmentNumber',
+                                        None))
+
+            if person.area is not None:
+                if person.area:
+                    update_person.append(( ldap.MOD_REPLACE,
+                                        'destinationIndicator',
+                                        str(person.area)))
+                else:
+                    update_person.append(( ldap.MOD_DELETE,
+                                        'destinationIndicator',
+                                           None))
+
+            if person.position is not None:
+                if person.position:
+                    update_person.append(( ldap.MOD_REPLACE,
+                                           'employeeType',
+                                           str(person.position)))
+                else:
+                    update_person.append(( ldap.MOD_DELETE,
+                                           'employeeType',
+                                           None))
+
             udn = Person.ldap_udn_for( person.ldap_user_name )
             LdapConn.new_user().modify_s(udn, update_person)
             logging.info( "Updated ldap user data for %s \n" % person.ldap_user_name)

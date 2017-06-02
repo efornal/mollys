@@ -177,14 +177,18 @@ class PersonAdmin(admin.ModelAdmin):
                     ('tipodoc', [str(obj.document_type)] ),
                     ('numdoc', [str(obj.document_number)] ),
                     ('uidNumber', [str(new_uid_number)] ),
-                    ('employeeType', [str(obj.position)] ),
-                    ('departmentNumber', [str(obj.floor)] ),
-                    ('destinationIndicator', [str(obj.area)] ),
                     ('userPassword', [str(obj.ldap_user_password)] ),
                     ('homedirectory', [str('%s%s' % ( settings.LDAP_PEOPLE_HOMEDIRECTORY_PREFIX,
                                                       ldap_user_name))]),
                     ('gidNumber', [str(obj.group_id)] ),
                     ('loginShell', [str(settings.LDAP_PEOPLE_LOGIN_SHELL)]),]
+
+                if obj.position:                
+                    new_user.append(('employeeType', [str(obj.position)] ))
+                if obj.area:
+                    new_user.append(('destinationIndicator', [str(obj.area)]))
+                if obj.floor:
+                    new_user.append(('departmentNumber', [str(obj.floor)] ))
                 if obj.work_phone:
                     new_user.append(('telephoneNumber', [str(obj.work_phone)]))
                 if obj.home_phone:
