@@ -35,10 +35,10 @@
               <div class="col-sm-4">
                 <select class="form-control" id="document_type_id" name="document_type">
                   {% for doc in document_types %}
-                    <option value="{{doc.id}}"
-                    {% if doc.id == form.document_type.value|add:0 %}selected="selected"{% endif %}>
+                  <option value="{{doc.id}}"
+                          {% if doc.id == form.document_type.value|add:0 %}selected="selected"{% endif %}>
                     {{doc.name}}
-                    </option>
+                  </option>
                   {% endfor %}
                 </select>
               </div>
@@ -49,21 +49,7 @@
                        value="{{ form.document_number.value }}"/>
               </div>
             </div>
-           
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="textinput">{{ _("work_phone") }}</label>
-              <div class="col-sm-4">
-                <input class="form-control" type="text" name="work_phone"
-                       value="{{ form.work_phone.value }}"/>
-              </div>
-              <label class="col-sm-2 control-label" for="textinput">{{ _("short_home_phone") }}</label>
-              <div class="col-sm-4">
-                <input class="form-control" type="text" name="home_phone"
-                       value="{{ form.home_phone.value }}"/>
-              </div>
-            </div>
-
-
+            
             <div class="form-group">
               <label class="col-sm-2 control-label" for="textinput">{{ _("ldap_user_password") }} *</label>
               <div class="col-sm-4">
@@ -78,6 +64,25 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="textinput">{{ _("Alternative_email") }}</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="alternative_email" value=""/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="textinput">{{ _("work_phone") }}</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="work_phone"
+                       value="{{ form.work_phone.value }}"/>
+              </div>
+              <label class="col-sm-2 control-label" for="textinput">{{ _("short_home_phone") }}</label>
+              <div class="col-sm-4">
+                <input class="form-control" type="text" name="home_phone"
+                       value="{{ form.home_phone.value }}"/>
+              </div>
+            </div>
             
             <div class="form-group">
               <label for="inputEmail" class="col-sm-2 control-label">{{ _("address") }}</label>
@@ -101,10 +106,10 @@
                 <select class="form-control" id="office_id" name="office">
                   <option value="0">{{ _("select_one") }}</option>
                   {% for office in offices %}
-                    <option value="{{office.id}}"
-                    {% if office.id == form.office.value|add:0 %}selected="selected"{% endif %}>
+                  <option value="{{office.id}}"
+                          {% if office.id == form.office.value|add:0 %}selected="selected"{% endif %}>
                     {{office.name}}
-                    </option>
+                  </option>
                   {% endfor %}
                   <option value=''>{{ _('specify_other') }}</option>
                 </select>
@@ -112,27 +117,24 @@
             </div>
 
             <div class="form-group" id="new_office_block">
-              <label class="col-sm-2 control-label" for="textinput"></label>
-              <div class="col-sm-4"></div>
               <label class="col-sm-2 control-label" for="textinput">{{ _("other_office") }}:</label>
               <div class="col-sm-4">
                 <input class="form-control" type="text" name="other_office"
                        value="{{ form.other_office.value }}"/>
               </div>
             </div>
-
+            
             <br>
-              
-            <div class="form-group">
-              <div class="col-lg-10 col-lg-offset-2">
-                <button type="reset" class="btn btn-default">{{ _("cancel") }}</button>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="submit" class="btn btn-primary">{{ _("send_request") }}</button>
+            <div class="form-group pull-right">
+              <div class="col-xs-12">
+                <button type="reset" class="btn btn-default">{{ _('cancel') }}</button>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <button type="submit" class="btn btn-primary">{{ _('send_request') }}</button>
               </div>
             </div>
-              
-            </fieldset>
-          </form>
+            
+          </fieldset>
+        </form>
 
       </div>
     </div>
