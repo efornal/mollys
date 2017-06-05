@@ -79,6 +79,10 @@ LDAP_PEOPLE_LOGIN_SHELL = "/bin/bash"
 LDAP_PEOPLE_OBJECTCLASSES = ['agente','hordeperson','inetOrgPerson',
                              'organizationalperson','person','posixaccount',
                              'shadowaccount', 'top']
+# Domain name used to identify the institutional mail of an alternative
+# Ej: the (LDAP DN)
+LDAP_DOMAIN_MAIL=''
+
 # =======================================/
 
 
@@ -91,7 +95,7 @@ SECRET_KEY = 'tfp%=#=oszs#x4wea8mkm60p=nmg3l9)jq5g1%s_ev#_4$w#&-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -181,7 +185,7 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Argentina/Buenos_Aires'
 
 USE_I18N = True
 

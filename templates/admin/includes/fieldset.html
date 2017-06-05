@@ -73,6 +73,10 @@
           $("#suggested_ldap_name_arrow").click(function(){
             $("#id_ldap_user_name").val($("#suggested_ldap_name_arrow").attr('data-name'));
           });
+
+          $("#suggested_ldap_email_arrow").click(function(){
+            $("#id_email").val($("#suggested_ldap_email_arrow").attr('data-name'));
+          });
           
           $("#id_ldap_user_password_check").change(function(){
 
@@ -126,14 +130,19 @@
                     });
         </script>
         {% if not field.field.value %}
-        
           <p>{{ _('suggested_name') }}: &nbsp;
-            <a href="#" title="{{ _('suggested_name_title') }}" id="suggested_ldap_name_arrow" data-name="{{ suggested_ldap_name }}"><i class="glyphicon glyphicon-arrow-up arrow-up"></i><strong>{{ suggested_ldap_name }}</strong>
-              </a>
+            <a href="#" title="{{ _('suggested_name_title') }}" id="suggested_ldap_name_arrow" data-name="{{ suggested_ldap_name }}"><strong>{{ suggested_ldap_name }}</strong>&nbsp;<i class="glyphicon glyphicon-arrow-up arrow-up"></i></a>
           &nbsp; &nbsp;
-        </p>
+          </p>
         {% endif %}
 
+        {% endif %}
+
+        {% if field.field.name == 'email' and not field.field.value and suggested_ldap_email %}
+          <p>{{ _('suggested_email') }}: &nbsp;
+            <a href="#" title="{{ _('suggested_email_title') }}" id="suggested_ldap_email_arrow" data-name="{{ suggested_ldap_email }}"><strong>{{ suggested_ldap_email }}</strong>&nbsp;<i class="glyphicon glyphicon-arrow-up arrow-up"></i></a>
+          &nbsp; &nbsp;
+        </p>
         {% endif %}
 
         {% if field.field.name == 'ldap_user_password' %}

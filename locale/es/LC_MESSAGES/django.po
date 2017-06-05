@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-05 10:22-0300\n"
+"POT-Creation-Date: 2017-06-05 10:58-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -43,25 +43,25 @@ msgstr "La contraseña de autenticación del usuario es muy corta"
 msgid "user_ID_ldap_already_exists"
 msgstr "Ya existe en Ldap un usuario con este Documento cuyo uid es %(uid)s"
 
-#: app/admin.py:110
+#: app/admin.py:114
 msgid "ldap_without_connection"
 msgstr ""
 "No se pudo establecer una conexión con el servidor Ldap. Algunas opciones no "
 "estarán disponibles."
 
-#: app/admin.py:143
+#: app/admin.py:148
 msgid "cant_change_password"
 msgstr "El usuario no tiene permisos para cambiar la contraseña"
 
-#: app/admin.py:154
+#: app/admin.py:159
 msgid "cant_change_group"
 msgstr "El usuario no tiene permisos para cambiar el grupo"
 
-#: app/admin.py:161
+#: app/admin.py:166
 msgid "without_ldap_user_uid"
 msgstr "No se pudo determinar el uid del usuario ldap"
 
-#: app/admin.py:166
+#: app/admin.py:171
 msgid "uidnumber_already_exist"
 msgstr "Ya existe en Ldap un usuario con el uidNumber %(uidnumber)s"
 
@@ -262,7 +262,7 @@ msgstr "Español"
 msgid "English"
 msgstr "Inglés"
 
-#: mollys/settings.py:204 mollys/settings.tpl.py:198
+#: mollys/settings.py:209 mollys/settings.tpl.py:202
 msgid "title"
 msgstr "Mollys"
 
@@ -301,13 +301,21 @@ msgid_plural " Please correct the errors below."
 msgstr[0] "Por favor, corrija el error indicado"
 msgstr[1] "Por favor, corrija los errores indicados"
 
-#: templates/admin/includes/fieldset.html:130
+#: templates/admin/includes/fieldset.html:133
 msgid "suggested_name"
 msgstr "Nombre sugerido"
 
-#: templates/admin/includes/fieldset.html:131
+#: templates/admin/includes/fieldset.html:134
 msgid "suggested_name_title"
 msgstr "Usar nombre sugerido (copiar)"
+
+#: templates/admin/includes/fieldset.html:142
+msgid "suggested_email"
+msgstr "Email sugerido"
+
+#: templates/admin/includes/fieldset.html:143
+msgid "suggested_email_title"
+msgstr "Usar email sugerido (copiar)"
 
 #: templates/base.html:45
 msgid "language"

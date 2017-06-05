@@ -101,15 +101,20 @@ class PersonAdmin(admin.ModelAdmin):
         exists_in_ldap = None
         groups = None
         suggested_ldap_name = ''
+        suggested_ldap_email = ''
 
         if enable_ldap_connection:
             exists_in_ldap = Person.exists_in_ldap( person.ldap_user_name )
             groups = Group.all()
             suggested_ldap_name = Person.suggested_name(object_id)
+            if hasattr(settings, 'LDAP_DOMAIN_MAIL') and settings.LDAP_DOMAIN_MAIL:
+                suggested_ldap_email = "{}@{}".format(suggested_ldap_name,
+                                                     settings.LDAP_DOMAIN_MAIL)
         else:
             messages.warning(request, _('ldap_without_connection'))
 
         context = {'suggested_ldap_name': suggested_ldap_name,
+                   'suggested_ldap_email': suggested_ldap_email,
                    'groups': groups,
                    'hide_save_box': (not enable_ldap_connection),
                    'exists_in_ldap': exists_in_ldap }
