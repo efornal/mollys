@@ -79,8 +79,7 @@
           });
           
           $("#id_ldap_user_password_check").change(function(){
-
-          if ( $("#id_ldap_user_password_check").attr('checked') == 'checked') {
+          if ( $("#id_ldap_user_password_check").is(':checked') ) {
             $("#id_ldap_user_password").prop('readonly', false);
           } else {
             $("#id_ldap_user_password").val($("#id_ldap_user_password_check").attr('data-name'));
