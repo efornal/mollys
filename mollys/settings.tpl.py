@@ -119,6 +119,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'app.middleware.ForceLangMiddleware',
 )
 
 ROOT_URLCONF = 'mollys.urls'
