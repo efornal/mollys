@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-02 10:44-0300\n"
+"POT-Creation-Date: 2017-06-05 10:22-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -81,15 +81,15 @@ msgstr "Número Documento"
 msgid "document_type"
 msgstr "Tipo Documento"
 
-#: app/forms.py:39 app/models.py:294 app/views.py:173 templates/new.html:96
+#: app/forms.py:39 app/models.py:294 app/views.py:173 templates/new.html:98
 msgid "position"
 msgstr "Cargo"
 
-#: app/forms.py:42 templates/new.html:114
+#: app/forms.py:42 templates/new.html:116
 msgid "specify_other"
 msgstr "Especificar otra"
 
-#: app/forms.py:45 app/models.py:123 app/models.py:320 templates/new.html:104
+#: app/forms.py:45 app/models.py:123 app/models.py:320 templates/new.html:106
 msgid "office"
 msgstr "Secretaría"
 
@@ -101,7 +101,7 @@ msgstr "Teléfono laboral"
 msgid "home_phone"
 msgstr "Teléfono particular"
 
-#: app/forms.py:57 app/models.py:309 app/views.py:185 templates/new.html:88
+#: app/forms.py:57 app/models.py:309 app/views.py:185 templates/new.html:90
 msgid "address"
 msgstr "Domicilio"
 
@@ -113,7 +113,7 @@ msgstr "creado"
 msgid "updated_at"
 msgstr "actualizado"
 
-#: app/forms.py:67 app/models.py:325 templates/new.html:120
+#: app/forms.py:67 app/models.py:325 templates/new.html:122
 msgid "other_office"
 msgstr "Otra Secretaría"
 
@@ -262,7 +262,7 @@ msgstr "Español"
 msgid "English"
 msgstr "Inglés"
 
-#: mollys/settings.py:203 mollys/settings.tpl.py:197
+#: mollys/settings.py:204 mollys/settings.tpl.py:198
 msgid "title"
 msgstr "Mollys"
 
@@ -301,6 +301,14 @@ msgid_plural " Please correct the errors below."
 msgstr[0] "Por favor, corrija el error indicado"
 msgstr[1] "Por favor, corrija los errores indicados"
 
+#: templates/admin/includes/fieldset.html:130
+msgid "suggested_name"
+msgstr "Nombre sugerido"
+
+#: templates/admin/includes/fieldset.html:131
+msgid "suggested_name_title"
+msgstr "Usar nombre sugerido (copiar)"
+
 #: templates/base.html:45
 msgid "language"
 msgstr "idioma"
@@ -321,19 +329,27 @@ msgstr "Contraseña preliminar de autenticación del usuario a suministrar"
 msgid "Alternative_email"
 msgstr "Email alternativo"
 
+#: templates/new.html:79
+msgid "Examples"
+msgstr "Ejemplos"
+
 #: templates/new.html:80
+msgid "or_alone"
+msgstr "o sólo"
+
+#: templates/new.html:82
 msgid "short_home_phone"
 msgstr "Particular"
 
-#: templates/new.html:107
+#: templates/new.html:109
 msgid "select_one"
 msgstr "Seleccione una"
 
-#: templates/new.html:130
+#: templates/new.html:132
 msgid "cancel"
 msgstr "Cancelar"
 
-#: templates/new.html:132
+#: templates/new.html:134
 msgid "send_request"
 msgstr "Enviar Solicitud"
 

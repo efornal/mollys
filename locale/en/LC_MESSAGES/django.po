@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-02 10:44-0300\n"
+"POT-Creation-Date: 2017-06-05 10:22-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -78,15 +78,15 @@ msgstr "ID Number"
 msgid "document_type"
 msgstr "ID Type"
 
-#: app/forms.py:39 app/models.py:294 app/views.py:173 templates/new.html:96
+#: app/forms.py:39 app/models.py:294 app/views.py:173 templates/new.html:98
 msgid "position"
 msgstr "Job title"
 
-#: app/forms.py:42 templates/new.html:114
+#: app/forms.py:42 templates/new.html:116
 msgid "specify_other"
 msgstr "Specify other"
 
-#: app/forms.py:45 app/models.py:123 app/models.py:320 templates/new.html:104
+#: app/forms.py:45 app/models.py:123 app/models.py:320 templates/new.html:106
 msgid "office"
 msgstr "Office"
 
@@ -98,7 +98,7 @@ msgstr "Work phone"
 msgid "home_phone"
 msgstr "Home phone"
 
-#: app/forms.py:57 app/models.py:309 app/views.py:185 templates/new.html:88
+#: app/forms.py:57 app/models.py:309 app/views.py:185 templates/new.html:90
 msgid "address"
 msgstr "Address"
 
@@ -110,7 +110,7 @@ msgstr "Created at"
 msgid "updated_at"
 msgstr "Updated at"
 
-#: app/forms.py:67 app/models.py:325 templates/new.html:120
+#: app/forms.py:67 app/models.py:325 templates/new.html:122
 msgid "other_office"
 msgstr "Another office"
 
@@ -258,7 +258,7 @@ msgstr "Spanish"
 msgid "English"
 msgstr "English"
 
-#: mollys/settings.py:203 mollys/settings.tpl.py:197
+#: mollys/settings.py:204 mollys/settings.tpl.py:198
 msgid "title"
 msgstr "Mollys"
 
@@ -297,6 +297,14 @@ msgid_plural " Please correct the errors below."
 msgstr[0] "Please correct the error below."
 msgstr[1] "Please correct the errors below."
 
+#: templates/admin/includes/fieldset.html:130
+msgid "suggested_name"
+msgstr "Suggested name"
+
+#: templates/admin/includes/fieldset.html:131
+msgid "suggested_name_title"
+msgstr "Use suggested name (copy)"
+
 #: templates/base.html:45
 msgid "language"
 msgstr "language"
@@ -317,19 +325,27 @@ msgstr "Preliminary password user authentication to provide"
 msgid "Alternative_email"
 msgstr "Alternative email"
 
+#: templates/new.html:79
+msgid "Examples"
+msgstr "Examples"
+
 #: templates/new.html:80
+msgid "or_alone"
+msgstr "or alone"
+
+#: templates/new.html:82
 msgid "short_home_phone"
 msgstr "Home Phone"
 
-#: templates/new.html:107
+#: templates/new.html:109
 msgid "select_one"
 msgstr "Select one"
 
-#: templates/new.html:130
+#: templates/new.html:132
 msgid "cancel"
 msgstr "Cancel"
 
-#: templates/new.html:132
+#: templates/new.html:134
 msgid "send_request"
 msgstr "Send request"
 
