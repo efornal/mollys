@@ -10,7 +10,7 @@
     padding: 4px;
     border: 1px solid transparent;
     background-position: -292px -92px;
-    background-image: url("{% static 'bootstrap/img/glyphicons-halflings.png' %}");
+    background-image: url("{% static 'suit/bootstrap/img/glyphicons-halflings.png'%}");
   }
 </style>
 
@@ -127,8 +127,10 @@
         </script>
         {% if not field.field.value %}
         
-        <p>Nombre sugerido: &nbsp; <strong>{{ suggested_ldap_name }}</strong>
-          &nbsp; &nbsp; <a href="#" id='suggested_ldap_name_arrow' class="arrow-up" data-name="{{ suggested_ldap_name }}" ></a>
+          <p>{{ _('suggested_name') }}: &nbsp;
+            <a href="#" title="{{ _('suggested_name_title') }}" id="suggested_ldap_name_arrow" data-name="{{ suggested_ldap_name }}"><i class="glyphicon glyphicon-arrow-up arrow-up"></i><strong>{{ suggested_ldap_name }}</strong>
+              </a>
+          &nbsp; &nbsp;
         </p>
         {% endif %}
 
