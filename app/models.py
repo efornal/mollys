@@ -193,7 +193,7 @@ class Group(models.Model):
             logging.error( "Error updating group '%s' with id '%s' of member: '%s'. Missing parameter.\n" \
                            % (ldap_group,group_id,ldap_user_name) )
             return
-
+            
         update_group = [( ldap.MOD_ADD, 'memberUid', ldap_user_name )]
         try:
             gdn = "cn=%s,ou=%s,%s" % ( ldap_group,
@@ -232,11 +232,27 @@ class Group(models.Model):
             logging.error( "Error deleting member %s of group: %s \n" % (ldap_user_name,ldap_group) )
             logging.error( e )
 
+
+    @classmethod
+    def _skip_groups(cls):
+        groups = []
+        if hasattr(settings, 'LDAP_GROUP_SKIP_VALUES') \
+           and len(settings.LDAP_GROUP_SKIP_VALUES)>0:
+            groups = settings.LDAP_GROUP_SKIP_VALUES
+        return groups
             
     @classmethod
+    def _skip_groups_filter(cls):
+        filters = ''
+        for gid in Group._skip_groups():
+            filters += '(!({}={}))'.format(settings.LDAP_GROUP_FIELDS[0],gid)
+        return filters
+    
+    @classmethod
     def all(cls):
-        ldap_condition = "(&(cn=*)(%s>=%s))"  % (settings.LDAP_GROUP_FIELDS[0],
-                                                 settings.LDAP_GROUP_MIN_VALUE)
+        ldap_condition = "(&(cn=*)({}>={}){})".format(settings.LDAP_GROUP_FIELDS[0],
+                                                      settings.LDAP_GROUP_MIN_VALUE,
+                                                      Group._skip_groups_filter())
         rows = []
 
         r = LdapConn.new().search_s( "ou=%s,%s" %(settings.LDAP_GROUP, settings.LDAP_DN),
