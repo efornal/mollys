@@ -43,27 +43,7 @@ class ReceivedApplicationFilter(admin.SimpleListFilter):
 
 
 class PersonAdminForm(forms.ModelForm):
-    name = forms.CharField(
-        max_length=200, 
-        required=True,
-        label=_('name'))
-    surname = forms.CharField(
-        max_length=200, 
-        required=True,
-        label=_('surname'))
-    document_number = forms.CharField(
-        max_length=10, 
-        required=True,
-        label=_('document_number'))
-    document_type = forms.ModelChoiceField(
-        queryset=DocumentType.objects.all(),
-        to_field_name = "id",
-        required = True,
-        label=_('document_type'))
-    email = forms.EmailField(
-        max_length=200,
-        required=True)
-    
+
     class Meta:
         model = Person
         fields = '__all__'
@@ -73,8 +53,21 @@ class PersonAdminForm(forms.ModelForm):
 
     
     def clean(self):
+
+
         if "received_application" in self.cleaned_data \
            and self.cleaned_data["received_application"]:
+
+            # email required if received
+            if not "email" in self.cleaned_data \
+               or not self.cleaned_data["email"]:
+                self.add_error('email',_('required_attribute') )                
+
+            if not "ldap_user_name" in self.cleaned_data \
+               or not self.cleaned_data["ldap_user_name"]:
+                self.add_error('ldap_user_name',_('required_attribute') )                
+
+            # email should not exist before if received request
             email = ''
             exists = False
             if "email" in self.cleaned_data and self.cleaned_data["email"]:
@@ -82,8 +75,7 @@ class PersonAdminForm(forms.ModelForm):
                 exists = Person.ldap_uid_by_email(email)
             if exists:
                 self.add_error('email', _('the_mail_is_required') % {'email':email}  )
-
-
+            
         if self.cleaned_data["ldap_user_name"] and not self.cleaned_data["received_application"]:
             self.add_error('received_application',_('received_application_required') )
 

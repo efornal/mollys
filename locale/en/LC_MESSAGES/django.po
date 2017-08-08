@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-05 10:58-0300\n"
+"POT-Creation-Date: 2017-08-08 11:53-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/admin.py:17 app/forms.py:86 app/models.py:340
+#: app/admin.py:17 app/forms.py:86 app/models.py:356
 msgid "received_application"
 msgstr "Received application"
 
@@ -21,64 +21,68 @@ msgstr "Yes"
 msgid "All"
 msgstr "All"
 
-#: app/admin.py:64
+#: app/admin.py:64 app/admin.py:68
+msgid "required_attribute"
+msgstr "This field is required"
+
+#: app/admin.py:77
 msgid "the_mail_is_required"
 msgstr "Email address '%(email)s' already exists."
 
-#: app/admin.py:68
+#: app/admin.py:80
 msgid "received_application_required"
 msgstr ""
 "You can not assign a user ldap without confirming the 'application received'"
 
-#: app/admin.py:71 app/admin.py:72
+#: app/admin.py:83 app/admin.py:84
 msgid "required_attribute_group"
 msgstr "Group: This field is required"
 
-#: app/admin.py:75
+#: app/admin.py:87
 msgid "ldap_user_password_too_short"
 msgstr "The ldap user password is too short"
 
-#: app/admin.py:84
+#: app/admin.py:96
 msgid "user_ID_ldap_already_exists"
 msgstr "Ldap user already exists with this document whose uid is %(uid)s"
 
-#: app/admin.py:114
+#: app/admin.py:126
 msgid "ldap_without_connection"
 msgstr "Unable to connect to the LDAP server. Some options are not available"
 
-#: app/admin.py:148
+#: app/admin.py:160
 msgid "cant_change_password"
 msgstr "The user does not have permission to change the password"
 
-#: app/admin.py:159
+#: app/admin.py:171
 msgid "cant_change_group"
 msgstr "The user does not have permission to change the group"
 
-#: app/admin.py:166
+#: app/admin.py:178
 msgid "without_ldap_user_uid"
 msgstr "The ldap user uid could not be determined"
 
-#: app/admin.py:171
+#: app/admin.py:183
 msgid "uidnumber_already_exist"
 msgstr "The ldap user with uidNumber %(uidnumber)s already exist"
 
-#: app/forms.py:16 app/models.py:119 app/models.py:268 templates/new.html:21
+#: app/forms.py:16 app/models.py:119 app/models.py:284 templates/new.html:21
 msgid "name"
 msgstr "Name"
 
-#: app/forms.py:20 app/models.py:272 templates/new.html:26
+#: app/forms.py:20 app/models.py:288 templates/new.html:26
 msgid "surname"
 msgstr "Surname"
 
-#: app/forms.py:24 app/models.py:276
+#: app/forms.py:24 app/models.py:292
 msgid "document_number"
 msgstr "ID Number"
 
-#: app/forms.py:29 app/models.py:281
+#: app/forms.py:29 app/models.py:297
 msgid "document_type"
 msgstr "ID Type"
 
-#: app/forms.py:39 app/models.py:294 app/views.py:173 templates/new.html:98
+#: app/forms.py:39 app/models.py:310 app/views.py:173 templates/new.html:98
 msgid "position"
 msgstr "Job title"
 
@@ -86,39 +90,39 @@ msgstr "Job title"
 msgid "specify_other"
 msgstr "Specify other"
 
-#: app/forms.py:45 app/models.py:123 app/models.py:320 templates/new.html:106
+#: app/forms.py:45 app/models.py:123 app/models.py:336 templates/new.html:106
 msgid "office"
 msgstr "Office"
 
-#: app/forms.py:49 app/models.py:299 app/views.py:177 templates/new.html:75
+#: app/forms.py:49 app/models.py:315 app/views.py:177 templates/new.html:75
 msgid "work_phone"
 msgstr "Work phone"
 
-#: app/forms.py:53 app/models.py:304 app/views.py:181
+#: app/forms.py:53 app/models.py:320 app/views.py:181
 msgid "home_phone"
 msgstr "Home phone"
 
-#: app/forms.py:57 app/models.py:309 app/views.py:185 templates/new.html:90
+#: app/forms.py:57 app/models.py:325 app/views.py:185 templates/new.html:90
 msgid "address"
 msgstr "Address"
 
-#: app/forms.py:60 app/models.py:312
+#: app/forms.py:60 app/models.py:328
 msgid "created_at"
 msgstr "Created at"
 
-#: app/forms.py:63 app/models.py:315
+#: app/forms.py:63 app/models.py:331
 msgid "updated_at"
 msgstr "Updated at"
 
-#: app/forms.py:67 app/models.py:325 templates/new.html:122
+#: app/forms.py:67 app/models.py:341 templates/new.html:122
 msgid "other_office"
 msgstr "Another office"
 
-#: app/forms.py:71 app/models.py:330
+#: app/forms.py:71 app/models.py:346
 msgid "ldap_user_name"
 msgstr "ldap username"
 
-#: app/forms.py:76 app/models.py:336 templates/new.html:54
+#: app/forms.py:76 app/models.py:352 templates/new.html:54
 msgid "ldap_user_password"
 msgstr "Password"
 
@@ -126,7 +130,7 @@ msgstr "Password"
 msgid "ldap_user_password_confirm"
 msgstr "Password confirm"
 
-#: app/forms.py:89 app/models.py:343
+#: app/forms.py:89 app/models.py:359
 msgid "group_id"
 msgstr "Group"
 
@@ -162,31 +166,31 @@ msgstr "Group"
 msgid "Groups"
 msgstr "Groups"
 
-#: app/models.py:260
+#: app/models.py:276
 msgid "invalid_value"
 msgstr "Enter a valid value"
 
-#: app/models.py:285
+#: app/models.py:301
 msgid "email"
 msgstr "email"
 
-#: app/models.py:289
+#: app/models.py:305
 msgid "alternative_email"
 msgstr "alternative email"
 
-#: app/models.py:348
+#: app/models.py:364
 msgid "floor"
 msgstr "floor"
 
-#: app/models.py:353
+#: app/models.py:369
 msgid "area"
 msgstr "area"
 
-#: app/models.py:358
+#: app/models.py:374
 msgid "person"
 msgstr "Person"
 
-#: app/models.py:359
+#: app/models.py:375
 msgid "people"
 msgstr "People"
 
@@ -258,7 +262,7 @@ msgstr "Spanish"
 msgid "English"
 msgstr "English"
 
-#: mollys/settings.py:209 mollys/settings.tpl.py:202
+#: mollys/settings.py:211 mollys/settings.tpl.py:202
 msgid "title"
 msgstr "Mollys"
 
@@ -297,19 +301,19 @@ msgid_plural " Please correct the errors below."
 msgstr[0] "Please correct the error below."
 msgstr[1] "Please correct the errors below."
 
-#: templates/admin/includes/fieldset.html:133
+#: templates/admin/includes/fieldset.html:132
 msgid "suggested_name"
 msgstr "Suggested name"
 
-#: templates/admin/includes/fieldset.html:134
+#: templates/admin/includes/fieldset.html:133
 msgid "suggested_name_title"
 msgstr "Use suggested name (copy)"
 
-#: templates/admin/includes/fieldset.html:142
+#: templates/admin/includes/fieldset.html:141
 msgid "suggested_email"
 msgstr "Suggested email"
 
-#: templates/admin/includes/fieldset.html:143
+#: templates/admin/includes/fieldset.html:142
 msgid "suggested_email_title"
 msgstr "Use suggested email (copy)"
 
