@@ -43,6 +43,26 @@ class ReceivedApplicationFilter(admin.SimpleListFilter):
 
 
 class PersonAdminForm(forms.ModelForm):
+    name = forms.CharField(
+        max_length=200, 
+        required=True,
+        label=_('name'))
+    surname = forms.CharField(
+        max_length=200, 
+        required=True,
+        label=_('surname'))
+    document_number = forms.CharField(
+        max_length=10, 
+        required=True,
+        label=_('document_number'))
+    document_type = forms.ModelChoiceField(
+        queryset=DocumentType.objects.all(),
+        to_field_name = "id",
+        required = True,
+        label=_('document_type'))
+    email = forms.EmailField(
+        max_length=200,
+        required=True)
     
     class Meta:
         model = Person
