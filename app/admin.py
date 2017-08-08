@@ -76,7 +76,8 @@ class PersonAdminForm(forms.ModelForm):
             if exists:
                 self.add_error('email', _('the_mail_is_required') % {'email':email}  )
             
-        if self.cleaned_data["ldap_user_name"] and not self.cleaned_data["received_application"]:
+        if "ldap_user_name" in self.cleaned_data and self.cleaned_data["ldap_user_name"] \
+        and not self.cleaned_data["received_application"]:
             self.add_error('received_application',_('received_application_required') )
 
         if self.instance.pk and not self.cleaned_data["group_id"]:
@@ -86,7 +87,8 @@ class PersonAdminForm(forms.ModelForm):
         if len(self.cleaned_data['ldap_user_password']) < settings.MIN_LENGTH_LDAP_USER_PASSWORD:
             raise ValidationError(_('ldap_user_password_too_short'))
 
-        if self.cleaned_data["ldap_user_name"]:
+        if "ldap_user_name" in self.cleaned_data \
+           and self.cleaned_data["ldap_user_name"]:
             existing_names_in_ldap = Person.ldap_uid_by_id( self.cleaned_data['document_number'],
                                                             self.cleaned_data['document_type'] )
             if existing_names_in_ldap and (self.cleaned_data["ldap_user_name"] not in existing_names_in_ldap):
