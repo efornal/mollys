@@ -13,18 +13,12 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-APPLICATION_NAME= "Mollys"
-APPLICATION_DESC= "LDAP Users"
-
+import ldap
 from django.utils.translation import ugettext_lazy as _
-LANGUAGE_CODE = 'es'
-LANGUAGES = (
-  ('es', _('Spanish')),
-  ('en', _('English')),
-)
-USE_I18N = True
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_URL = "{{ app_base_url }}{{ app_url }}"
+APPLICATION_NAME= "{{ app_title|capitalize }}"
+APPLICATION_DESC= "{{ app_desc|capitalize }}"
 
 # CONFIGURATION FOR PRODUCTION  ====================\
 #STATIC_ROOT = os.path.join(BASE_DIR, "mollys/static_produccion")
@@ -37,54 +31,6 @@ USE_I18N = True
 # ==================================================/
 
 
-# LDAP CONFIGURATION ====================\
-# LDAP server
-LDAP_SERVER = 'ldap://host_ldap:port'
-# Dn for entry
-LDAP_DN = 'dc=domain,dc=edu,dc=ar'
-
-# LDAP authentication
-# The admin user is used in building operations
-# and modification (password and group) of a user
-# The user does not admin, is used to modify only
-# certain attributes (office and telephoneNumber)
-LDAP_ADMIN_USERNAME='admin_username'
-LDAP_ADMIN_USERPASS='admin_password'
-LDAP_USERNAME='username'
-LDAP_USERPASS='password'
-
-# Organizational Unit for Person and Person Group
-LDAP_GROUP  = 'Group' # ou=Entry
-LDAP_PEOPLE = 'People' # ou=Entry
-LDAP_PEOPLE_FIELDS = ['uid','cn'] # idfirst!
-LDAP_GROUP_FIELDS  = ['gidNumber','cn']  # id first!
-
-# It requires user authentication check further
-# certain allocating a group ldap
-LDAP_GROUP_VALIDATION = True
-LDAP_GROUPS_VALID   = ['admin','stecnico']  # id first!
-
-# Performs filtering to obtain LDAP groups
-# min group_id (group_id>= 500) for ldap search filter
-LDAP_GROUP_MIN_VALUE = 500
-LDAP_GROUP_SKIP_VALUES = [] # group_id to exclude in ldap search filter
-# Minimum size which is required to create an LDAP user
-MIN_LENGTH_LDAP_USER_PASSWORD = 8
-
-# Attributes that are assigned by default to create a new user
-LDAP_DEFAULT_GROUPS = ['audio','cdrom']
-LDAP_PEOPLE_PAISDOC = "ARG"
-LDAP_PEOPLE_HOMEDIRECTORY_PREFIX = "/home/"
-LDAP_PEOPLE_LOGIN_SHELL = "/bin/bash"
-LDAP_PEOPLE_OBJECTCLASSES = ['agente','hordeperson','inetOrgPerson',
-                             'organizationalperson','person','posixaccount',
-                             'shadowaccount', 'top']
-# Domain name used to identify the institutional mail of an alternative
-# Ej: the (LDAP DN)
-LDAP_DOMAIN_MAIL=''
-
-# =======================================/
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -93,13 +39,13 @@ LDAP_DOMAIN_MAIL=''
 SECRET_KEY = 'tfp%=#=oszs#x4wea8mkm60p=nmg3l9)jq5g1%s_ev#_4$w#&-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+DEBUG = {{ app_debug }}
 
 ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-
 INSTALLED_APPS = (
     'suit',
     'django.contrib.admin',
@@ -108,6 +54,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'jquery',
+    'jquery_ui',
+    'bootstrap_ui',
     'django_extensions',
     'bootstrap_themes',
     'app',
@@ -126,28 +75,13 @@ MIDDLEWARE_CLASSES = (
     'app.middleware.ForceLangMiddleware',
 )
 
-ROOT_URLCONF = 'mollys.urls'
-
-STATIC_URL='/static/'
-
-LOGIN_URL='/login/'
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-    '/static/',
-)
-
-LOCALE_PATHS = (
-     BASE_DIR + '/locale', )
-
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
-            'debug': True,
+            'debug': {{ app_debug }},
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -166,22 +100,56 @@ WSGI_APPLICATION = 'mollys.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mollys_db',
-        'USER': 'mollys_user',
-        'PASSWORD': 'user',
-        'PORT': '5432',        
-        'HOST': 'localhost',
+        'NAME': '{{ db_name }}',
+        'USER': '{{ db_user }}',
+        'PASSWORD': '{{ db_pass }}',
+        'PORT': '{{ db_port }}',
+        'HOST': '{{ db_host }}',
     },
-    'mollys_owner': {
+    '{{ db_user_owner }}': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mollys_db',
-        'USER': 'mollys_owner',
-        'PASSWORD': 'owner',
-        'PORT': '5432',        
-        'HOST': 'localhost',
+        'NAME': '{{ db_name }}',
+        'USER': '{{ db_user_owner }}',
+        'PASSWORD': '{{ db_pass_owner }}',
+        'PORT': '{{ db_port }}',
+        'HOST': '{{ db_host }}',
     },
 }
 
+
+LANGUAGE_CODE = 'es'
+
+LANGUAGES = (
+  ('es', _('Spanish')),
+  ('en', _('English')),
+)
+USE_I18N = True
+
+
+ROOT_URLCONF = 'mollys.urls'
+
+
+{% if app_static_root %}
+STATIC_ROOT = "{{ app_static_root }}"
+{% endif %}
+STATIC_URL="{{ app_static_url }}"
+
+
+LOGIN_URL="{{ app_login_url }}"
+LOGIN_REDIRECT_URL = "{{ app_login_redirect_url }}"
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
+LOCALE_PATHS = (
+     BASE_DIR + '/locale', )
+
+
+# django configuration
+SUIT_CONFIG = {
+    'ADMIN_NAME': APPLICATION_NAME
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -195,12 +163,54 @@ USE_TZ = True
 
 DEFAULT_CHARSET = 'utf-8'
 
+# LDAP CONFIGURATION ====================\
+LDAP_SERVER = "{{ ldap_server }}"
+LDAP_DN = "{{ ldap_dn }}"
+# Organizational Unit for Person
+LDAP_PEOPLE = "{{ ldap_people }}"
+LDAP_GROUP  = "{{ ldap_group }}"
+LDAP_GROUP_FIELDS  = {{ ldap_group_fields }}  # id first!
+LDAP_PEOPLE_FIELDS = {{ ldap_people_fields }} # idfirst!
+
+LDAP_USERNAME = "{{ ldap_username }}"
+LDAP_PASSWORD = "{{ ldap_password }}"
+LDAP_ADMIN_USERNAME = "{{ ldap_admin_username }}"
+LDAP_ADMIN_USERPASS = "{{ ldap_admin_password }}"
+
+# Organizational Unit for Person and Person Group
+LDAP_GROUP_VALIDATION = {{ ldap_group_validation }}
+LDAP_GROUPS_VALID   = {{ ldap_groups_valid }}  # id first!
+LDAP_GROUP_MIN_VALUE = {{ ldap_group_min_value }} # min group_id (group_id>= 500) for ldap search filter
+LDAP_GROUP_SKIP_VALUES = {{ ldap_group_skip_values }} # group_id to exclude in ldap search filter
+MIN_LENGTH_LDAP_USER_PASSWORD = 8
+LDAP_DEFAULT_GROUPS = {{ ldap_default_groups }} # ldap default groups for each new user
+
+# Params for create new people in ldap
+LDAP_PEOPLE_OBJECTCLASSES = {{ ldap_people_objectclasses }}
+LDAP_PEOPLE_PAISDOC = "{{ ldap_people_paisdoc }}"
+LDAP_PEOPLE_HOMEDIRECTORY_PREFIX = "{{ ldap_people_homedirectory_prefix }}"
+LDAP_PEOPLE_LOGIN_SHELL = "{{ ldap_people_login_shell }}"
+#
+# Domain name used to identify the institutional mail of an alternative
+# Ej: the (LDAP DN)
+LDAP_DOMAIN_MAIL="{{ ldap_domain_mail }}"
+
+# =======================================/
+
 
 # =================================\
-# django configuration
-SUIT_CONFIG = {
-    'ADMIN_NAME': _('title')
-}
+# redmine configuration
+REDMINE_ENABLE_TICKET_CREATION = {{ redmine_enable_ticket_creation }}
+REDMINE_URL = "{{ redmine_url }}"
+REDMINE_USERNAME = "{{ redmine_username }}"
+REDMINE_PASSWORD = "{{ redmine_password }}"
+REDMINE_PROJECT = "{{ redmine_project }}"
+REDMINE_TRACKER_ID = {{ redmine_tracker_id }}
+REDMINE_STATUS_ID = {{ redmine_status_id }}
+REDMINE_PRIORITY_ID = {{ redmine_priority_id }}
+REDMINE_ASSIGNED_TO_ID = {{ redmine_assigned_to_id }}
+# =================================/
+
 
 # =================================\
 # django ldap configuration
@@ -233,11 +243,12 @@ AUTH_LDAP_USER_FLAGS_BY_GROUP = {
 
 AUTH_LDAP_SERVER_URI = LDAP_SERVER
 
-AUTH_LDAP_BIND_DN = ''
-AUTH_LDAP_BIND_PASSWORD = ''
+#AUTH_LDAP_BIND_DN = ''
+#AUTH_LDAP_BIND_PASSWORD = ''
 
 AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=%s,%s" % (LDAP_PEOPLE,LDAP_DN),
                                    ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
+
 AUTH_LDAP_USER_ATTR_MAP = {
     "first_name": "givenName",
     "last_name": "sn",
@@ -253,7 +264,7 @@ AUTHENTICATION_BACKENDS = (
 # =================================/
 
 
-# loggin querys in develompent
+# ##loggin querys in develompent
 # if DEBUG:
 #     import logging
 #     l = logging.getLogger('django.db.backends')
@@ -263,3 +274,29 @@ AUTHENTICATION_BACKENDS = (
 #         level = logging.DEBUG,
 #         format = " %(levelname)s %(name)s: %(message)s",
 #     )
+
+# # Enable debug for ldap server connection
+# logger = logging.getLogger('django_auth_ldap')
+# logger.addHandler(logging.StreamHandler())
+# logger.setLevel(logging.DEBUG)
+
+
+# #database logging
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#         }
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#         },
+#     }
+# }
+
+
