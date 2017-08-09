@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-08 11:53-0300\n"
+"POT-Creation-Date: 2017-08-09 09:21-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -29,48 +29,48 @@ msgstr "This field is required"
 msgid "the_mail_is_required"
 msgstr "Email address '%(email)s' already exists."
 
-#: app/admin.py:80
+#: app/admin.py:81
 msgid "received_application_required"
 msgstr ""
 "You can not assign a user ldap without confirming the 'application received'"
 
-#: app/admin.py:83 app/admin.py:84
+#: app/admin.py:84 app/admin.py:85
 msgid "required_attribute_group"
 msgstr "Group: This field is required"
 
-#: app/admin.py:87
+#: app/admin.py:88
 msgid "ldap_user_password_too_short"
 msgstr "The ldap user password is too short"
 
-#: app/admin.py:96
+#: app/admin.py:98
 msgid "user_ID_ldap_already_exists"
 msgstr "Ldap user already exists with this document whose uid is %(uid)s"
 
-#: app/admin.py:126
+#: app/admin.py:128
 msgid "ldap_without_connection"
 msgstr "Unable to connect to the LDAP server. Some options are not available"
 
-#: app/admin.py:160
+#: app/admin.py:162
 msgid "cant_change_password"
 msgstr "The user does not have permission to change the password"
 
-#: app/admin.py:171
+#: app/admin.py:173
 msgid "cant_change_group"
 msgstr "The user does not have permission to change the group"
 
-#: app/admin.py:178
+#: app/admin.py:180
 msgid "without_ldap_user_uid"
 msgstr "The ldap user uid could not be determined"
 
-#: app/admin.py:183
+#: app/admin.py:185
 msgid "uidnumber_already_exist"
 msgstr "The ldap user with uidNumber %(uidnumber)s already exist"
 
-#: app/forms.py:16 app/models.py:119 app/models.py:284 templates/new.html:21
+#: app/forms.py:16 app/models.py:119 app/models.py:284 templates/new.html:19
 msgid "name"
 msgstr "Name"
 
-#: app/forms.py:20 app/models.py:288 templates/new.html:26
+#: app/forms.py:20 app/models.py:288 templates/new.html:24
 msgid "surname"
 msgstr "Surname"
 
@@ -82,19 +82,19 @@ msgstr "ID Number"
 msgid "document_type"
 msgstr "ID Type"
 
-#: app/forms.py:39 app/models.py:310 app/views.py:173 templates/new.html:98
+#: app/forms.py:39 app/models.py:310 app/views.py:173 templates/new.html:96
 msgid "position"
 msgstr "Job title"
 
-#: app/forms.py:42 templates/new.html:116
+#: app/forms.py:42 templates/new.html:114
 msgid "specify_other"
 msgstr "Specify other"
 
-#: app/forms.py:45 app/models.py:123 app/models.py:336 templates/new.html:106
+#: app/forms.py:45 app/models.py:123 app/models.py:336 templates/new.html:104
 msgid "office"
 msgstr "Office"
 
-#: app/forms.py:49 app/models.py:315 app/views.py:177 templates/new.html:75
+#: app/forms.py:49 app/models.py:315 app/views.py:177 templates/new.html:73
 msgid "work_phone"
 msgstr "Work phone"
 
@@ -102,7 +102,7 @@ msgstr "Work phone"
 msgid "home_phone"
 msgstr "Home phone"
 
-#: app/forms.py:57 app/models.py:325 app/views.py:185 templates/new.html:90
+#: app/forms.py:57 app/models.py:325 app/views.py:185 templates/new.html:88
 msgid "address"
 msgstr "Address"
 
@@ -114,7 +114,7 @@ msgstr "Created at"
 msgid "updated_at"
 msgstr "Updated at"
 
-#: app/forms.py:67 app/models.py:341 templates/new.html:122
+#: app/forms.py:67 app/models.py:341 templates/new.html:120
 msgid "other_office"
 msgstr "Another office"
 
@@ -122,11 +122,11 @@ msgstr "Another office"
 msgid "ldap_user_name"
 msgstr "ldap username"
 
-#: app/forms.py:76 app/models.py:352 templates/new.html:54
+#: app/forms.py:76 app/models.py:352 templates/new.html:52
 msgid "ldap_user_password"
 msgstr "Password"
 
-#: app/forms.py:82 templates/new.html:61
+#: app/forms.py:82 templates/new.html:59
 msgid "ldap_user_password_confirm"
 msgstr "Password confirm"
 
@@ -213,7 +213,7 @@ msgstr ""
 msgid "header_code"
 msgstr "Header code"
 
-#: app/views.py:160 templates/new.html:18
+#: app/views.py:160 templates/new.html:16
 msgid "enabling_account"
 msgstr "Apply for the enabling of a new account"
 
@@ -221,11 +221,11 @@ msgstr "Apply for the enabling of a new account"
 msgid "applicant"
 msgstr "Applicant"
 
-#: app/views.py:167 templates/new.html:34
+#: app/views.py:167 templates/new.html:32
 msgid "doc_type"
 msgstr "ID Type"
 
-#: app/views.py:168 templates/new.html:46
+#: app/views.py:168 templates/new.html:44
 msgid "doc_number"
 msgstr "ID number"
 
@@ -262,7 +262,7 @@ msgstr "Spanish"
 msgid "English"
 msgstr "English"
 
-#: mollys/settings.py:211 mollys/settings.tpl.py:202
+#: mollys/settings.py:212 mollys/settings.tpl.py:202
 msgid "title"
 msgstr "Mollys"
 
@@ -317,47 +317,55 @@ msgstr "Suggested email"
 msgid "suggested_email_title"
 msgstr "Use suggested email (copy)"
 
-#: templates/base.html:45
+#: templates/base.html:38 templates/base.html:41 templates/base.html:54
+msgid "Go_home"
+msgstr "Home"
+
+#: templates/base.html:57
 msgid "language"
 msgstr "language"
 
-#: templates/base.html:47 templates/base.html:52
+#: templates/base.html:59 templates/base.html:64
 msgid "spanish"
 msgstr "spanish"
 
-#: templates/base.html:48 templates/base.html:54
+#: templates/base.html:60 templates/base.html:66
 msgid "english"
 msgstr "english"
 
-#: templates/new.html:57
+#: templates/new.html:55
 msgid "ldap_user_password_note"
 msgstr "Preliminary password user authentication to provide"
 
-#: templates/new.html:68
+#: templates/new.html:65
+msgid "to_change_password"
+msgstr "It will be used to change the password"
+
+#: templates/new.html:66
 msgid "Alternative_email"
 msgstr "Alternative email"
 
-#: templates/new.html:79
+#: templates/new.html:77
 msgid "Examples"
 msgstr "Examples"
 
-#: templates/new.html:80
+#: templates/new.html:78
 msgid "or_alone"
 msgstr "or alone"
 
-#: templates/new.html:82
+#: templates/new.html:80
 msgid "short_home_phone"
 msgstr "Home Phone"
 
-#: templates/new.html:109
+#: templates/new.html:107
 msgid "select_one"
 msgstr "Select one"
 
-#: templates/new.html:132
+#: templates/new.html:130
 msgid "cancel"
 msgstr "Cancel"
 
-#: templates/new.html:134
+#: templates/new.html:132
 msgid "send_request"
 msgstr "Send request"
 

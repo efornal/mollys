@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-08 11:53-0300\n"
+"POT-Creation-Date: 2017-08-09 09:21-0300\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
@@ -29,51 +29,51 @@ msgstr "Este campo es obligatorio"
 msgid "the_mail_is_required"
 msgstr "La dirección de correo electrónico '%(email)s' ya existe"
 
-#: app/admin.py:80
+#: app/admin.py:81
 msgid "received_application_required"
 msgstr ""
 "No es posible asignar un usuario ldap sin antes confirmar la 'solicitud "
 "recibida'"
 
-#: app/admin.py:83 app/admin.py:84
+#: app/admin.py:84 app/admin.py:85
 msgid "required_attribute_group"
 msgstr "Grupo: Este campo es obligatorio"
 
-#: app/admin.py:87
+#: app/admin.py:88
 msgid "ldap_user_password_too_short"
 msgstr "La contraseña de autenticación del usuario es muy corta"
 
-#: app/admin.py:96
+#: app/admin.py:98
 msgid "user_ID_ldap_already_exists"
 msgstr "Ya existe en Ldap un usuario con este Documento cuyo uid es %(uid)s"
 
-#: app/admin.py:126
+#: app/admin.py:128
 msgid "ldap_without_connection"
 msgstr ""
 "No se pudo establecer una conexión con el servidor Ldap. Algunas opciones no "
 "estarán disponibles."
 
-#: app/admin.py:160
+#: app/admin.py:162
 msgid "cant_change_password"
 msgstr "El usuario no tiene permisos para cambiar la contraseña"
 
-#: app/admin.py:171
+#: app/admin.py:173
 msgid "cant_change_group"
 msgstr "El usuario no tiene permisos para cambiar el grupo"
 
-#: app/admin.py:178
+#: app/admin.py:180
 msgid "without_ldap_user_uid"
 msgstr "No se pudo determinar el uid del usuario ldap"
 
-#: app/admin.py:183
+#: app/admin.py:185
 msgid "uidnumber_already_exist"
 msgstr "Ya existe en Ldap un usuario con el uidNumber %(uidnumber)s"
 
-#: app/forms.py:16 app/models.py:119 app/models.py:284 templates/new.html:21
+#: app/forms.py:16 app/models.py:119 app/models.py:284 templates/new.html:19
 msgid "name"
 msgstr "Nombre"
 
-#: app/forms.py:20 app/models.py:288 templates/new.html:26
+#: app/forms.py:20 app/models.py:288 templates/new.html:24
 msgid "surname"
 msgstr "Apellido"
 
@@ -85,19 +85,19 @@ msgstr "Número Documento"
 msgid "document_type"
 msgstr "Tipo Documento"
 
-#: app/forms.py:39 app/models.py:310 app/views.py:173 templates/new.html:98
+#: app/forms.py:39 app/models.py:310 app/views.py:173 templates/new.html:96
 msgid "position"
 msgstr "Cargo"
 
-#: app/forms.py:42 templates/new.html:116
+#: app/forms.py:42 templates/new.html:114
 msgid "specify_other"
 msgstr "Especificar otra"
 
-#: app/forms.py:45 app/models.py:123 app/models.py:336 templates/new.html:106
+#: app/forms.py:45 app/models.py:123 app/models.py:336 templates/new.html:104
 msgid "office"
 msgstr "Secretaría"
 
-#: app/forms.py:49 app/models.py:315 app/views.py:177 templates/new.html:75
+#: app/forms.py:49 app/models.py:315 app/views.py:177 templates/new.html:73
 msgid "work_phone"
 msgstr "Teléfono laboral"
 
@@ -105,7 +105,7 @@ msgstr "Teléfono laboral"
 msgid "home_phone"
 msgstr "Teléfono particular"
 
-#: app/forms.py:57 app/models.py:325 app/views.py:185 templates/new.html:90
+#: app/forms.py:57 app/models.py:325 app/views.py:185 templates/new.html:88
 msgid "address"
 msgstr "Domicilio"
 
@@ -117,7 +117,7 @@ msgstr "creado"
 msgid "updated_at"
 msgstr "actualizado"
 
-#: app/forms.py:67 app/models.py:341 templates/new.html:122
+#: app/forms.py:67 app/models.py:341 templates/new.html:120
 msgid "other_office"
 msgstr "Otra Secretaría"
 
@@ -125,11 +125,11 @@ msgstr "Otra Secretaría"
 msgid "ldap_user_name"
 msgstr "Nombre de usuario ldap"
 
-#: app/forms.py:76 app/models.py:352 templates/new.html:54
+#: app/forms.py:76 app/models.py:352 templates/new.html:52
 msgid "ldap_user_password"
 msgstr "Contraseña"
 
-#: app/forms.py:82 templates/new.html:61
+#: app/forms.py:82 templates/new.html:59
 msgid "ldap_user_password_confirm"
 msgstr "Confirma Contraseña"
 
@@ -216,7 +216,7 @@ msgstr ""
 msgid "header_code"
 msgstr "Office<br/>Business<br/>Other,.."
 
-#: app/views.py:160 templates/new.html:18
+#: app/views.py:160 templates/new.html:16
 msgid "enabling_account"
 msgstr "Solicitud de habilitación de cuenta"
 
@@ -224,11 +224,11 @@ msgstr "Solicitud de habilitación de cuenta"
 msgid "applicant"
 msgstr "Solicitante"
 
-#: app/views.py:167 templates/new.html:34
+#: app/views.py:167 templates/new.html:32
 msgid "doc_type"
 msgstr "Tipo Documento"
 
-#: app/views.py:168 templates/new.html:46
+#: app/views.py:168 templates/new.html:44
 msgid "doc_number"
 msgstr "Número Documento"
 
@@ -266,7 +266,7 @@ msgstr "Español"
 msgid "English"
 msgstr "Inglés"
 
-#: mollys/settings.py:211 mollys/settings.tpl.py:202
+#: mollys/settings.py:212 mollys/settings.tpl.py:202
 msgid "title"
 msgstr "Mollys"
 
@@ -321,47 +321,55 @@ msgstr "Email sugerido"
 msgid "suggested_email_title"
 msgstr "Usar email sugerido (copiar)"
 
-#: templates/base.html:45
+#: templates/base.html:38 templates/base.html:41 templates/base.html:54
+msgid "Go_home"
+msgstr "Inicio"
+
+#: templates/base.html:57
 msgid "language"
 msgstr "idioma"
 
-#: templates/base.html:47 templates/base.html:52
+#: templates/base.html:59 templates/base.html:64
 msgid "spanish"
 msgstr "español"
 
-#: templates/base.html:48 templates/base.html:54
+#: templates/base.html:60 templates/base.html:66
 msgid "english"
 msgstr "inglés"
 
-#: templates/new.html:57
+#: templates/new.html:55
 msgid "ldap_user_password_note"
 msgstr "Contraseña preliminar de autenticación del usuario a suministrar"
 
-#: templates/new.html:68
+#: templates/new.html:65
+msgid "to_change_password"
+msgstr "Se usará para modificar la contraseña"
+
+#: templates/new.html:66
 msgid "Alternative_email"
 msgstr "Email alternativo"
 
-#: templates/new.html:79
+#: templates/new.html:77
 msgid "Examples"
 msgstr "Ejemplos"
 
-#: templates/new.html:80
+#: templates/new.html:78
 msgid "or_alone"
 msgstr "o sólo"
 
-#: templates/new.html:82
+#: templates/new.html:80
 msgid "short_home_phone"
 msgstr "Particular"
 
-#: templates/new.html:109
+#: templates/new.html:107
 msgid "select_one"
 msgstr "Seleccione una"
 
-#: templates/new.html:132
+#: templates/new.html:130
 msgid "cancel"
 msgstr "Cancelar"
 
-#: templates/new.html:134
+#: templates/new.html:132
 msgid "send_request"
 msgstr "Enviar Solicitud"
 
