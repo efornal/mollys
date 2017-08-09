@@ -44,6 +44,13 @@ DEBUG = {{ app_debug }}
 
 ALLOWED_HOSTS = ['*']
 
+ADMINS = (
+    ("{{ app_admin_name }}", "{{ app_admin_email }}"),
+)
+
+MANAGERS = (
+    ("{{ app_manager_name }}", "{{ app_manager_email }}"),
+)
 
 # Application definition
 INSTALLED_APPS = (
@@ -142,9 +149,10 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-LOCALE_PATHS = (
-     BASE_DIR + '/locale', )
-
+LOCALE_PATHS = [
+    os.path.join('/srv/mollys/shared/app/locale/'),
+    os.path.join(BASE_DIR, 'locale/'),
+]
 
 # django configuration
 SUIT_CONFIG = {
