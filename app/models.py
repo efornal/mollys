@@ -620,52 +620,42 @@ class Person(models.Model):
             if person.work_phone is not None:
                 if person.work_phone:
                     update_person.append(( ldap.MOD_REPLACE,
-                                        'telephoneNumber',
-                                        str(person.work_phone)))
+                                        'telephoneNumber', str(person.work_phone)))
                 else:
                     update_person.append(( ldap.MOD_DELETE,
-                                        'telephoneNumber',
-                                        None))
+                                        'telephoneNumber', None))
                           
             if person.home_phone is not None:
                 if person.home_phone:
                     update_person.append(( ldap.MOD_REPLACE,
-                                        'homePhone',
-                                        str(person.home_phone)))
+                                        'homePhone', str(person.home_phone)))
                 else:
                     update_person.append(( ldap.MOD_DELETE,
-                                        'homePhone',
-                                        None))
+                                        'homePhone', None))
 
             if person.floor is not None:
                 if person.floor:
                     update_person.append(( ldap.MOD_REPLACE,
-                                        'departmentNumber',
-                                        str(person.floor)))
+                                        'departmentNumber', str(person.floor)))
                 else:
                     update_person.append(( ldap.MOD_DELETE,
-                                        'departmentNumber',
-                                        None))
+                                        'departmentNumber', None))
 
             if person.area is not None:
                 if person.area:
                     update_person.append(( ldap.MOD_REPLACE,
-                                        'destinationIndicator',
-                                        str(person.area)))
+                                        'destinationIndicator', str(person.area)))
                 else:
                     update_person.append(( ldap.MOD_DELETE,
-                                        'destinationIndicator',
-                                           None))
+                                        'destinationIndicator', None))
 
             if person.position is not None:
                 if person.position:
                     update_person.append(( ldap.MOD_REPLACE,
-                                           'employeeType',
-                                           str(person.position)))
+                                           'employeeType', str(person.position)))
                 else:
                     update_person.append(( ldap.MOD_DELETE,
-                                           'employeeType',
-                                           None))
+                                           'employeeType', None))
 
             udn = Person.ldap_udn_for( person.ldap_user_name )
             LdapConn.new_user().modify_s(udn, update_person)
