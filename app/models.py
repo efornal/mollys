@@ -85,6 +85,12 @@ class LdapConn():
             return True
         except ldap.LDAPError, e:
             return False
+
+    @classmethod
+    def ldap_dn(self):
+        if hasattr(settings, 'LDAP_DN'):
+            return settings.LDAP_DN
+        return None
         
     @classmethod
     def parseattr (cls, s):
@@ -254,11 +260,12 @@ class Group(models.Model):
                                                       settings.LDAP_GROUP_MIN_VALUE,
                                                       Group._skip_groups_filter())
         rows = []
+        retrieve_attributes = [str(x) for x in settings.LDAP_GROUP_FIELDS]
 
         r = LdapConn.new().search_s( "ou=%s,%s" %(settings.LDAP_GROUP, settings.LDAP_DN),
                                      ldap.SCOPE_SUBTREE,
                                      ldap_condition,
-                                     settings.LDAP_GROUP_FIELDS )
+                                     retrieve_attributes)
         for dn,entry in r:
             row = {}
             if settings.LDAP_GROUP_FIELDS[0] in entry \
@@ -378,6 +385,17 @@ class Person(models.Model):
     def __unicode__(self):
         return self.name
 
+    @classmethod
+    def ldap_ou(self):
+        if hasattr(settings, 'LDAP_PEOPLE'):
+            return settings.LDAP_PEOPLE
+        return None
+
+    @classmethod
+    def ldap_size_limit(self):
+        if hasattr(settings, 'LDAP_SIZE_LIMIT'):
+            return settings.LDAP_SIZE_LIMIT
+        return 100
     
     def name_and_surname(self):
         return "%s, %s" % (self.name, self.surname)
@@ -516,9 +534,41 @@ class Person(models.Model):
         except ldap.LDAPError, e:
             logging.error(e)
 
-    
     @classmethod
     def exists_in_ldap(cls, uid):
+        ldap_condition = "(uid={})".format( uid )
+        attributes = settings.LDAP_PEOPLE_FIELDS
+        retrieve_attributes = [str(x) for x in attributes]
+        ldap_result = []
+            
+        try:
+            r = LdapConn.new().search_ext_s(
+                "ou={},{}".format(Person.ldap_ou(),
+                                  LdapConn.ldap_dn()),
+                ldap.SCOPE_SUBTREE,
+                ldap_condition,
+                retrieve_attributes,
+                sizelimit=Person.ldap_size_limit())
+
+            for dn,entry in r:
+                if entry['uid'][0] == uid:
+                    return True
+                
+            return False
+
+        except ldap.TIMEOUT, e:
+            logging.error( "Timeout exception {} \n".format(e))
+            return None
+        except ldap.SIZELIMIT_EXCEEDED, e:
+            logging.error( "Size limit exceeded exception {} \n".format(e))
+            return None
+        except ldap.LDAPError, e:
+            logging.error( e )
+
+        return LdapPerson.ldap_to_obj(ldap_result)
+    
+    @classmethod
+    def exists_in_ldap2(cls, uid):
         
         ldap_condition = "(uid=%s)" % uid
         try:
