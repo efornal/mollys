@@ -149,10 +149,10 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-LOCALE_PATHS = [
-    os.path.join('/srv/mollys/shared/app/locale/'),
-    os.path.join(BASE_DIR, 'locale/'),
-]
+LOCALE_PATHS = (
+    os.path.join('/srv/mollys/shared/app/locale'),
+    os.path.join(BASE_DIR, 'locale'),
+)
 
 # django configuration
 SUIT_CONFIG = {
