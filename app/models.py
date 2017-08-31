@@ -68,7 +68,7 @@ class LdapConn():
         try:
             connection = ldap.initialize( settings.LDAP_SERVER )
             connection.simple_bind_s( "cn=%s,%s" % ( settings.LDAP_USERNAME, settings.LDAP_DN ),
-                                      settings.LDAP_USERPASS )
+                                      settings.LDAP_PASSWORD )
             return connection
 
         except ldap.LDAPError, e:
