@@ -177,8 +177,8 @@ LDAP_DN = "{{ ldap_dn }}"
 # Organizational Unit for Person
 LDAP_PEOPLE = "{{ ldap_people }}"
 LDAP_GROUP  = "{{ ldap_group }}"
-LDAP_GROUP_FIELDS  = {{ ldap_group_fields }}  # id first!
-LDAP_PEOPLE_FIELDS = {{ ldap_people_fields }} # idfirst!
+LDAP_GROUP_FIELDS  = {{ ldap_group_fields|to_json }}  # id first!
+LDAP_PEOPLE_FIELDS = {{ ldap_people_fields|to_json }} # idfirst!
 
 LDAP_USERNAME = "{{ ldap_username }}"
 LDAP_PASSWORD = "{{ ldap_password }}"
@@ -187,14 +187,14 @@ LDAP_ADMIN_USERPASS = "{{ ldap_admin_password }}"
 
 # Organizational Unit for Person and Person Group
 LDAP_GROUP_VALIDATION = {{ ldap_group_validation }}
-LDAP_GROUPS_VALID   = {{ ldap_groups_valid }}  # id first!
+LDAP_GROUPS_VALID   = {{ ldap_groups_valid|to_json }}  # id first!
 LDAP_GROUP_MIN_VALUE = {{ ldap_group_min_value }} # min group_id (group_id>= 500) for ldap search filter
 LDAP_GROUP_SKIP_VALUES = {{ ldap_group_skip_values }} # group_id to exclude in ldap search filter
 MIN_LENGTH_LDAP_USER_PASSWORD = 8
-LDAP_DEFAULT_GROUPS = {{ ldap_default_groups }} # ldap default groups for each new user
+LDAP_DEFAULT_GROUPS = {{ ldap_default_groups|to_json }} # ldap default groups for each new user
 
 # Params for create new people in ldap
-LDAP_PEOPLE_OBJECTCLASSES = {{ ldap_people_objectclasses }}
+LDAP_PEOPLE_OBJECTCLASSES = {{ ldap_people_objectclasses|to_json }}
 LDAP_PEOPLE_PAISDOC = "{{ ldap_people_paisdoc }}"
 LDAP_PEOPLE_HOMEDIRECTORY_PREFIX = "{{ ldap_people_homedirectory_prefix }}"
 LDAP_PEOPLE_LOGIN_SHELL = "{{ ldap_people_login_shell }}"
