@@ -55,7 +55,7 @@ class LdapConn():
         try:
             connection = ldap.initialize( settings.LDAP_SERVER )
             connection.simple_bind_s( "cn=%s,%s" % ( settings.LDAP_ADMIN_USERNAME, settings.LDAP_DN ),
-                                      settings.LDAP_ADMIN_USERPASS )
+                                      settings.LDAP_ADMIN_PASSWORD )
             return connection
 
         except ldap.LDAPError, e:
@@ -706,6 +706,16 @@ class Person(models.Model):
                 else:
                     update_person.append(( ldap.MOD_DELETE,
                                            'employeeType', None))
+
+            if person.email is not None:
+                mails = []
+                mails.append(str(person.email))
+                if person.alternative_email:
+                    mails.append(str(person.alternative_email))
+
+                update_person.append((ldap.MOD_REPLACE, 'mail', mails))
+            else:
+                update_person.append((ldap.MOD_DELETE, 'mail', None))
 
             udn = Person.ldap_udn_for( person.ldap_user_name )
             LdapConn.new_user().modify_s(udn, update_person)

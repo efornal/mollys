@@ -215,6 +215,13 @@ class PersonAdmin(admin.ModelAdmin):
                 if obj.office_name():
                     new_user.append(('physicalDeliveryOfficeName',
                                      [str(LdapConn.parseattr(obj.office_name()))]))
+                if obj.email:
+                    mails = []
+                    mails.append(str(obj.email))
+                    if obj.alternative_email:
+                        mails.append(str(obj.alternative_email))
+                        
+                    new_user.append(('mail',mails))
 
                 Person.create_ldap_user( ldap_user_name, new_user )
 
