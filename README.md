@@ -93,3 +93,18 @@ sudo aptitude install python-pygraphviz
 
 python manage.py graph_models -a -o myapp_models.pdf
 ```
+
+# permisos en postgres para mollys_user
+```bash
+# up
+GRANT ALL ON ALL TABLES IN SCHEMA public TO mollys_user;
+# down
+REVOKE ALL ON ALL TABLES IN SCHEMA public FROM mollys_user;
+
+
+#up
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO mollys_user;
+#down
+REVOKE ALL ON ALL SEQUENCES IN SCHEMA public FROM mollys_user;
+
+```
