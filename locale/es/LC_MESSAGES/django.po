@@ -127,7 +127,7 @@ msgstr "Otra Secretaría"
 
 #: app/forms.py:72 app/models.py:354
 msgid "ldap_user_name"
-msgstr "Nombre de usuario ldap"
+msgstr "Usuario ldap"
 
 #: app/forms.py:77 app/models.py:360 templates/new.html:52
 msgid "ldap_user_password"
