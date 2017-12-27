@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.db import models
 from datetime import datetime
 from django.core.validators import RegexValidator
@@ -503,9 +504,9 @@ class Person(models.Model):
             r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE,
                                                      settings.LDAP_DN),
                                         ldap.SCOPE_SUBTREE,
-                                        ldap_condition,
-                                        ['uid'])
+                                        ldap_condition)
             uids = []
+
             for dn,entry in r:
                 uids.append( entry['uid'][0] )
 
@@ -567,28 +568,6 @@ class Person(models.Model):
 
         return LdapPerson.ldap_to_obj(ldap_result)
     
-    @classmethod
-    def exists_in_ldap2(cls, uid):
-        
-        ldap_condition = "(uid=%s)" % uid
-        try:
-            r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE,
-                                                     settings.LDAP_DN),
-                                        ldap.SCOPE_SUBTREE,
-                                        ldap_condition,
-                                        settings.LDAP_PEOPLE_FIELDS)
-            for dn,entry in r:
-                if entry['uid'][0] == uid:
-                    return True
-                
-            return False
-
-        except ldap.LDAPError, e:
-            logging.error(e)
-            logging.error("It was not possible to verify the existence of: '%s'" % uid )
-
-
-
     
     @classmethod
     def map_ldap_field(cls,ldap_field):
