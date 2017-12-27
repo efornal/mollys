@@ -74,7 +74,9 @@ class PersonAdminForm(forms.ModelForm):
                 email = self.cleaned_data['email']
                 exists = Person.ldap_uid_by_email(email)
             if exists:
-                self.add_error('email', _('the_mail_is_required') % {'email':email}  )
+                logging.warning(_('the_mail_is_required') % {'email':email})
+                logging.warning('The email should not exist before if received request.')
+                #self.add_error('email', _('the_mail_is_required') % {'email':email}  )
             
         if "ldap_user_name" in self.cleaned_data and self.cleaned_data["ldap_user_name"] \
         and not self.cleaned_data["received_application"]:
@@ -137,12 +139,13 @@ class PersonAdmin(admin.ModelAdmin):
 
 
     def save_model(self, request, obj, form, change):
+        
         ldap_user_name = str(obj.ldap_user_name) if obj.ldap_user_name else None
         udn = Person.ldap_udn_for( ldap_user_name )
-        
+
         try:
             if (not ldap_user_name) or (ldap_user_name is None):
-                logging.info("An LDAP user was not given. It is not updated!")
+                logging.warning("An LDAP user was not given. It is not updated!")
                 super(PersonAdmin, self).save_model(request, obj, form, change)
                 return
             
@@ -151,7 +154,7 @@ class PersonAdmin(admin.ModelAdmin):
 
                 # update data
                 ldap_person.update_ldap_data_from(obj)
-        
+
                 # update password only for superuser
                 if str(ldap_person.ldap_user_password) != str(obj.ldap_user_password) \
                    and request.POST.has_key('ldap_user_password_check'):
