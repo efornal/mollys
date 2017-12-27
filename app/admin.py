@@ -104,12 +104,16 @@ class PersonAdmin(admin.ModelAdmin):
 
     form = PersonAdminForm
     list_display = ('surname', 'name', 'document_number', 'ldap_user_name',
-                    'received_application')
+                    'created_at_formatted', 'received_application')
     search_fields = ['surname', 'name', 'document_number', 'ldap_user_name',
                      'received_application']
     list_filter = (ReceivedApplicationFilter,)
+    ordering_fields = ('created_at',)
 
-    
+    def created_at_formatted(self, obj):
+        return obj.created_at.strftime("%d/%m/%y %H:%M")
+    created_at_formatted.short_description = _('created_at_formatted')
+      
     def change_view(self, request, object_id, form_url='', extra_context=None):
 
         person = Person.objects.get(id=object_id)
