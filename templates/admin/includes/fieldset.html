@@ -146,7 +146,7 @@
 
         {% if field.field.name == 'ldap_user_password' %}
         &nbsp;&nbsp;&nbsp;
-        <input type="checkbox" data-name="{{ field.field.value }}" id="id_ldap_user_password_check" name="ldap_user_password_check" value=""> Permitir modificar
+        <input type="checkbox" data-name="{{ field.field.value }}" id="id_ldap_user_password_check" name="ldap_user_password_check" value="" title="{{ _('allow_modify_pass_message') }}"> Permitir modificar
         {% endif %}
 
         
