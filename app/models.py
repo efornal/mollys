@@ -156,7 +156,7 @@ class Group(models.Model):
         r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_GROUP, settings.LDAP_DN),
                                     ldap.SCOPE_SUBTREE,
                                     ldap_condition,
-                                    ['cn'])
+                                    [str('cn')])
         for dn,entry in r:
             if 'cn' in entry and entry['cn'][0]:
                 cn_found = entry['cn'][0]
@@ -174,7 +174,7 @@ class Group(models.Model):
 
         r = LdapConn.new_admin().search_s("ou=%s,%s" %(settings.LDAP_GROUP, settings.LDAP_DN),
                                     ldap.SCOPE_SUBTREE,
-                                          ldap_condition, ['memberUid'])
+                                          ldap_condition, [str('memberUid')])
         for dn,entry in r:
             members.append(entry['memberUid'])
         return sum(members,[])
@@ -467,7 +467,7 @@ class Person(models.Model):
 
         r = LdapConn.new_admin().search_s(ldap_dn,ldap.SCOPE_SUBTREE,
                                     ldap_condition,
-                                    ['uidNumber'])
+                                    [str('uidNumber')])
 
         for dn,entry in r:
             if entry['uidNumber'][0] and int(entry['uidNumber'][0]) > next_value:
@@ -486,7 +486,7 @@ class Person(models.Model):
 
         r = LdapConn.new().search_s(ldap_dn,ldap.SCOPE_SUBTREE,
                                     ldap_condition,
-                                    ['uidNumber'])
+                                    [str('uidNumber')])
         for dn,entry in r:
             if int(entry['uidNumber'][0]) == int(uidnumber):
                 return True
@@ -504,7 +504,8 @@ class Person(models.Model):
             r = LdapConn.new().search_s("ou=%s,%s" %(settings.LDAP_PEOPLE,
                                                      settings.LDAP_DN),
                                         ldap.SCOPE_SUBTREE,
-                                        ldap_condition)
+                                        ldap_condition,
+                                        [str('uid')])
             uids = []
 
             for dn,entry in r:
@@ -525,7 +526,7 @@ class Person(models.Model):
                                                      settings.LDAP_DN),
                                         ldap.SCOPE_SUBTREE,
                                         ldap_condition,
-                                        ['uid'])
+                                        [str('uid')])
             uids = []
             for dn,entry in r:
                 uids.append( entry['uid'][0] )
