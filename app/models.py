@@ -445,15 +445,13 @@ class Person(models.Model):
         Taken from: https://gist.github.com/rca/7217540
         """
         salt = os.urandom(4)
-
-        # hash the password and append the salt
         sha = hashlib.sha1(password)
         sha.update(salt)
 
-        # create a base64 encoded string of the concatenated digest + salt
-        digest_salt_b64 = '{}{}'.format(sha.digest(), salt).encode('base64').strip()
+        digest_salt_b64 = sha.digest() + salt
 
-        # now tag the digest above with the {SSHA} tag
+        digest_salt_b64 = digest_salt_b64.encode('base64').strip()
+
         tagged_digest_salt = '{{SSHA}}{}'.format(digest_salt_b64)
 
         return tagged_digest_salt
