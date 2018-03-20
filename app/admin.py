@@ -105,7 +105,7 @@ class PersonAdmin(admin.ModelAdmin):
 
     form = PersonAdminForm
     list_display = ('surname', 'name', 'document_number', 'ldap_user_name',
-                    'created_at_formatted', 'received_application')
+                    'email', 'received_application')
     search_fields = ['surname', 'name', 'document_number', 'ldap_user_name',
                      'received_application']
     list_filter = (ReceivedApplicationFilter,)
