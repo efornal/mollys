@@ -30,25 +30,23 @@ def index(request):
 
 
 def check_ldap(request):
-    existing_uid_in_ldap = None
     existing_name_in_ldap = None
     doc_type = None
-
+    result = False
+        
     if 'ldap_user_name' in request.POST and request.POST['ldap_user_name']:
-        existing_uid_in_ldap = Person.exists_in_ldap( request.POST['ldap_user_name'] )
-        existing_name_in_ldap = request.POST['ldap_user_name']
-    
+        if Person.exists_in_ldap( request.POST['ldap_user_name'] ):
+            existing_name_in_ldap = request.POST['ldap_user_name']
+
     if 'doc_type' in request.POST and request.POST['doc_type']:
         doc_type = DocumentType.objects.get(pk=request.POST['doc_type'])
         if 'doc_num'  in request.POST and request.POST['doc_num']:
             existing_name_in_ldap = Person.ldap_uid_by_id( request.POST['doc_num'],
                                                            doc_type.name.upper() )
             
-    if ( existing_uid_in_ldap or existing_name_in_ldap ):
+    if existing_name_in_ldap:
         result = True
-    else :
-        result = False
-        
+
     topic_list = json.dumps({'exists': result, 'uid_in_ldap': existing_name_in_ldap})
     return HttpResponse(topic_list)
 

@@ -494,7 +494,7 @@ class Person(models.Model):
     @classmethod
     def ldap_uid_by_id(cls, doc_num, type_num, nationality=''):
         nationality = nationality or settings.LDAP_PEOPLE_PAISDOC
-        
+        uids = []        
         ldap_condition = "(&(numdoc=%s)(tipodoc=%s)(paisdoc=%s))" % (doc_num,
                                                                      type_num,
                                                                      nationality)
@@ -504,18 +504,16 @@ class Person(models.Model):
                                         ldap.SCOPE_SUBTREE,
                                         ldap_condition,
                                         [str('uid')])
-            uids = []
-
             for dn,entry in r:
                 uids.append( entry['uid'][0] )
-
-            return uids
-        
+       
         except ldap.LDAPError, e:
             logging.error(e)
             logging.error('Could not get uid from id.')
 
+        return uids
 
+    
     @classmethod
     def ldap_uid_by_email(cls, email):
         ldap_condition = "(mail=%s)" % email
@@ -540,7 +538,7 @@ class Person(models.Model):
         attributes = settings.LDAP_PEOPLE_FIELDS
         retrieve_attributes = [str(x) for x in attributes]
         ldap_result = []
-            
+
         try:
             r = LdapConn.new().search_ext_s(
                 "ou={},{}".format(Person.ldap_ou(),
@@ -565,7 +563,7 @@ class Person(models.Model):
         except ldap.LDAPError, e:
             logging.error( e )
 
-        return LdapPerson.ldap_to_obj(ldap_result)
+        return False
     
     
     @classmethod
