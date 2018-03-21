@@ -16,6 +16,7 @@ import unicodedata
 import hashlib
 import os
 import re
+from validators import validate_email_domain_restriction
 
 
     
@@ -27,7 +28,12 @@ def validate_ldap_user_password(value):
 def validate_ldap_user_name(value):
     if not Person.ldap_user_name_valid(value):
         raise ValidationError(_('ldap_user_name_invalid'))
+
     
+def validate_email_domain(value):
+    result = validate_email_domain_restriction(value)
+    if result:
+        raise ValidationError(result['message'])
 
     
 class LdapConn():
@@ -306,6 +312,7 @@ class Person(models.Model):
     email = models.EmailField(
         null=True,
         blank=True,
+        validators=[validate_email_domain],
         verbose_name=_('email'))
     alternative_email = models.EmailField(
         null=True,
