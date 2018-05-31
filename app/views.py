@@ -53,7 +53,7 @@ def check_ldap(request):
 def new(request):
     request.session['has_registered'] = False
     document_types = DocumentType.objects.order_by('id')
-    offices = Office.objects.order_by('name')
+    offices = Office.objects.filter(enable=True).order_by('name')
     context = {'offices': offices, 'document_types': document_types}
     return render(request, 'new.html', context)
 

@@ -128,8 +128,16 @@ class DocumentType(models.Model):
 
     
 class Office(models.Model):
-    id = models.AutoField(primary_key=True,null=False)
-    name = models.CharField(max_length=200, null=False, verbose_name=_('name'))
+    id = models.AutoField(
+        primary_key=True,
+        null=False)
+    name = models.CharField(
+        max_length=200,
+        null=False,
+        verbose_name=_('name'))
+    enable = models.BooleanField(
+        default=True,
+        verbose_name=_('enable'))
     
     class Meta:
         db_table = 'offices'

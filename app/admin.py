@@ -247,9 +247,12 @@ class PersonAdmin(admin.ModelAdmin):
             messages.set_level(request, messages.ERROR)
             messages.error(request,"%s" % e[0])
 
+class OfficeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'enable')
+    list_filter = ('name','enable')
         
 admin.site.register(Person, PersonAdmin)
-admin.site.register(Office)
+admin.site.register(Office,OfficeAdmin)
 
 
 
