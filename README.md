@@ -1,24 +1,29 @@
 # mollys
 Administration request for internal user accounts to the organization. The user accounts are relationated with ldap account
 
-### Package Installation
+### Package Installation debian stretch
 ```bash
-sudo apt-get install python2.7
-sudo apt-get install postgresql-9.4
-sudo apt-get install python-psycopg2
-sudo apt-get install python-pip=1.5.6-5
-sudo apt-get install python-yaml=3.11-2
-sudo apt-get install python-ldap=2.4.10-1
-sudo apt-get install python-dev=2.7.9-1
-sudo apt-get install gettext=0.19.3-2
-sudo pip install django-suit==0.2.13
-sudo pip install django==1.8.5
-sudo pip install django-extensions==1.5.5
-sudo pip install reportlab==3.2.0
-sudo pip install django-bootstrap-themes==3.1.2
-sudo pip install django-auth-ldap==1.2.6
-
+sudo apt-get install python-dev
+sudo apt-get install python-pip
+sudo apt-get install libpq-dev
+sudo apt-get install libyaml-dev
+sudo apt-get install libldap2-dev
+sudo apt-get install libsasl2-dev
+sudo apt-get install gettext
+sudo apt-get install libjpeg-dev
+sudo apt-get install zlib1g-dev
+sudo apt-get install python-dnspython # for reidi
+sudo apt-get install mariadb-client # for dumpserver
+sudo apt-get install pkg-config
+sudo apt-get install libgtk2.0-dev
+sudo apt-get install libgirepository1.0-dev
 ```
+
+### Python lib Installation
+```bash
+pip install -r requirements.txt
+```
+
 ### Postgres configuration
 ```bash
 createdb mollys_db;
