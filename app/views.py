@@ -17,12 +17,17 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 import json
 from django.utils import translation
-
+from django.core.mail import send_mail
 
 def set_language(request, lang='es'):
     translation.activate(lang)
     request.session[translation.LANGUAGE_SESSION_KEY] = lang
     return redirect('index')
+
+
+def health(request):
+    from django.http import HttpResponse
+    return HttpResponse(status=200)
 
 
 def index(request):
@@ -57,6 +62,17 @@ def new(request):
     context = {'offices': offices, 'document_types': document_types}
     return render(request, 'new.html', context)
 
+def send_email(message):
+    recipient_list = settings.EMAIL_RECIPIENT_LIST 
+    subject = 'Mollys: Solicitud de creación de cuenta para rectorado'
+    from_email = settings.EMAIL_FROM 
+    if subject and message and from_email and len(recipient_list)>0:
+        try:
+            send_mail(subject, message, from_email, recipient_list)
+        except Exception as e:
+            logging.error(e)
+    else:
+        logging.error("Parámetros de envío de mail incompletos, se omite el envío.")
 
 def create(request):
     document_types = DocumentType.objects.order_by('id')
@@ -74,6 +90,22 @@ def create(request):
                 f = form.save()
                 f.save()
                 request.session['has_registered'] = True
+                
+                oficina = f.office.name if (f.office and f.office.name) else ''
+                tipodni = f.document_type.name if (f.document_type and f.document_type.name) else ''
+                texto = """
+                Se solicitó la creación de cuenta para el siguiente usuario:
+                Nombre y apellido: {}, {}
+                Documento: {} {}
+                Email: {}
+                Email alternativo: {}
+                Oficina: {}
+
+                Gestionar desde {}
+                """.format(f.name, f.surname, tipodni, f.document_number, f.email, f.alternative_email,
+                           oficina, settings.EMAIL_URL_ADMIN)
+                send_email(texto)
+
                 return outcome_success(request, f)
             except IntegrityError:
                 logging.error('Database integrity error')
