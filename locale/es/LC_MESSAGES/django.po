@@ -217,9 +217,8 @@ msgstr ""
 msgid "outcome_success"
 msgstr ""
 "Estimado/a <strong>%(surname)s, %(name)s</strong> <br> La solicitud se a "
-"realizado con éxito. Para completar el trámite te pedimos que te acerques a "
-"nuestra oficina con el siguiente <a href='%(url)s' "
-"TARGET='_blank'>formulario</a> impreso y la firma del responsable de tu área."
+"realizado con éxito. A la brevedad nos estaremos comunicando "
+"para brindarle información sobre los datos de su cuenta."
 
 #: app/views.py:99
 msgid "outcome_error"

@@ -215,9 +215,8 @@ msgstr ""
 msgid "outcome_success"
 msgstr ""
 "Dear <strong>%(surname)s, %(name)s</strong> <br> the request has been "
-"successfuly made. To complete the process we ask you to approach our office "
-"with the  <a href='%(url)s' TARGET='_blank'>aplication form</a> printed and "
-"signed by the head of your area"
+"successfuly made. We will be contacting you shortly "
+"to provide you with information about your account details."
 
 #: app/views.py:99
 msgid "outcome_error"
