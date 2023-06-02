@@ -8,7 +8,7 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^mollys/admin/', include(admin.site.urls)),
-    url(r'^mollys/', include('app.urls')),
+    url(r'^mollys/$', include('app.urls')),
 ]
 # urlpatterns += i18n_patterns(
 #     url(r'^', include('app.urls')),

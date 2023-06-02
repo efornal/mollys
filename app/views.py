@@ -18,6 +18,7 @@ from django.utils.translation import ugettext as _
 import json
 from django.utils import translation
 from django.core.mail import send_mail
+from django.http import HttpResponse
 
 def set_language(request, lang='es'):
     translation.activate(lang)
@@ -26,7 +27,6 @@ def set_language(request, lang='es'):
 
 
 def health(request):
-    from django.http import HttpResponse
     return HttpResponse(status=200)
 
 
