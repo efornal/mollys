@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -e
+echo "Status SKIP_APP_INIT: $SKIP_APP_INIT"
 
 if [ -z "$SKIP_APP_INIT" ]; then
     python manage.py compilemessages
