@@ -121,6 +121,10 @@ DATABASES = {
         'PASSWORD':  os.environ.get('DB_USER_PASSWORD'),
         'PORT': os.environ.get('DB_PORT'),
         'HOST': os.environ.get('DB_HOST'),
+        'TEST': {
+          'ENGINE': 'django.db.backends.sqlite3',
+          'NAME': 'test_db',
+        },
     },
     'db_owner': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
