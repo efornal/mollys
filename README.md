@@ -12,6 +12,7 @@ docker volume create mollys_pgdata
 ```bash
 cp .env.tpl .env.dev
 ```
+configuration details in /mollys/settings.py
 * Environment creation with docker-compose 
 ```bash
 docker-compose up
