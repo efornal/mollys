@@ -19,13 +19,14 @@ import json
 from django.utils import translation
 from django.core.mail import send_mail
 from django.http import HttpResponse
+from django.views.decorators.cache import never_cache
 
 def set_language(request, lang='es'):
     translation.activate(lang)
     request.session[translation.LANGUAGE_SESSION_KEY] = lang
     return redirect('index')
 
-
+@never_cache
 def health(request):
     return HttpResponse(status=200)
 
