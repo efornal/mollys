@@ -26,10 +26,6 @@ def set_language(request, lang='es'):
     request.session[translation.LANGUAGE_SESSION_KEY] = lang
     return redirect('index')
 
-@never_cache
-def health(request):
-    return HttpResponse(status=200)
-
 
 def index(request):
     return redirect('new')

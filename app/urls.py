@@ -4,7 +4,6 @@ from django.conf.urls import url
 from app import views
 
 urlpatterns = [
-    url(r'^health/$', views.health, name='health'),
     url(r'^people/new/$',views.new, name='new'),
     url(r'^people/create/$',views.create, name='create'),
 #    url(r'^people/print/(\d+)/$',views.print_request, name='print_request'),

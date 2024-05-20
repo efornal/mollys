@@ -3,6 +3,7 @@ version: "3"
 services:
   
   db:
+    container_name: db
     image: postgres:13.5-alpine
     restart: always
     environment:
@@ -17,6 +18,7 @@ services:
       retries: 10
   
   mollys:
+    container_name: mollys
     restart: always
     build:
       context: .
@@ -31,7 +33,7 @@ services:
     depends_on:
       - db
     healthcheck:
-      test: ["CMD", "curl --fail http://0.0.0.0:8000/mollys/health/ || exit 1"]
+      test: ["CMD", "curl --fail http://0.0.0.0:8000/healthz"]
       interval: 10s
       timeout: 5s
       retries: 3
