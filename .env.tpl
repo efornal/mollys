@@ -1,11 +1,14 @@
 ## django configuration
 
-DEBUG=True
-
-BASE_URL=https://0.0.0.0:3443
+LANG=es_AR.UTF-8
+TZ=America\/Argentina\/Cordoba
 
 APPLICATION_NAME=Cuenta de usuarios
 APPLICATION_DESC=Habilitación de cuenta
+
+DEBUG=True
+
+BASE_URL=https://0.0.0.0:3443
 
 ALLOWED_HOSTS=['*']
 
@@ -19,7 +22,7 @@ LANGUAGE_CODE=es
 
 DEFAULT_CHARSET=utf-8
 
-TIME_ZONE=America/Argentina/Buenos_Aires
+TIME_ZONE=America/Argentina/Cordoba
 
 CONTEXT_ROOT=/mollys
 
