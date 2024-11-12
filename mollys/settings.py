@@ -18,6 +18,7 @@ import ast
 import ldap
 import environ
 from django.utils.translation import ugettext_lazy as _
+import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -35,7 +36,6 @@ APPLICATION_DESC = os.environ.get('APPLICATION_DESC')
 # ==================================================/
 
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -44,6 +44,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
+
+# Nivel mínimo para registrar eventos (cubre DEBUG, INFO, WARNING, ERROR)
+LOGGING_DEBUG = os.getenv("LOGGING_DEBUG", "DEBUG") == "DEBUG"
+
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS')
 
 ADMINS = os.environ.get('ADMINS')
@@ -180,6 +184,14 @@ USE_TZ = True
 
 DEFAULT_CHARSET =  os.environ.get('DEFAULT_CHARSET')
 
+# Configurar backend de sesion en archivos o base de datos
+SESSION_ENGINE = 'django.contrib.sessions.backends.file'
+#SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+# Definir ubicacion de archivos de sesion si se opto por
+# django.contrib.sessions.backends.file
+SESSION_FILE_PATH = "/srv/django_sessions"
+
 SESSION_COOKIE_NAME = os.environ.get('SESSION_COOKIE_NAME')
 SESSION_COOKIE_PATH = "/"
 SESSION_COOKIE_AGE = int(os.getenv('SESSION_COOKIE_AGE',1209600))
@@ -277,6 +289,35 @@ AUTHENTICATION_BACKENDS = (
 )
 # =================================/
 
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console_stdout': {
+            'level': LOGGING_DEBUG,  # Puedes ajustar el nivel de log según tus necesidades
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,  # Enviar mensajes de log a stdout
+        },
+        'console_stderr': {
+            'level': LOGGING_DEBUG,
+            'class': 'logging.StreamHandler',
+            'stream': sys.stderr,  # Enviar errores a stderr
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console_stdout', 'console_stderr'],
+            'level': LOGGING_DEBUG,  # Nivel mínimo para registrar eventos (cubre DEBUG, INFO, WARNING, ERROR)
+            'propagate': True,
+        },
+        'django.contrib.sessions': {
+            'handlers': ['console_stdout', 'console_stderr'],
+            'level': LOGGING_DEBUG,
+            'propagate': False,
+        },
+    },
+}
 
 # ##loggin querys in develompent
 # if DEBUG:

@@ -8,6 +8,8 @@ APPLICATION_DESC=Habilitación de cuenta
 
 DEBUG=True
 
+LOGGING_DEBUG=DEBUG
+
 BASE_URL=https://0.0.0.0:3443
 
 ALLOWED_HOSTS=['*']
