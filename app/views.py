@@ -76,9 +76,8 @@ def create(request):
     offices = Office.objects.order_by('name')
     context = {'offices': offices, 'document_types': document_types}
     if request.method == 'POST':
-        logging.info("POST (New People): %s" % request.POST)
 
-        if request.session['has_registered']:
+        if request.session and 'has_registered' in request.session and request.session['has_registered']:
             return redirect('new')
         
         form = PersonForm(request.POST)
