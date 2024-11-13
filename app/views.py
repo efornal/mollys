@@ -84,7 +84,7 @@ def create(request):
         if form.is_valid():
             try:
                 f = form.save()
-                f.save()
+#                f.save()
                 request.session['has_registered'] = True
                 
                 oficina = f.office.name if (f.office and f.office.name) else ''
