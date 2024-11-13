@@ -757,13 +757,17 @@ class Person(models.Model):
                 
 @receiver(pre_save, sender=Person)
 def update_user_password(sender, instance, *args, **kwargs):
-    if instance.pk and instance.pk > 0:  #update!
-        current = Person.objects.get(id=instance.pk)
-        if current.ldap_user_password != instance.ldap_user_password:
+    try:
+        if instance.pk and instance.pk > 0:  #update!
+            current = Person.objects.get(id=instance.pk)
+            if current.ldap_user_password != instance.ldap_user_password:
+                instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
+        else: # nuevo!
             instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
-    else: # nuevo!
-        instance.ldap_user_password = Person.make_secret( instance.ldap_user_password )
-
+    except ldap.LDAPError, e:
+        logging.error( "Error updating password for user %s \n" % ldap_user_name)
+        logging.error( e )
+            
         
 @receiver(user_logged_in)
 def sig_user_logged_in_check(sender, user, request, **kwargs):
