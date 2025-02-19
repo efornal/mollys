@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.utils import translation
 import logging
-
+import os
 from django.http import HttpResponse, HttpResponseServerError
 
 class ForceLangMiddleware(object):
@@ -33,10 +33,11 @@ class HealthCheckMiddleware(object):
         # One-time configuration and initialization.
 
     def __call__(self, request):
+        context = os.environ.get('CONTEXT_ROOT','')
         if request.method == "GET":
-            if request.path == "/readiness":
+            if request.path == "{}/readiness".format(context):
                 return self.readiness(request)
-            elif request.path == "/healthz":
+            elif request.path == "{}/healthz".format(context):
                 return self.healthz(request)
         return self.get_response(request)
 

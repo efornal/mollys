@@ -44,5 +44,5 @@ RUN mkdir -vp /srv/django_sessions
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["gunicorn", "mollys.wsgi:application", "--bind",  ":8000"]
+CMD ["gunicorn", "mollys.wsgi:application", "--config", "gunicorn.conf.py"]
 

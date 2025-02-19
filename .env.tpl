@@ -8,7 +8,7 @@ APPLICATION_DESC=Habilitación de cuenta
 
 DEBUG=True
 
-LOGGING_DEBUG=DEBUG
+LOGGING_LEVEL=INFO
 
 BASE_URL=https://0.0.0.0:3443
 
@@ -90,3 +90,12 @@ EMAIL_USE_TLS=False
 EMAIL_FROM=mollys@domain.com
 EMAIL_RECIPIENT_LIST=["email@domain.com"]
 EMAIL_URL_ADMIN=https://url_to_admin
+
+# gunicorn
+# GUNICORN_TIMEOUT: "3600"
+# GUNICORN_LOGLEVEL: "info"
+# GUNICORN_BIND: "0.0.0.0:8000"
+# GUNICORN_WORKERS: ""
+# GUNICORN_THREADS: ""
+# GUNICORN_ACCESSLOG: ""
+# GUNICORN_ERRORLOG: ""
