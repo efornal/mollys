@@ -126,6 +126,9 @@ DATABASES = {
         'PASSWORD':  os.environ.get('DB_USER_PASSWORD'),
         'PORT': os.environ.get('DB_PORT'),
         'HOST': os.environ.get('DB_HOST'),
+        'OPTIONS': {
+            'sslmode': os.environ.get('DB_SSLMODE', 'prefer'),
+        },
         'TEST': {
           'ENGINE': 'django.db.backends.sqlite3',
           'NAME': 'test_db',
@@ -138,6 +141,9 @@ DATABASES = {
         'PASSWORD': os.environ.get('DB_OWNER_PASSWORD'),
         'PORT': os.environ.get('DB_PORT'),
         'HOST': os.environ.get('DB_HOST'),
+        'OPTIONS': {
+            'sslmode': os.environ.get('DB_SSLMODE', 'prefer'),
+        },
     },
 }
 
