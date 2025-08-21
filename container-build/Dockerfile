@@ -10,6 +10,11 @@ ENV DEBIAN_FRONTEND=noninteractive
 EXPOSE 8000
 WORKDIR /srv/mollys
 
+RUN echo "deb http://archive.debian.org/debian/ buster main contrib non-free" > /etc/apt/sources.list.d/debian.list && \
+    echo "deb http://archive.debian.org/debian-security buster/updates main contrib non-free" >> /etc/apt/sources.list.d/debian.list && \
+    echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99disable-valid-until && \
+    rm /etc/apt/sources.list
+
 RUN rm /etc/localtime \
     && ln -s /usr/share/zoneinfo/$LOCAL_TIME /etc/localtime
 
